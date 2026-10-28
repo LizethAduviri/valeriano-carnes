@@ -36,17 +36,23 @@
   @media (min-width:600px){ .app{box-shadow:0 20px 60px rgba(0,0,0,.18)} }
 
   /* ---------- Splash ---------- */
-  .splash{position:fixed;inset:0;z-index:50;background:var(--red);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:56px 24px 40px;max-width:430px;margin:0 auto;overflow:hidden;transition:transform .5s cubic-bezier(.7,0,.2,1)}
+  /* Fotos de fondo con degradado (portada, banners y secciones) */
+  .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .shade{position:absolute;inset:0;z-index:1;pointer-events:none}
+  .over{position:relative;z-index:2}
+
+  /* ---------- Splash ---------- */
+  .splash{position:fixed;inset:0;z-index:50;background:#141414;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:56px 24px 40px;max-width:430px;margin:0 auto;overflow:hidden;transition:transform .5s cubic-bezier(.7,0,.2,1)}
   .splash.hide{transform:translateY(-100%)}
+  .splash .bg{animation:zoom 14s ease-out both}
+  @keyframes zoom{from{transform:scale(1.12)}to{transform:scale(1)}}
+  .splash .shade{background:linear-gradient(180deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.15) 34%,rgba(0,0,0,.1) 52%,rgba(140,8,13,.9) 80%,#c4161d 100%)}
   .splash .brand{text-align:center}
-  .splash .logo{width:56px;height:56px;border-radius:14px;background:#111;display:grid;place-items:center;font-family:var(--display);font-size:28px;margin:0 auto 14px}
-  .splash h1{font-family:var(--display);font-size:46px;line-height:.92;margin:0;letter-spacing:-.5px}
-  .splash .sub{letter-spacing:.32em;font-weight:700;font-size:12px;margin-top:8px;opacity:.9}
-  .splash .hero{width:100%;max-width:400px;filter:drop-shadow(0 30px 30px rgba(0,0,0,.35));margin:10px 0;display:grid;place-items:center}
-  .splash .hero img{width:86%;aspect-ratio:1;object-fit:cover;border-radius:50%;border:6px solid rgba(255,255,255,.9)}
-  .splash .tag{font-size:15px;opacity:.9;margin-bottom:18px;text-align:center}
+  .splash .logo{width:56px;height:56px;border-radius:14px;background:var(--red);display:grid;place-items:center;font-family:var(--display);font-size:28px;margin:0 auto 14px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+  .splash h1{font-family:var(--display);font-size:46px;line-height:.92;margin:0;letter-spacing:-.5px;text-shadow:0 4px 24px rgba(0,0,0,.5)}
+  .splash .sub{letter-spacing:.32em;font-weight:700;font-size:12px;margin-top:8px;opacity:.95}
+  .splash .tag{font-size:16px;font-weight:600;margin-bottom:18px;text-align:center;text-shadow:0 2px 12px rgba(0,0,0,.4)}
   .splash .enter{background:#fff;color:var(--ink);font-weight:800;font-size:16px;padding:16px 28px;border-radius:999px;width:100%;max-width:340px;display:flex;justify-content:center;gap:10px;align-items:center}
-  .splash .ring{position:absolute;border:1.5px solid rgba(255,255,255,.18);border-radius:50%}
 
   /* ---------- Header ---------- */
   .top{position:sticky;top:0;z-index:20;background:var(--bg);padding:16px 18px 10px}
@@ -83,27 +89,22 @@
   .chip.on{background:#111;color:#fff;border-color:#111}
 
   /* ---------- Hero banners ---------- */
-  .banner{position:relative;border-radius:var(--radius);overflow:hidden;background:var(--red);color:#fff;padding:20px;min-height:178px;cursor:pointer}
-  .banner .pill{display:inline-block;background:#111;color:#fff;font-size:10px;font-weight:800;letter-spacing:.14em;padding:6px 10px;border-radius:8px;position:relative;z-index:2}
-  .banner h3{font-family:var(--display);font-size:26px;line-height:.98;margin:10px 0 6px;max-width:58%;position:relative;z-index:2}
-  .banner .pr{font-weight:800;font-size:15px;position:relative;z-index:2}
-  .banner .pr s{opacity:.65;font-weight:600;margin-left:6px}
-  .banner .ds{font-size:12px;opacity:.85;max-width:56%;margin-bottom:4px;position:relative;z-index:2;line-height:1.35}
-  .banner .cta{margin-top:12px;display:inline-flex;background:#fff;color:#111;font-weight:800;font-size:13px;padding:10px 18px;border-radius:999px;position:relative;z-index:2}
-  .banner .img{position:absolute;right:-30px;bottom:-24px;width:62%;filter:drop-shadow(0 14px 18px rgba(0,0,0,.35))}
-  .banner .img.photo{right:0;bottom:0;top:0;width:52%;filter:none}
-  .banner .img.photo img{width:100%;height:100%;object-fit:cover;-webkit-mask-image:linear-gradient(90deg,transparent,#000 40%);mask-image:linear-gradient(90deg,transparent,#000 40%)}
-  .banner .dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.08) 1.5px,transparent 1.6px);background-size:14px 14px;pointer-events:none}
+  .banner{position:relative;border-radius:var(--radius);overflow:hidden;background:#1a1a1a;color:#fff;padding:20px;min-height:224px;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start}
+  .banner .shade{background:linear-gradient(90deg,rgba(8,8,8,.9) 0%,rgba(8,8,8,.62) 52%,rgba(8,8,8,.08) 100%)}
+  .banner .pill{display:inline-block;background:var(--red);color:#fff;font-size:10px;font-weight:800;letter-spacing:.14em;padding:6px 10px;border-radius:8px}
+  .banner h3{font-family:var(--display);font-size:28px;line-height:.98;margin:auto 0 6px;max-width:68%;padding-top:18px}
+  .banner .pr{font-weight:800;font-size:17px}
+  .banner .pr s{opacity:.6;font-weight:600;font-size:14px;margin-left:6px}
+  .banner .ds{font-size:12.5px;opacity:.88;max-width:64%;margin-bottom:6px;line-height:1.35}
+  .banner .cta{margin-top:12px;display:inline-flex;align-items:center;gap:8px;background:#fff;color:#111;font-weight:800;font-size:13px;padding:10px 18px;border-radius:999px}
   .duo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-  .mini{border-radius:18px;padding:16px;min-height:130px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
-  .mini.dark{background:#111;color:#fff}
-  .mini.light{background:#fff;border:1px solid var(--line)}
+  .mini{border-radius:18px;padding:14px;min-height:168px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;background:#1a1a1a;color:#fff}
+  .mini .shade{background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,.1) 35%,rgba(0,0,0,.88) 100%)}
   .mini .pill{align-self:flex-start;font-size:9px;font-weight:800;letter-spacing:.14em;padding:5px 8px;border-radius:6px;background:var(--red);color:#fff}
   .mini.light .pill{background:#111}
-  .mini h4{font-family:var(--display);font-size:17px;line-height:1.02;margin:10px 0 6px}
-  .mini .pr{color:var(--red);font-weight:800;font-size:14px}
-  .mini .pr s{color:#999;font-weight:600;font-size:12px;margin-left:4px}
-  .mini.dark .pr{color:#ff5a5f}
+  .mini h4{font-family:var(--display);font-size:17px;line-height:1.02;margin:10px 0 5px}
+  .mini .pr{color:#ff6b70;font-weight:800;font-size:14px}
+  .mini .pr s{color:#bbb;font-weight:600;font-size:12px;margin-left:4px}
 
   /* ---------- Section shortcuts ---------- */
   .shortcuts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
@@ -168,12 +169,12 @@
   .big-btn.danger{background:#fff;color:var(--red);border:1.5px solid var(--red)}
   .big-btn.sm{padding:13px;font-size:14px;margin-top:10px}
 
-  .sec-hero{border-radius:var(--radius);padding:20px;color:#fff;position:relative;overflow:hidden;margin-bottom:16px;min-height:150px}
-  .sec-hero.red{background:var(--red)}
-  .sec-hero.black{background:#111}
-  .sec-hero h2{font-family:var(--display);font-size:30px;line-height:.95;margin:0;max-width:65%}
-  .sec-hero p{margin:8px 0 0;font-size:13px;opacity:.85;max-width:60%;line-height:1.4}
-  .sec-hero .img{position:absolute;right:-24px;bottom:-18px;width:52%;filter:drop-shadow(0 12px 16px rgba(0,0,0,.4))}
+  .sec-hero{border-radius:var(--radius);padding:20px;color:#fff;position:relative;overflow:hidden;margin-bottom:16px;min-height:190px;background:#1a1a1a;display:flex;flex-direction:column;justify-content:flex-end}
+  .sec-hero .shade{background:linear-gradient(90deg,rgba(8,8,8,.88) 0%,rgba(8,8,8,.45) 62%,rgba(8,8,8,.1) 100%)}
+  .sec-hero.red .shade{background:linear-gradient(90deg,rgba(185,14,20,.95) 0%,rgba(185,14,20,.62) 55%,rgba(185,14,20,.08) 100%)}
+  .sec-hero .kick{font-size:10px;font-weight:800;letter-spacing:.2em;opacity:.85;margin-bottom:6px}
+  .sec-hero h2{font-family:var(--display);font-size:30px;line-height:.95;margin:0;max-width:72%}
+  .sec-hero p{margin:8px 0 0;font-size:13px;opacity:.9;max-width:66%;line-height:1.4}
   .tip{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:16px;font-size:13px;line-height:1.45;color:var(--ink-2)}
   .tip i{flex:none;width:34px;height:34px;border-radius:10px;background:var(--red-soft);color:var(--red);display:grid;place-items:center;font-style:normal;font-weight:800}
   .store-info{background:#111;color:#fff;border-radius:var(--radius);padding:18px;margin-top:22px}
@@ -407,16 +408,15 @@
 
   <!-- Splash -->
   <section class="splash" id="splash">
-    <span class="ring" style="width:520px;height:520px;top:120px;left:-120px"></span>
-    <span class="ring" style="width:360px;height:360px;top:200px;left:-20px"></span>
-    <div class="brand">
+    <img class="bg" data-sec="portada" alt="">
+    <div class="shade"></div>
+    <div class="brand over">
       <div class="logo">V</div>
       <h1>VALERIANO</h1>
       <div class="sub">CARNES PREMIUM</div>
     </div>
-    <div class="hero" id="splashMeat"></div>
-    <div style="width:100%;display:flex;flex-direction:column;align-items:center">
-      <div class="tag">Cortes selectos, pesados al momento.</div>
+    <div class="over" style="width:100%;display:flex;flex-direction:column;align-items:center">
+      <div class="tag" data-sec-txt="portada">Cortes selectos, pesados al momento.</div>
       <button class="enter" id="enterBtn">Entrar
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </button>
@@ -477,11 +477,7 @@
 
   <!-- PARRILLA -->
   <main class="view" id="v-parrilla">
-    <div class="sec-hero black">
-      <h2>Cortes para Parrilla</h2>
-      <p>Jugosos, con buen marmoleado y grasa que se dora al carbón.</p>
-      <div class="img" data-meat="bone"></div>
-    </div>
+    <div class="sec-hero" data-hero="sec-parrilla"></div>
     <div class="chips" id="chipsParrilla"></div>
     <div class="grid" id="gridParrilla" style="margin-top:12px"></div>
     <div class="tip"><i>!</i><div><b>Tip del parrillero:</b> calcula entre 400 y 500 g por adulto si hay cortes con hueso. Sal gruesa recién al poner la carne en la parrilla.</div></div>
@@ -489,11 +485,7 @@
 
   <!-- PLATOS -->
   <main class="view" id="v-platos">
-    <div class="sec-hero red">
-      <h2>Cortes para Platos de Casa</h2>
-      <p>Para silpancho, milanesa, guisos, sopas, estofados y al horno.</p>
-      <div class="img" data-meat="roast"></div>
-    </div>
+    <div class="sec-hero" data-hero="sec-platos"></div>
     <div class="chips" id="chipsPlatos"></div>
     <div class="grid" id="gridPlatos" style="margin-top:12px"></div>
     <div class="tip"><i>!</i><div><b>Para platos comunes</b> calcula unos 200–250 g de carne por persona; en sopas y guisos con verduras alcanza con 150 g.</div></div>
@@ -501,11 +493,7 @@
 
   <!-- OFERTAS -->
   <main class="view" id="v-ofertas">
-    <div class="sec-hero red">
-      <h2>Ofertas de la Semana</h2>
-      <p>Precios especiales mientras dure el stock.</p>
-      <div class="img" data-meat="steak"></div>
-    </div>
+    <div class="sec-hero red" data-hero="sec-ofertas"></div>
     <div class="grid" id="gridOfertas"></div>
   </main>
 
@@ -697,6 +685,22 @@ const BANNERS_BASE = [
   {id:"combo3", pill:"SEMANA", titulo:"Ojo de Bife", descripcion:"", precio:85, antes:95, unidad:"/kg", ir:"ojo"},
 ];
 
+/* Portadas: pantalla de bienvenida y encabezado de cada sección.
+   Se guardan en la misma tabla que los banners (ids que empiezan con "portada" o "sec-"). */
+const PORTADAS_BASE = [
+  {id:"portada",      orden:100, pill:"", titulo:"Bienvenida", descripcion:"Cortes selectos, pesados al momento."},
+  {id:"sec-parrilla", orden:101, pill:"SECCIÓN", titulo:"Cortes para Parrilla", descripcion:"Jugosos, con buen marmoleado y grasa que se dora al carbón."},
+  {id:"sec-platos",   orden:102, pill:"SECCIÓN", titulo:"Cortes para Platos de Casa", descripcion:"Para silpancho, milanesa, guisos, sopas, estofados y al horno."},
+  {id:"sec-ofertas",  orden:103, pill:"SOLO ESTA SEMANA", titulo:"Ofertas de la Semana", descripcion:"Precios especiales mientras dure el stock."},
+];
+const esPortada = id => id === "portada" || String(id).startsWith("sec-");
+/* Fotos reales de fábrica (Unsplash, licencia libre). Desde Gestión se reemplazan por fotos propias. */
+const FOTOS_BASE = {
+  portada: "images/portada.jpg", combo1: "images/banner-parrilla.jpg", combo2: "images/banner-casero.jpg", combo3: "images/banner-ojo.jpg",
+  "sec-parrilla": "images/sec-parrilla.jpg", "sec-platos": "images/sec-platos.jpg", "sec-ofertas": "images/sec-ofertas.jpg",
+};
+const fotoDe = x => x.foto || FOTOS_BASE[x.id] || "";
+
 const AJUSTES_BASE = {whatsapp:"59170000000", direccion:"", horario:"Lun a Sáb 7:00 – 20:00 · Dom 7:00 – 13:00"};
 
 const ZONAS = {
@@ -766,8 +770,9 @@ const ordenAdmin = (a, b) => a.orden - b.orden;
 /* =====================================================================
    Estado de la app
    ===================================================================== */
-let CORTES = [], BANNERS = [], AJUSTES = clone(AJUSTES_BASE);
+let CORTES = [], BANNERS = [], PORTADAS = {}, AJUSTES = clone(AJUSTES_BASE);
 const byId = id => CORTES.find(c => c.id === id);
+const todasBanners = () => [...BANNERS, ...Object.values(PORTADAS)];
 
 /* =====================================================================
    FOTOS LOCALES (modo sin nube): se guardan dentro del teléfono
@@ -899,7 +904,7 @@ const repoLocal = {
     for (const x of [...cortes, ...banners]) x.foto = blobs[x.id] ? urlLocal(x.id, blobs[x.id]) : null;
     return {cortes, banners, ajustes, blobs};
   },
-  persistir(){ store.set("valeriano.cortes", CORTES.map(sinFoto)); store.set("valeriano.combos", BANNERS.map(sinFoto)); store.set("valeriano.ajustes", AJUSTES); },
+  persistir(){ store.set("valeriano.cortes", CORTES.map(sinFoto)); store.set("valeriano.combos", todasBanners().map(sinFoto)); store.set("valeriano.ajustes", AJUSTES); },
   async cambiarFoto(id, blob){
     if (blob){ await fotoDB.put(id, blob); return urlLocal(id, blob); }
     try { await fotoDB.del(id); } catch {}
@@ -938,8 +943,12 @@ const repo = CLOUD ? repoNube : repoLocal;
 
 let sinConexion = false, ultimaCarga = 0;
 function aplicarDatos(d){
-  CORTES = d.cortes; BANNERS = d.banners.length ? d.banners : clone(BANNERS_BASE).map(normBanner); AJUSTES = d.ajustes;
+  CORTES = d.cortes; AJUSTES = d.ajustes;
+  const filas = d.banners.length ? d.banners : clone(BANNERS_BASE).map(normBanner);
+  BANNERS = filas.filter(b => !esPortada(b.id));
   while (BANNERS.length < 3) BANNERS.push(normBanner(BANNERS_BASE[BANNERS.length], BANNERS.length));
+  PORTADAS = {};
+  for (const p of PORTADAS_BASE) PORTADAS[p.id] = filas.find(b => b.id === p.id) || normBanner(clone(p));
 }
 async function cargarDatos(){
   if (!CLOUD){ aplicarDatos(await repoLocal.cargar()); return; }
@@ -1153,20 +1162,30 @@ const destinoBanner = b => ["parrilla","platos","ofertas","calc"].includes(b.ir)
 function renderBanners(){
   const [a, b, c] = BANNERS;
   const pr = x => `${bs(x.precio)}${x.unidad ? " " + esc(x.unidad) : ""}${x.antes ? ` <s>${bs(x.antes)}</s>` : ""}`;
+  const bg = x => fotoDe(x) ? `<img class="bg" src="${esc(fotoDe(x))}" alt="" loading="lazy"><div class="shade"></div>` : "";
+  const mini = x => `<div class="mini" ${destinoBanner(x)}>${bg(x)}<span class="pill over">${esc(x.pill)}</span><div class="over"><h4>${esc(x.titulo)}</h4><div class="pr">${pr(x)}</div></div></div>`;
   $("#homeBanners").innerHTML = `
     <div class="banner" ${destinoBanner(a)}>
-      <div class="dots"></div>
-      <span class="pill">${esc(a.pill)}</span>
-      <h3>${esc(a.titulo)}</h3>
-      ${a.descripcion ? `<div class="ds">${esc(a.descripcion)}</div>` : ""}
-      <div class="pr">${pr(a)}</div>
-      <span class="cta">Ver oferta</span>
-      <div class="img ${a.foto ? "photo" : ""}">${imgDe(a, "bone")}</div>
+      ${bg(a)}
+      <span class="pill over">${esc(a.pill)}</span>
+      <h3 class="over">${esc(a.titulo)}</h3>
+      ${a.descripcion ? `<div class="ds over">${esc(a.descripcion)}</div>` : ""}
+      <div class="pr over">${pr(a)}</div>
+      <span class="cta over">Ver oferta <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </div>
-    <div class="duo">
-      <div class="mini dark" ${destinoBanner(b)}><span class="pill">${esc(b.pill)}</span><div><h4>${esc(b.titulo)}</h4><div class="pr">${pr(b)}</div></div></div>
-      <div class="mini light" ${destinoBanner(c)}><span class="pill">${esc(c.pill)}</span><div><h4>${esc(c.titulo)}</h4><div class="pr">${pr(c)}</div></div></div>
-    </div>`;
+    <div class="duo">${mini(b)}${mini(c)}</div>`;
+}
+/* Pantalla de bienvenida y encabezados de Parrilla, Platos y Ofertas */
+function renderPortadas(){
+  const p = PORTADAS.portada;
+  const img = document.querySelector('.splash .bg');
+  if (fotoDe(p) && img.getAttribute("src") !== fotoDe(p)) img.src = fotoDe(p);
+  $('[data-sec-txt="portada"]').textContent = p.descripcion || "Cortes selectos, pesados al momento.";
+  $$("[data-hero]").forEach(el => {
+    const s = PORTADAS[el.dataset.hero];
+    el.innerHTML = `${fotoDe(s) ? `<img class="bg" src="${esc(fotoDe(s))}" alt="">` : ""}<div class="shade"></div>
+      ${s.pill ? `<div class="kick over">${esc(s.pill)}</div>` : ""}<h2 class="over">${esc(s.titulo)}</h2>${s.descripcion ? `<p class="over">${esc(s.descripcion)}</p>` : ""}`;
+  });
 }
 function renderTienda(){
   const a = AJUSTES;
@@ -1193,7 +1212,7 @@ function renderCowInfo(){
 function elegirZona(z){ filtroZona = filtroZona === z ? null : z; filtroInicio = "todos"; renderCowInfo(); renderInicio(); }
 
 function renderAll(){
-  renderBanners(); renderInicio(); renderSeccion("parrilla"); renderSeccion("platos"); renderOfertas(); renderTienda(); renderCowInfo();
+  renderBanners(); renderPortadas(); renderInicio(); renderSeccion("parrilla"); renderSeccion("platos"); renderOfertas(); renderTienda(); renderCowInfo();
   guardarCarrito();
   if (esAdmin && vistaActual === "admin") renderAdmin();
 }
@@ -1648,23 +1667,54 @@ async function compartirLista(){
 }
 
 /* ---- Pestaña: Banners ---- */
+const thFoto = x => fotoDe(x) ? `<img src="${esc(fotoDe(x))}" alt="">` : meatSVG("steak", x.id);
+const NOMBRE_PORTADA = {portada: "Pantalla de bienvenida", "sec-parrilla": "Sección Parrilla", "sec-platos": "Sección Platos", "sec-ofertas": "Sección Ofertas"};
 function tabBanners(){
-  $("#admBody").innerHTML = `<div class="adm-box">${BANNERS.slice(0, 3).map((b, i) => `<div class="adm-row" data-editbanner="${i}">
-      <div class="th">${imgDe(b, i === 0 ? "bone" : "steak")}</div>
+  $("#admBody").innerHTML = `
+    <div class="sec-h" style="margin-top:16px"><h2>Ofertas del inicio</h2></div>
+    <div class="adm-box">${BANNERS.slice(0, 3).map((b, i) => `<div class="adm-row" data-editbanner="${i}">
+      <div class="th">${thFoto(b)}${b.foto ? "" : `<span class="nophoto" title="Foto de fábrica">!</span>`}</div>
       <div class="nf"><b>${esc(b.titulo)}</b><small>${i === 0 ? "Banner grande" : "Banner pequeño " + i} · ${esc(b.pill)}</small></div>
       <div class="pr">${bs(b.precio)}</div></div>`).join("")}</div>
-    <p class="note">Son las ofertas que se ven arriba en el inicio. Toca uno para cambiar texto, precio, foto o a dónde lleva.</p>`;
+    <div class="sec-h"><h2>Portadas</h2></div>
+    <div class="adm-box">${PORTADAS_BASE.map(({id}) => { const s = PORTADAS[id]; return `<div class="adm-row" data-editportada="${id}">
+      <div class="th">${thFoto(s)}${s.foto ? "" : `<span class="nophoto" title="Foto de fábrica">!</span>`}</div>
+      <div class="nf"><b>${NOMBRE_PORTADA[id]}</b><small>${esc(id === "portada" ? s.descripcion : s.titulo)}</small></div></div>`; }).join("")}</div>
+    <p class="note">El signo <b>!</b> indica que aún usa la foto de fábrica. Reemplázalas por fotos de tus propios cortes para que el catálogo sea 100% tuyo.</p>`;
 }
 function abrirEditorBanner(i){
   edit = {tipo: "banner", idx: i, original: clone(BANNERS[i]), data: clone(BANNERS[i]), nuevaFoto: undefined};
   pintarEditorBanner(); abrir("#editor");
 }
+function abrirEditorPortada(id){
+  edit = {tipo: "banner", portada: id, original: clone(PORTADAS[id]), data: clone(PORTADAS[id]), nuevaFoto: undefined};
+  pintarEditorBanner(); abrir("#editor");
+}
+/* Vista previa de la foto en el editor: nueva, propia o la de fábrica */
+function fotoBannerPreview(){
+  if (edit.nuevaFoto) return `<img src="${edit._preview}">`;
+  const actual = edit.nuevaFoto === null ? FOTOS_BASE[edit.data.id] : fotoDe(edit.data);
+  return actual ? `<img src="${esc(actual)}">` : meatSVG("steak", edit.data.id, "meat");
+}
 function pintarEditorBanner(){
-  const b = edit.data;
+  const b = edit.data, propia = !!(edit.nuevaFoto || (edit.nuevaFoto === undefined && b.foto));
+  const foto = `<div class="fg"><label>Foto</label>
+    <div class="photo-pick" data-pickphoto>${fotoBannerPreview()}<span class="lbl">${camIcon}Cambiar foto</span></div>
+    ${propia ? `<div class="photo-actions"><button data-delphoto>Volver a la foto de fábrica</button></div>` : `<div class="hint">Ahora usa la foto de fábrica. Sube una foto horizontal de tus propios cortes.</div>`}</div>`;
+  if (edit.portada){
+    const bienvenida = edit.portada === "portada";
+    $("#editor").innerHTML = `<div class="handle"></div>
+      <h3>${NOMBRE_PORTADA[edit.portada]}</h3>${foto}
+      ${bienvenida ? "" : `<div class="fg"><label>Texto pequeño de arriba</label><input id="b_pill" value="${esc(b.pill)}" placeholder="Ej.: SOLO ESTA SEMANA"></div>
+      <div class="fg"><label>Título</label><input id="b_titulo" value="${esc(b.titulo)}"></div>`}
+      <div class="fg"><label>${bienvenida ? "Frase de bienvenida" : "Texto"}</label><input id="b_desc" value="${esc(b.descripcion)}"></div>
+      <button class="big-btn" data-savebanner>Guardar</button>
+      <button class="big-btn line sm" data-close>Cancelar</button>`;
+    return;
+  }
   const destinos = [["parrilla","Sección Parrilla"],["platos","Sección Platos"],["ofertas","Sección Ofertas"],["calc","Calculadora"], ...[...CORTES].sort(ordenAdmin).map(c => [c.id, "Corte: " + c.nombre])];
   $("#editor").innerHTML = `<div class="handle"></div>
-    <h3>${edit.idx === 0 ? "Banner grande" : "Banner pequeño"}</h3>
-    ${edit.idx === 0 ? `<div class="fg"><label>Foto</label>${fotoBloque()}</div>` : ""}
+    <h3>${edit.idx === 0 ? "Banner grande" : "Banner pequeño"}</h3>${foto}
     <div class="fg"><label>Etiqueta</label><input id="b_pill" value="${esc(b.pill)}" placeholder="Ej.: COMBO PARRILLERO"></div>
     <div class="fg"><label>Título</label><input id="b_titulo" value="${esc(b.titulo)}"></div>
     ${edit.idx === 0 ? `<div class="fg"><label>Detalle</label><input id="b_desc" value="${esc(b.descripcion)}" placeholder="Qué incluye"></div>` : ""}
@@ -1678,10 +1728,13 @@ function pintarEditorBanner(){
     <button class="big-btn line sm" data-close>Cancelar</button>`;
 }
 function leerFormBanner(){
-  const b = edit.data, v = id => ($("#" + id) ? $("#" + id).value.trim() : "");
-  b.pill = v("b_pill").toUpperCase(); b.titulo = v("b_titulo"); if ($("#b_desc")) b.descripcion = v("b_desc");
-  b.precio = parseFloat(v("b_precio")) || 0; b.antes = parseFloat(v("b_antes")) || null;
-  b.unidad = v("b_unidad"); b.ir = v("b_ir");
+  const b = edit.data, v = id => ($("#" + id) ? $("#" + id).value.trim() : null);
+  const set = (k, val) => { if (val !== null) b[k] = val; };
+  set("pill", v("b_pill") !== null ? v("b_pill").toUpperCase() : null); set("titulo", v("b_titulo")); set("descripcion", v("b_desc"));
+  if (!edit.portada){
+    b.precio = parseFloat(v("b_precio")) || 0; b.antes = parseFloat(v("b_antes")) || null;
+    b.unidad = v("b_unidad") || ""; b.ir = v("b_ir");
+  }
 }
 async function guardarBanner(){
   leerFormBanner();
@@ -1693,10 +1746,10 @@ async function guardarBanner(){
       await repo.guardarBanners([b]);
     });
   } catch (e) { return toast("⚠ No se guardó: " + e.message, 4000); }
-  BANNERS[edit.idx] = b;
+  if (edit.portada) PORTADAS[edit.portada] = b; else BANNERS[edit.idx] = b;
   if (!repo.nube) repo.persistir();
-  repo.log("Editó banner", `${b.titulo} · ${bs(b.precio)}`);
-  logCache = null; cerrar(); renderAll(); toast("✓ Banner guardado");
+  repo.log(edit.portada ? "Editó portada" : "Editó banner", edit.portada ? NOMBRE_PORTADA[edit.portada] : `${b.titulo} · ${bs(b.precio)}`);
+  logCache = null; cerrar(); renderAll(); toast("✓ Guardado");
 }
 
 /* ---- Pestaña: Historial ---- */
@@ -1797,7 +1850,7 @@ async function exportar(){
   const fotos = {};
   if (!repo.nube){ const blobs = await fotoDB.all(); for (const [id, b] of Object.entries(blobs)) fotos[id] = await blobToDataURL(b); }
   const data = JSON.stringify({app: "valeriano", version: 2, fecha: new Date().toISOString(),
-    cortes: CORTES.map(c => repo.nube ? c : sinFoto(c)), banners: BANNERS.map(b => repo.nube ? b : sinFoto(b)), ajustes: AJUSTES, fotos});
+    cortes: CORTES.map(c => repo.nube ? c : sinFoto(c)), banners: todasBanners().map(b => repo.nube ? b : sinFoto(b)), ajustes: AJUSTES, fotos});
   const nombre = `valeriano-catalogo-${hoy()}.json`;
   if (window.AndroidBridge && AndroidBridge.saveFile){
     const ok = AndroidBridge.saveFile(nombre, data);
@@ -1827,8 +1880,8 @@ async function importar(file){
         const nuevos = new Set(cortes.map(c => c.id));
         for (const c of CORTES) if (!nuevos.has(c.id)) await nube.borrar("cortes", c.id);
       }
-      CORTES = cortes; BANNERS = banners.length ? banners : BANNERS; AJUSTES = ajustes;
-      await repo.guardarCortes(CORTES); await repo.guardarBanners(BANNERS); await repo.guardarAjustes();
+      aplicarDatos({cortes, banners: banners.length ? banners : todasBanners(), ajustes});
+      await repo.guardarCortes(CORTES); await repo.guardarBanners(todasBanners()); await repo.guardarAjustes();
     });
   } catch (e) { toast("⚠ No se pudo restaurar: " + e.message, 5000); return recargar(); }
   repo.log("Restauró copia de seguridad", `${cortes.length} cortes`);
@@ -1846,7 +1899,7 @@ async function recargar(){ await cargarDatos(); renderAll(); calcular(); }
    Eventos
    ===================================================================== */
 document.addEventListener("click", e => {
-  const t = e.target.closest("button, [data-go], [data-open], [data-edit], [data-editbanner], [data-af], [data-pickphoto], .card, .cow-region, #scrim");
+  const t = e.target.closest("button, [data-go], [data-open], [data-edit], [data-editbanner], [data-editportada], [data-af], [data-pickphoto], .card, .cow-region, #scrim");
   if (!t || t.disabled) return;
   const d = t.dataset, has = a => t.hasAttribute(a);
   if (t.id === "scrim" || has("data-close")) return cerrar();
@@ -1854,6 +1907,7 @@ document.addEventListener("click", e => {
   if (d.mover){ e.stopPropagation(); return mover(d.mover, +d.dir); }
   if (d.edit){ e.stopPropagation(); return abrirEditor(d.edit); }
   if (d.editbanner) return abrirEditorBanner(+d.editbanner);
+  if (d.editportada) return abrirEditorPortada(d.editportada);
   if (d.go){ cerrar(); return go(d.go); }
   if (d.open) return abrirDetalle(d.open);
   if (t.classList.contains("card")) return abrirDetalle(d.id);
@@ -1992,15 +2046,12 @@ if ("serviceWorker" in navigator && location.protocol === "https:" && !window.An
 /* Arranque */
 (async () => {
   $("#cowMap").innerHTML = cowSVG();
-  $$("[data-meat]").forEach(el => el.innerHTML = meatSVG(el.dataset.meat, el.parentElement.className));
-  $("#splashMeat").innerHTML = meatSVG("steak", "splash-ojo");
+  document.querySelector(".splash .bg").src = FOTOS_BASE.portada;
   await cargarDatos();
   if (CLOUD) esAdmin = !!nube.ses && await nube.esAdmin();
   else try { esAdmin = sessionStorage.getItem("valeriano.admin") === "1"; } catch {}
   setAdmin(esAdmin);
   calcular();
-  const portada = (byId("ojo") && byId("ojo").foto) || (BANNERS[0] && BANNERS[0].foto);
-  if (portada) $("#splashMeat").innerHTML = `<img src="${esc(portada)}" alt="">`;
 })();
 </script>
 </body>
