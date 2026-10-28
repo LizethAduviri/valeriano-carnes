@@ -1,0 +1,2007 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#d71920">
+<title>Valeriano Carnes Premium</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Valeriano">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="config.js"></script>
+<style>
+  :root{
+    --red:#d71920; --red-dark:#a80f15; --red-soft:#fde8e8;
+    --ink:#111; --ink-2:#2a2a2a; --muted:#6b6b6b; --line:#e7e7e7;
+    --bg:#f4f4f4; --card:#fff; --chip:#efefef; --ok:#15803d; --warn:#d97706;
+    --radius:22px;
+    --display:"Archivo Black", "Arial Black", Impact, sans-serif;
+    --text:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none!important}
+  html,body{margin:0;padding:0}
+  body{background:#d9d9d9;font-family:var(--text);color:var(--ink);min-height:100vh}
+  button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+  button:disabled{opacity:.45;cursor:default}
+  input,select,textarea{font-family:inherit}
+
+  .app{max-width:430px;margin:0 auto;min-height:100vh;background:var(--bg);position:relative;overflow-x:hidden;padding-bottom:96px}
+  @media (min-width:600px){ .app{box-shadow:0 20px 60px rgba(0,0,0,.18)} }
+
+  /* ---------- Splash ---------- */
+  .splash{position:fixed;inset:0;z-index:50;background:var(--red);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:56px 24px 40px;max-width:430px;margin:0 auto;overflow:hidden;transition:transform .5s cubic-bezier(.7,0,.2,1)}
+  .splash.hide{transform:translateY(-100%)}
+  .splash .brand{text-align:center}
+  .splash .logo{width:56px;height:56px;border-radius:14px;background:#111;display:grid;place-items:center;font-family:var(--display);font-size:28px;margin:0 auto 14px}
+  .splash h1{font-family:var(--display);font-size:46px;line-height:.92;margin:0;letter-spacing:-.5px}
+  .splash .sub{letter-spacing:.32em;font-weight:700;font-size:12px;margin-top:8px;opacity:.9}
+  .splash .hero{width:100%;max-width:400px;filter:drop-shadow(0 30px 30px rgba(0,0,0,.35));margin:10px 0;display:grid;place-items:center}
+  .splash .hero img{width:86%;aspect-ratio:1;object-fit:cover;border-radius:50%;border:6px solid rgba(255,255,255,.9)}
+  .splash .tag{font-size:15px;opacity:.9;margin-bottom:18px;text-align:center}
+  .splash .enter{background:#fff;color:var(--ink);font-weight:800;font-size:16px;padding:16px 28px;border-radius:999px;width:100%;max-width:340px;display:flex;justify-content:center;gap:10px;align-items:center}
+  .splash .ring{position:absolute;border:1.5px solid rgba(255,255,255,.18);border-radius:50%}
+
+  /* ---------- Header ---------- */
+  .top{position:sticky;top:0;z-index:20;background:var(--bg);padding:16px 18px 10px}
+  .top-row{display:flex;align-items:center;gap:12px}
+  .logo-s{width:40px;height:40px;border-radius:11px;background:#111;color:#fff;display:grid;place-items:center;font-family:var(--display);font-size:20px;flex:none;user-select:none}
+  .brand-s{flex:1;line-height:1;user-select:none}
+  .brand-s b{font-family:var(--display);font-size:17px;letter-spacing:.5px;display:block}
+  .brand-s span{font-size:10px;letter-spacing:.28em;color:var(--red);font-weight:800}
+  .icon-btn{width:44px;height:44px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;position:relative;flex:none}
+  .icon-btn.dark{background:#111}
+  .icon-btn.light{background:#fff;color:#111}
+  .badge{position:absolute;top:-3px;right:-3px;background:#111;color:#fff;font-size:11px;font-weight:800;min-width:20px;height:20px;border-radius:10px;display:grid;place-items:center;padding:0 5px;border:2px solid var(--bg)}
+  .search{margin-top:14px;display:flex;align-items:center;gap:10px;background:#fff;border-radius:999px;padding:0 16px;height:48px;border:1px solid var(--line)}
+  .search input{border:0;outline:0;flex:1;font-size:15px;background:transparent;min-width:0}
+  .search svg{flex:none;color:var(--muted)}
+  .admin-bar{display:flex;align-items:center;gap:8px;background:#111;color:#fff;border-radius:16px;padding:8px 8px 8px 14px;margin-top:12px;font-size:13px;font-weight:700}
+  .admin-bar span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .admin-bar button{background:var(--red);color:#fff;font-weight:800;font-size:12px;padding:9px 12px;border-radius:999px;flex:none}
+  .admin-bar button.ghost{background:#2b2b2b}
+  .offline{margin-top:10px;background:#fff7e6;color:#8a5300;border:1px solid #f5d9a6;border-radius:12px;padding:8px 12px;font-size:12px;font-weight:600}
+
+  /* ---------- Generic ---------- */
+  .view{display:none;padding:0 18px;animation:fade .3s ease}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:22px 0 12px}
+  .sec-h h2{font-family:var(--display);font-size:22px;margin:0;letter-spacing:-.2px}
+  .sec-h a,.link{color:var(--red);font-weight:700;font-size:13px;text-decoration:none;cursor:pointer}
+  .page-title{font-family:var(--display);font-size:34px;line-height:.95;margin:6px 0 4px;letter-spacing:-.5px}
+  .page-sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+  .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;padding:9px 16px;border-radius:999px;background:#fff;border:1px solid var(--line);font-weight:700;font-size:13px;white-space:nowrap}
+  .chip.on{background:#111;color:#fff;border-color:#111}
+
+  /* ---------- Hero banners ---------- */
+  .banner{position:relative;border-radius:var(--radius);overflow:hidden;background:var(--red);color:#fff;padding:20px;min-height:178px;cursor:pointer}
+  .banner .pill{display:inline-block;background:#111;color:#fff;font-size:10px;font-weight:800;letter-spacing:.14em;padding:6px 10px;border-radius:8px;position:relative;z-index:2}
+  .banner h3{font-family:var(--display);font-size:26px;line-height:.98;margin:10px 0 6px;max-width:58%;position:relative;z-index:2}
+  .banner .pr{font-weight:800;font-size:15px;position:relative;z-index:2}
+  .banner .pr s{opacity:.65;font-weight:600;margin-left:6px}
+  .banner .ds{font-size:12px;opacity:.85;max-width:56%;margin-bottom:4px;position:relative;z-index:2;line-height:1.35}
+  .banner .cta{margin-top:12px;display:inline-flex;background:#fff;color:#111;font-weight:800;font-size:13px;padding:10px 18px;border-radius:999px;position:relative;z-index:2}
+  .banner .img{position:absolute;right:-30px;bottom:-24px;width:62%;filter:drop-shadow(0 14px 18px rgba(0,0,0,.35))}
+  .banner .img.photo{right:0;bottom:0;top:0;width:52%;filter:none}
+  .banner .img.photo img{width:100%;height:100%;object-fit:cover;-webkit-mask-image:linear-gradient(90deg,transparent,#000 40%);mask-image:linear-gradient(90deg,transparent,#000 40%)}
+  .banner .dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.08) 1.5px,transparent 1.6px);background-size:14px 14px;pointer-events:none}
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  .mini{border-radius:18px;padding:16px;min-height:130px;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+  .mini.dark{background:#111;color:#fff}
+  .mini.light{background:#fff;border:1px solid var(--line)}
+  .mini .pill{align-self:flex-start;font-size:9px;font-weight:800;letter-spacing:.14em;padding:5px 8px;border-radius:6px;background:var(--red);color:#fff}
+  .mini.light .pill{background:#111}
+  .mini h4{font-family:var(--display);font-size:17px;line-height:1.02;margin:10px 0 6px}
+  .mini .pr{color:var(--red);font-weight:800;font-size:14px}
+  .mini .pr s{color:#999;font-weight:600;font-size:12px;margin-left:4px}
+  .mini.dark .pr{color:#ff5a5f}
+
+  /* ---------- Section shortcuts ---------- */
+  .shortcuts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .sc{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 4px 10px;text-align:center;font-size:11.5px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:7px}
+  .sc i{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:var(--red-soft);color:var(--red)}
+  .sc.k i{background:#111;color:#fff}
+
+  /* ---------- Cow map (estilo lámina de carnicería) ---------- */
+  .cow-card{background:#0d0d0d;color:#fff;border-radius:var(--radius);padding:18px 14px 14px;position:relative;overflow:hidden}
+  .cow-card h3{font-family:var(--display);font-size:22px;margin:0 4px;line-height:1}
+  .cow-card p{margin:6px 4px 0;color:#bdbdbd;font-size:13px}
+  .cow-card svg{width:100%;height:auto;margin-top:6px;display:block;overflow:visible}
+  .cow-card svg *{pointer-events:none}
+  .cow-card svg .cow-region{pointer-events:all}
+  .cow-region{fill:url(#cowShade);stroke:#fff;stroke-width:1.1;stroke-dasharray:4 3;stroke-opacity:.75;cursor:pointer;transition:fill .2s}
+  .cow-region:hover{fill:#3a1517}
+  .cow-region.on{fill:var(--red)}
+  .cow-label{fill:#fff;font-size:9px;font-weight:800;pointer-events:none;font-family:var(--text);letter-spacing:.02em;paint-order:stroke;stroke:#0d0d0d;stroke-width:2.5px}
+  .cow-info{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:4px 4px 0;min-height:44px}
+  .cow-info b{font-size:15px}
+  .cow-info small{display:block;color:#bdbdbd;font-size:12px;margin-top:2px}
+  .cow-info button{background:var(--red);color:#fff;font-weight:800;font-size:12px;padding:10px 14px;border-radius:999px;flex:none}
+  .zone-cuts{display:flex;gap:8px;overflow-x:auto;margin:10px 4px 0;padding-bottom:4px;scrollbar-width:none}
+  .zone-cuts::-webkit-scrollbar{display:none}
+  .zc{flex:none;width:128px;background:#1b1b1b;border-radius:14px;padding:8px;text-align:left;color:#fff;animation:fade .25s ease}
+  .zc .t{aspect-ratio:1.3;border-radius:10px;background:#262626;display:grid;place-items:center;overflow:hidden;position:relative}
+  .zc .t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .zc .t svg{width:92%}
+  .zc b{display:block;font-size:12.5px;margin-top:7px;line-height:1.15}
+  .zc small{display:block;color:#bdbdbd;font-size:11px;margin-top:2px;line-height:1.25}
+  .zc em{display:block;font-style:normal;color:#ff5a5f;font-weight:800;font-size:12.5px;margin-top:4px}
+  .zone-empty{color:#bdbdbd;font-size:12.5px;margin:10px 4px 0}
+  .zone-chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 4px 0}
+  .zone-chips button{background:#1f1f1f;color:#ddd;font-size:11.5px;font-weight:700;padding:6px 10px;border-radius:999px}
+  .zone-chips button.on{background:var(--red);color:#fff}
+
+  /* ---------- Product grid ---------- */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .card{background:var(--card);border-radius:20px;padding:10px 10px 14px;position:relative;cursor:pointer;border:1px solid #ececec;display:flex;flex-direction:column;transition:transform .15s}
+  .card:active{transform:scale(.97)}
+  .card .ph{background:var(--chip);border-radius:15px;aspect-ratio:1.18;display:grid;place-items:center;overflow:hidden;position:relative}
+  .card .ph svg{width:88%;height:auto;filter:drop-shadow(0 8px 8px rgba(0,0,0,.18))}
+  .card .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .card .off{position:absolute;top:8px;left:8px;background:var(--red);color:#fff;font-size:11px;font-weight:800;padding:4px 8px;border-radius:8px;z-index:2}
+  .card .cat{position:absolute;top:8px;right:8px;background:#fff;font-size:10px;font-weight:800;padding:4px 7px;border-radius:7px;z-index:2}
+  .card .star{position:absolute;bottom:8px;left:8px;background:#111;color:#ffd166;font-size:10px;font-weight:800;padding:4px 7px;border-radius:7px;z-index:2}
+  .card.soldout .ph > img,.card.soldout .ph > svg{filter:grayscale(1) opacity(.55)}
+  .card .sold{position:absolute;inset:auto 8px 8px 8px;background:#111;color:#fff;text-align:center;font-size:11px;font-weight:800;letter-spacing:.14em;padding:6px;border-radius:8px;z-index:3}
+  .card h5{font-family:var(--display);font-size:15.5px;margin:10px 2px 3px;line-height:1.05;letter-spacing:-.1px}
+  .card .use{font-size:11.5px;color:var(--muted);margin:0 2px;line-height:1.3;flex:1}
+  .card .foot{display:flex;align-items:flex-end;justify-content:space-between;margin:10px 2px 0}
+  .card .price{color:var(--red);font-weight:800;font-size:16px;line-height:1}
+  .card .price small{color:var(--muted);font-weight:600;font-size:11px}
+  .card .price s{display:block;color:#aaa;font-weight:600;font-size:11px;margin-bottom:2px}
+  .card .add{width:32px;height:32px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;flex:none}
+  .card .add.edit{background:var(--red)}
+  .empty{text-align:center;color:var(--muted);padding:40px 10px;font-size:14px;grid-column:1/-1}
+
+  .big-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--red);color:#fff;font-weight:800;font-size:15px;padding:17px;border-radius:999px;margin-top:16px}
+  .big-btn.dark{background:#111}
+  .big-btn.line{background:#fff;color:#111;border:1.5px solid #111}
+  .big-btn.danger{background:#fff;color:var(--red);border:1.5px solid var(--red)}
+  .big-btn.sm{padding:13px;font-size:14px;margin-top:10px}
+
+  .sec-hero{border-radius:var(--radius);padding:20px;color:#fff;position:relative;overflow:hidden;margin-bottom:16px;min-height:150px}
+  .sec-hero.red{background:var(--red)}
+  .sec-hero.black{background:#111}
+  .sec-hero h2{font-family:var(--display);font-size:30px;line-height:.95;margin:0;max-width:65%}
+  .sec-hero p{margin:8px 0 0;font-size:13px;opacity:.85;max-width:60%;line-height:1.4}
+  .sec-hero .img{position:absolute;right:-24px;bottom:-18px;width:52%;filter:drop-shadow(0 12px 16px rgba(0,0,0,.4))}
+  .tip{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:16px;font-size:13px;line-height:1.45;color:var(--ink-2)}
+  .tip i{flex:none;width:34px;height:34px;border-radius:10px;background:var(--red-soft);color:var(--red);display:grid;place-items:center;font-style:normal;font-weight:800}
+  .store-info{background:#111;color:#fff;border-radius:var(--radius);padding:18px;margin-top:22px}
+  .store-info h3{font-family:var(--display);font-size:20px;margin:0 0 10px}
+  .store-info p{margin:6px 0;font-size:13.5px;color:#d6d6d6;display:flex;gap:10px;align-items:flex-start;line-height:1.4}
+  .store-info p b{color:#fff;min-width:74px;font-size:12px;letter-spacing:.06em}
+
+  /* ---------- Calculator ---------- */
+  .calc{background:#111;color:#fff;border-radius:var(--radius);padding:18px}
+  .seg{display:grid;grid-template-columns:1fr 1fr;background:#2a2a2a;border-radius:999px;padding:4px;gap:4px}
+  .seg button{padding:11px 6px;border-radius:999px;font-weight:800;font-size:12.5px;color:#cfcfcf}
+  .seg button.on{background:#fff;color:#111}
+  .field{margin-top:18px}
+  .field label{display:block;font-size:11px;letter-spacing:.2em;font-weight:800;color:#a9a9a9;margin-bottom:10px;text-transform:uppercase}
+  .stepper{display:flex;align-items:center;justify-content:space-between;background:#1f1f1f;border-radius:18px;padding:8px}
+  .stepper .who{padding-left:8px}
+  .stepper .who b{display:block;font-size:15px}
+  .stepper .who small{color:#9a9a9a;font-size:12px}
+  .stepper .ctl{display:flex;align-items:center;gap:6px}
+  .stepper button{width:40px;height:40px;border-radius:50%;background:#fff;color:#111;font-size:20px;font-weight:800;display:grid;place-items:center}
+  .stepper button.r{background:var(--red);color:#fff}
+  .stepper input{width:64px;text-align:center;background:transparent;border:0;color:#fff;font-size:22px;font-weight:800;outline:0;-moz-appearance:textfield}
+  .stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .stepper + .stepper{margin-top:8px}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .opts.three{grid-template-columns:1fr 1fr 1fr}
+  .opt{background:#1f1f1f;border:1.5px solid #1f1f1f;border-radius:16px;padding:12px;text-align:left;color:#fff}
+  .opt b{display:block;font-size:13.5px}
+  .opt small{color:#9a9a9a;font-size:11px}
+  .opt.on{border-color:var(--red);background:#2a1213}
+  .presets{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+  .presets button{background:#262626;color:#ddd;font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px}
+  .result{background:var(--red);border-radius:20px;padding:18px;margin-top:20px;position:relative;overflow:hidden}
+  .result .lbl{font-size:11px;letter-spacing:.2em;font-weight:800;opacity:.85}
+  .result .num{font-family:var(--display);font-size:54px;line-height:1;margin:6px 0 2px}
+  .result .num small{font-size:20px;margin-left:4px}
+  .result .det{font-size:13px;opacity:.92;line-height:1.45}
+  .result .dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.1) 1.5px,transparent 1.6px);background-size:14px 14px;pointer-events:none}
+  .mix{background:#fff;border-radius:20px;padding:16px;margin-top:12px;border:1px solid var(--line)}
+  .mix h4{margin:0 0 10px;font-family:var(--display);font-size:17px}
+  .mix-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid #f0f0f0;font-size:13.5px}
+  .mix-row:first-of-type{border-top:0}
+  .mix-row .bar{height:6px;border-radius:3px;background:var(--red-soft);flex:1;overflow:hidden}
+  .mix-row .bar span{display:block;height:100%;background:var(--red)}
+  .mix-row .nm{width:118px;font-weight:700}
+  .mix-row .kg{width:66px;text-align:right;font-weight:800}
+  .mix .total{display:flex;justify-content:space-between;margin-top:10px;padding-top:12px;border-top:2px dashed #e5e5e5;font-weight:800}
+  .mix .total span:last-child{color:var(--red)}
+  .note{font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.4}
+  .table-ref{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px}
+  .table-ref td{padding:8px 0;border-top:1px solid #f0f0f0}
+  .table-ref td:last-child{text-align:right;font-weight:800}
+
+  /* ---------- Panel de gestión ---------- */
+  .adm-status{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;padding:8px 12px;border-radius:12px;margin-bottom:12px}
+  .adm-status.cloud{background:#e8f6ee;color:var(--ok)}
+  .adm-status.local{background:#fff7e6;color:#8a5300}
+  .adm-status i{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+  .tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;background:#e9e9e9;padding:4px;border-radius:16px;position:sticky;top:76px;z-index:15}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{flex:1 0 auto;padding:10px 6px;border-radius:12px;font-weight:800;font-size:11.5px;color:#555;white-space:nowrap}
+  .tabs button.on{background:#111;color:#fff}
+  .adm-box{background:#fff;border:1px solid var(--line);border-radius:20px;padding:6px 14px;margin-top:12px}
+  .adm-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid #f0f0f0;cursor:pointer}
+  .adm-row:first-child{border-top:0}
+  .adm-row .th{width:54px;height:54px;border-radius:14px;background:var(--chip);display:grid;place-items:center;overflow:hidden;flex:none;position:relative}
+  .adm-row .th svg{width:86%}
+  .adm-row .th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .adm-row .nf{flex:1;min-width:0}
+  .adm-row .nf b{display:block;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .adm-row .nf small{color:var(--muted);font-size:12px}
+  .adm-row .pr{font-weight:800;color:var(--red);font-size:14px;text-align:right;white-space:nowrap}
+  .adm-row .pr s{display:block;color:#aaa;font-size:11px;font-weight:600}
+  .adm-row .nophoto{position:absolute;bottom:3px;right:3px;width:16px;height:16px;border-radius:50%;background:var(--warn);color:#fff;font-size:10px;font-weight:800;display:grid;place-items:center}
+  .adm-row .ord{display:flex;flex-direction:column;gap:2px;flex:none}
+  .adm-row .ord button{width:28px;height:24px;border-radius:8px;background:#f0f0f0;font-size:12px;font-weight:800;display:grid;place-items:center}
+  .tg{display:inline-block;font-size:10px;font-weight:800;padding:2px 6px;border-radius:6px;margin-left:4px;vertical-align:1px;letter-spacing:.04em}
+  .tg.sold{background:#111;color:#fff}
+  .tg.star{background:#fff3c4;color:#8a5a00}
+  .tg.off{background:var(--red-soft);color:var(--red)}
+  .adm-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .adm-stats div{background:#111;color:#fff;border-radius:16px;padding:10px;cursor:pointer}
+  .adm-stats b{font-family:var(--display);font-size:20px;display:block}
+  .adm-stats small{color:#aaa;font-size:10.5px}
+  .adm-search{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:0 12px;height:44px;margin-top:12px}
+  .adm-search input{border:0;outline:0;flex:1;font-size:14.5px;background:transparent;min-width:0}
+  .adm-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;margin-top:12px}
+  .adm-card h4{font-family:var(--display);font-size:17px;margin:0 0 4px}
+  .adm-card p{margin:0 0 12px;color:var(--muted);font-size:12.5px;line-height:1.4}
+  .adm-card.warn{background:#fff7e6;border-color:#f5d9a6}
+  .pe-row{display:grid;grid-template-columns:1fr 78px 78px;gap:8px;align-items:center;padding:9px 0;border-top:1px solid #f0f0f0}
+  .pe-row:first-child{border-top:0}
+  .pe-row.head{font-size:10.5px;font-weight:800;letter-spacing:.12em;color:#888;padding:4px 0 6px}
+  .pe-row .nm{font-weight:700;font-size:13.5px;min-width:0}
+  .pe-row .nm small{display:block;font-weight:500;color:var(--muted);font-size:11px}
+  .pe-row input{width:100%;border:1.5px solid #e2e2e2;border-radius:10px;padding:9px 6px;font-size:14px;font-weight:700;text-align:right;background:#fafafa;outline:0}
+  .pe-row input:focus{border-color:#111;background:#fff}
+  .pe-row input.chg{border-color:var(--red);background:var(--red-soft)}
+  .savebar{position:sticky;bottom:88px;z-index:16;display:flex;gap:8px;margin-top:12px;background:var(--bg);padding:8px 0}
+  .savebar .big-btn{margin:0}
+  .mass{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .log{display:flex;gap:10px;padding:10px 0;border-top:1px solid #f0f0f0;font-size:13px}
+  .log:first-child{border-top:0}
+  .log i{width:30px;height:30px;border-radius:9px;background:var(--red-soft);color:var(--red);display:grid;place-items:center;font-style:normal;flex:none;font-size:13px}
+  .log b{display:block;font-size:13.5px}
+  .log small{color:var(--muted);font-size:11.5px}
+  .log .d{color:var(--ink-2);margin-top:2px;line-height:1.35;word-break:break-word}
+
+  .form{background:#fff;padding:20px 18px 28px}
+  .form .handle{width:44px;height:5px;border-radius:3px;background:#ddd;margin:0 auto 14px}
+  .form h3{font-family:var(--display);font-size:24px;margin:0 0 14px}
+  .fg{margin-bottom:14px}
+  .fg > label{display:block;font-size:11px;letter-spacing:.16em;font-weight:800;color:#777;margin-bottom:7px;text-transform:uppercase}
+  .fg input,.fg select,.fg textarea{width:100%;border:1.5px solid #e2e2e2;border-radius:14px;padding:13px 14px;font-size:15px;background:#fafafa;outline:0;color:var(--ink)}
+  .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--ink);background:#fff}
+  .fg textarea{min-height:84px;resize:vertical;line-height:1.4}
+  .fg .hint{font-size:11.5px;color:var(--muted);margin-top:5px}
+  .fg2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .sw{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fafafa;border:1.5px solid #e2e2e2;border-radius:14px;padding:12px 14px;margin-bottom:10px;cursor:pointer}
+  .sw b{font-size:14.5px;display:block}
+  .sw small{color:var(--muted);font-size:12px}
+  .sw input{display:none}
+  .sw .k{width:46px;height:28px;border-radius:14px;background:#d4d4d4;position:relative;flex:none;transition:background .2s}
+  .sw .k::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+  .sw input:checked + .k{background:var(--ok)}
+  .sw input:checked + .k::after{left:21px}
+  .photo-pick{position:relative;border-radius:20px;background:var(--chip);aspect-ratio:1.5;display:grid;place-items:center;overflow:hidden;border:2px dashed #d0d0d0;cursor:pointer}
+  .photo-pick img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .photo-pick svg.meat{width:60%;opacity:.5}
+  .photo-pick .lbl{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:#111;color:#fff;font-weight:800;font-size:13px;padding:10px 16px;border-radius:999px;white-space:nowrap;display:flex;gap:8px;align-items:center}
+  .photo-actions{display:flex;gap:8px;margin-top:8px}
+  .photo-actions button{flex:1;font-weight:700;font-size:13px;padding:11px;border-radius:999px;background:#f0f0f0}
+  .seg.light{background:#ececec}
+  .seg.light button{color:#555}
+  .seg.light button.on{background:#111;color:#fff}
+  .err{color:var(--red);font-weight:700;font-size:13px;min-height:18px;margin:4px 0}
+
+  /* ---------- Bottom nav ---------- */
+  .nav{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:calc(100% - 24px);max-width:406px;background:#111;border-radius:26px;display:grid;grid-template-columns:repeat(5,1fr);padding:8px 6px;z-index:30;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+  .nav button{color:#8d8d8d;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;font-weight:700;padding:6px 0;border-radius:18px}
+  .nav button.on{color:#fff}
+  .nav button.on .ni{background:var(--red)}
+  .nav .ni{width:40px;height:30px;border-radius:12px;display:grid;place-items:center;transition:background .2s}
+
+  /* ---------- Sheets ---------- */
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40;opacity:0;pointer-events:none;transition:opacity .25s}
+  .scrim.show{opacity:1;pointer-events:auto}
+  .sheet{position:fixed;left:50%;bottom:0;width:100%;max-width:430px;transform:translate(-50%,105%);z-index:41;transition:transform .35s cubic-bezier(.2,.8,.2,1);max-height:94vh;overflow-y:auto;border-radius:28px 28px 0 0}
+  .sheet.show{transform:translate(-50%,0)}
+  .detail{background:#fff}
+  .detail .photo{background:#fff;position:relative;padding:62px 20px 6px;display:grid;place-items:center}
+  .detail .photo svg{width:84%;max-width:320px;filter:drop-shadow(0 20px 22px rgba(0,0,0,.28))}
+  .detail .photo.real{padding:0;height:330px}
+  .detail .photo.real img{width:100%;height:100%;object-fit:cover}
+  .detail .photo .back{position:absolute;top:16px;left:16px;z-index:2}
+  .detail .photo .cartb{position:absolute;top:16px;right:16px;z-index:2}
+  .detail .photo .editb{position:absolute;top:16px;right:68px;z-index:2}
+  .detail .panel{background:#111;color:#fff;border-radius:28px 28px 0 0;padding:22px 20px 26px;margin-top:-22px;position:relative}
+  .detail .row1{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .detail h2{font-family:var(--display);font-size:30px;line-height:.95;margin:0}
+  .detail .alt{color:#a9a9a9;font-size:12.5px;margin-top:6px}
+  .detail .pp{text-align:right;flex:none}
+  .detail .pp b{font-family:var(--display);font-size:28px;display:block;line-height:1}
+  .detail .pp s{color:#888;font-size:13px}
+  .detail .pp small{color:#a9a9a9;font-size:11px}
+  .detail .until{color:#ff8a8d;font-size:11.5px;font-weight:700;margin-top:4px}
+  .detail .usefor{margin:14px 0 0;background:#1f1f1f;border-radius:14px;padding:12px 14px;font-size:13.5px;color:#fff;line-height:1.4}
+  .detail .usefor b{color:#ff5a5f;display:block;font-size:10.5px;letter-spacing:.18em;margin-bottom:3px}
+  .detail .desc{color:#d6d6d6;font-size:14px;line-height:1.5;margin:12px 0 0}
+  .detail .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .detail .tags span{background:#fff;color:#111;font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px}
+  .detail .tags span.r{background:var(--red);color:#fff}
+  .detail .lab{font-size:11px;letter-spacing:.22em;font-weight:800;color:#a9a9a9;margin:20px 0 10px}
+  .weights{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .weights button{border:1.5px solid #fff;color:#fff;border-radius:999px;padding:11px 0;font-weight:800;font-size:13px}
+  .weights button.on{background:#fff;color:#111}
+  .qty-row{display:flex;align-items:center;justify-content:space-between}
+  .qty{display:flex;align-items:center;gap:16px}
+  .qty button{width:40px;height:40px;border-radius:50%;background:#fff;color:#111;font-size:22px;font-weight:800;display:grid;place-items:center}
+  .qty b{font-size:20px;min-width:20px;text-align:center}
+  .tot{display:flex;justify-content:space-between;align-items:flex-end;margin-top:22px}
+  .tot span{color:#d0d0d0;font-size:13px}
+  .tot b{font-family:var(--display);font-size:26px}
+  .disclaimer{text-align:center;color:#8d8d8d;font-size:11.5px;margin-top:10px}
+
+  .cart{background:#fff;padding:20px 18px 26px}
+  .cart .handle{width:44px;height:5px;border-radius:3px;background:#ddd;margin:0 auto 14px}
+  .cart h3{font-family:var(--display);font-size:26px;margin:0 0 4px}
+  .ci{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #f0f0f0}
+  .ci .th{width:58px;height:58px;border-radius:14px;background:var(--chip);display:grid;place-items:center;flex:none;overflow:hidden;position:relative}
+  .ci .th svg{width:84%}
+  .ci .th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .ci .nf{flex:1;min-width:0}
+  .ci .nf b{display:block;font-size:14.5px}
+  .ci .nf small{color:var(--muted);font-size:12px}
+  .ci .pr{font-weight:800;color:var(--red);font-size:14.5px;text-align:right}
+  .ci .rm{display:block;color:var(--muted);font-size:11.5px;margin-top:4px;text-decoration:underline;font-weight:600}
+  .cart .sum{display:flex;justify-content:space-between;font-weight:800;font-size:18px;margin-top:16px}
+  .cart .sum span:last-child{color:var(--red)}
+
+  .pin-dots{display:flex;justify-content:center;gap:14px;margin:18px 0 8px}
+  .pin-dots i{width:16px;height:16px;border-radius:50%;border:2px solid #111}
+  .pin-dots i.f{background:#111}
+  .pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:300px;margin:14px auto 0}
+  .pin-pad button{height:58px;border-radius:18px;background:#f2f2f2;font-size:22px;font-weight:800}
+  .pin-err{text-align:center;color:var(--red);font-weight:700;font-size:13px;min-height:18px}
+
+  .busy{position:fixed;inset:0;z-index:70;background:rgba(255,255,255,.6);display:grid;place-items:center;backdrop-filter:blur(2px)}
+  .busy div{background:#111;color:#fff;padding:14px 20px;border-radius:16px;font-weight:700;font-size:14px;display:flex;gap:10px;align-items:center}
+  .busy div::before{content:"";width:16px;height:16px;border-radius:50%;border:2.5px solid #555;border-top-color:#fff;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ---------- iPhone: muesca, barra de inicio y zoom al escribir ---------- */
+  .top{padding-top:calc(16px + env(safe-area-inset-top))}
+  .splash{padding-top:calc(56px + env(safe-area-inset-top));padding-bottom:calc(40px + env(safe-area-inset-bottom))}
+  .nav{bottom:calc(12px + env(safe-area-inset-bottom))}
+  .app{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+  .sheet > :last-child{margin-bottom:env(safe-area-inset-bottom)}
+  @supports (-webkit-touch-callout: none){ input, select, textarea{font-size:16px!important} }
+  .ios-tip{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(92px + env(safe-area-inset-bottom));width:calc(100% - 24px);max-width:406px;background:#fff;color:#111;border-radius:18px;padding:14px 40px 14px 14px;box-shadow:0 10px 30px rgba(0,0,0,.25);z-index:35;font-size:13px;line-height:1.45}
+  .ios-tip b{display:block;font-size:14px;margin-bottom:2px}
+  .ios-tip .x{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:#f0f0f0;font-weight:800}
+  .ios-tip svg{vertical-align:-3px}
+
+  .toast{position:fixed;left:50%;bottom:100px;transform:translate(-50%,30px);background:#111;color:#fff;padding:12px 18px;border-radius:999px;font-size:13.5px;font-weight:700;opacity:0;transition:.3s;z-index:80;pointer-events:none;max-width:92vw;text-align:center}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- Splash -->
+  <section class="splash" id="splash">
+    <span class="ring" style="width:520px;height:520px;top:120px;left:-120px"></span>
+    <span class="ring" style="width:360px;height:360px;top:200px;left:-20px"></span>
+    <div class="brand">
+      <div class="logo">V</div>
+      <h1>VALERIANO</h1>
+      <div class="sub">CARNES PREMIUM</div>
+    </div>
+    <div class="hero" id="splashMeat"></div>
+    <div style="width:100%;display:flex;flex-direction:column;align-items:center">
+      <div class="tag">Cortes selectos, pesados al momento.</div>
+      <button class="enter" id="enterBtn">Entrar
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- Header -->
+  <header class="top">
+    <div class="top-row">
+      <div class="logo-s" id="logoTap">V</div>
+      <div class="brand-s"><b>VALERIANO</b><span>CARNES PREMIUM</span></div>
+      <button class="icon-btn" id="cartBtn" aria-label="Mi pedido">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a2 2 0 0 0 2 1.6h8.3a2 2 0 0 0 2-1.5L22 7H6"/></svg>
+        <span class="badge" id="cartCount" hidden>0</span>
+      </button>
+    </div>
+    <div class="admin-bar" id="adminBar" hidden>
+      <span id="adminBarTxt">✎ Administrador</span>
+      <button data-go="admin">Gestionar</button>
+      <button class="ghost" data-adminexit>Salir</button>
+    </div>
+    <div class="offline" id="offlineNote" hidden>Sin conexión: mostrando el catálogo guardado.</div>
+    <label class="search" id="searchBox">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="search" type="search" placeholder="Buscar cortes: lomo, costilla, molida…" autocomplete="off">
+    </label>
+  </header>
+
+  <!-- INICIO -->
+  <main class="view active" id="v-inicio">
+    <div class="sec-h"><h2>Ofertas de hoy</h2><a data-go="ofertas">Ver todas</a></div>
+    <div id="homeBanners"></div>
+
+    <div class="sec-h"><h2>Secciones</h2></div>
+    <div class="shortcuts">
+      <button class="sc" data-go="parrilla"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 10h16M5 10a7 7 0 0 0 14 0M8 17l-2 4M16 17l2 4M9 3c0 2 2 2 2 4M13 3c0 2 2 2 2 4"/></svg></i>Parrilla</button>
+      <button class="sc" data-go="platos"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 11h18a9 9 0 0 1-18 0zM2 11h20M8 7c0-1.5 1-2 1-3.5M12 7c0-1.5 1-2 1-3.5M16 7c0-1.5 1-2 1-3.5"/></svg></i>Platos</button>
+      <button class="sc" data-go="ofertas"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></i>Ofertas</button>
+      <button class="sc k" data-go="calc"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="2" width="16" height="20" rx="3"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15v3M8 18.5h.01M12 18.5h.01"/></svg></i>Calcular</button>
+    </div>
+
+    <div class="sec-h"><h2>Mapa de cortes</h2></div>
+    <div class="cow-card">
+      <h3>Toca una parte de la res</h3>
+      <p>Descubre qué cortes salen de cada zona.</p>
+      <div id="cowMap"></div>
+      <div class="cow-info" id="cowInfo"></div>
+      <div id="zoneCuts"></div>
+      <div class="zone-chips" id="zoneChips"></div>
+    </div>
+
+    <div class="sec-h"><h2>Catálogo de cortes</h2><span class="link" id="countAll"></span></div>
+    <div class="chips" id="filterChips"></div>
+    <div class="grid" id="gridAll" style="margin-top:12px"></div>
+
+    <div class="store-info" id="storeInfo"></div>
+  </main>
+
+  <!-- PARRILLA -->
+  <main class="view" id="v-parrilla">
+    <div class="sec-hero black">
+      <h2>Cortes para Parrilla</h2>
+      <p>Jugosos, con buen marmoleado y grasa que se dora al carbón.</p>
+      <div class="img" data-meat="bone"></div>
+    </div>
+    <div class="chips" id="chipsParrilla"></div>
+    <div class="grid" id="gridParrilla" style="margin-top:12px"></div>
+    <div class="tip"><i>!</i><div><b>Tip del parrillero:</b> calcula entre 400 y 500 g por adulto si hay cortes con hueso. Sal gruesa recién al poner la carne en la parrilla.</div></div>
+  </main>
+
+  <!-- PLATOS -->
+  <main class="view" id="v-platos">
+    <div class="sec-hero red">
+      <h2>Cortes para Platos de Casa</h2>
+      <p>Para silpancho, milanesa, guisos, sopas, estofados y al horno.</p>
+      <div class="img" data-meat="roast"></div>
+    </div>
+    <div class="chips" id="chipsPlatos"></div>
+    <div class="grid" id="gridPlatos" style="margin-top:12px"></div>
+    <div class="tip"><i>!</i><div><b>Para platos comunes</b> calcula unos 200–250 g de carne por persona; en sopas y guisos con verduras alcanza con 150 g.</div></div>
+  </main>
+
+  <!-- OFERTAS -->
+  <main class="view" id="v-ofertas">
+    <div class="sec-hero red">
+      <h2>Ofertas de la Semana</h2>
+      <p>Precios especiales mientras dure el stock.</p>
+      <div class="img" data-meat="steak"></div>
+    </div>
+    <div class="grid" id="gridOfertas"></div>
+  </main>
+
+  <!-- CALCULADORA -->
+  <main class="view" id="v-calc">
+    <h1 class="page-title">Calculadora de carne</h1>
+    <p class="page-sub">Calcula cuántos kilos necesitas o para cuántas personas te alcanza.</p>
+
+    <div class="calc">
+      <div class="seg" id="calcMode">
+        <button class="on" data-mode="kg">¿Cuántos kilos necesito?</button>
+        <button data-mode="people">¿Para cuántos alcanza?</button>
+      </div>
+
+      <div id="modeKg">
+        <div class="field">
+          <label>Personas</label>
+          <div class="stepper">
+            <div class="who"><b>Adultos</b><small>Porción completa</small></div>
+            <div class="ctl"><button data-step="adults" data-d="-1">−</button><input id="adults" type="number" inputmode="numeric" min="0" value="10"><button class="r" data-step="adults" data-d="1">+</button></div>
+          </div>
+          <div class="stepper">
+            <div class="who"><b>Niños</b><small>Media porción</small></div>
+            <div class="ctl"><button data-step="kids" data-d="-1">−</button><input id="kids" type="number" inputmode="numeric" min="0" value="0"><button class="r" data-step="kids" data-d="1">+</button></div>
+          </div>
+          <div class="presets">
+            <button data-p="10">10 personas</button><button data-p="20">20</button><button data-p="50">50</button><button data-p="100">100</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="modePeople" hidden>
+        <div class="field">
+          <label>Kilos de carne que tienes</label>
+          <div class="stepper">
+            <div class="who"><b>Kilos</b><small>Peso total</small></div>
+            <div class="ctl"><button data-step="kilos" data-d="-1">−</button><input id="kilos" type="number" inputmode="decimal" min="0" step="0.5" value="100"><button class="r" data-step="kilos" data-d="1">+</button></div>
+          </div>
+          <div class="presets">
+            <button data-k="5">5 kg</button><button data-k="10">10 kg</button><button data-k="50">50 kg</button><button data-k="100">100 kg</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Tipo de comida</label>
+        <div class="opts" id="calcType">
+          <button class="opt on" data-type="parrilla"><b>Parrillada</b><small>Asado, churrasco</small></button>
+          <button class="opt" data-type="platos"><b>Plato común</b><small>Almuerzo, guiso, horno</small></button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Apetito</label>
+        <div class="opts three" id="calcApp">
+          <button class="opt" data-app="0.8"><b>Ligero</b><small>Con guarniciones</small></button>
+          <button class="opt on" data-app="1"><b>Normal</b><small>Lo habitual</small></button>
+          <button class="opt" data-app="1.25"><b>Abundante</b><small>Buenos comensales</small></button>
+        </div>
+      </div>
+
+      <div class="result">
+        <div class="dots"></div>
+        <div class="lbl" id="resLbl">NECESITAS APROXIMADAMENTE</div>
+        <div class="num" id="resNum">4.5<small>kg</small></div>
+        <div class="det" id="resDet"></div>
+      </div>
+    </div>
+
+    <div class="mix" id="mixBox"></div>
+
+    <div class="mix">
+      <h4>Referencia por persona</h4>
+      <table class="table-ref">
+        <tr><td>Parrillada (con hueso)</td><td>450 g</td></tr>
+        <tr><td>Parrillada (sin hueso)</td><td>350 g</td></tr>
+        <tr><td>Plato común / almuerzo</td><td>250 g</td></tr>
+        <tr><td>Sopa o guiso con verduras</td><td>150 g</td></tr>
+        <tr><td>Niños (hasta 10 años)</td><td>la mitad</td></tr>
+      </table>
+      <p class="note">Son cantidades aproximadas en carne cruda. Si sirves mucha guarnición (arroz, papa, ensalada) puedes elegir apetito “Ligero”.</p>
+    </div>
+  </main>
+
+  <!-- GESTIÓN DEL CATÁLOGO -->
+  <main class="view" id="v-admin">
+    <h1 class="page-title">Gestión del catálogo</h1>
+    <div class="adm-status" id="admStatus"></div>
+    <div class="tabs" id="admTabs">
+      <button data-tab="cortes" class="on">Cortes</button>
+      <button data-tab="precios">Precios</button>
+      <button data-tab="banners">Banners</button>
+      <button data-tab="actividad">Historial</button>
+      <button data-tab="ajustes">Ajustes</button>
+    </div>
+    <div id="admBody"></div>
+  </main>
+
+  <!-- Bottom nav -->
+  <nav class="nav" id="nav">
+    <button class="on" data-go="inicio"><span class="ni"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span>Inicio</button>
+    <button data-go="parrilla"><span class="ni"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 10h16M5 10a7 7 0 0 0 14 0M8 17l-2 4M16 17l2 4M9 3c0 2 2 2 2 4M13 3c0 2 2 2 2 4"/></svg></span>Parrilla</button>
+    <button data-go="platos"><span class="ni"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 11h18a9 9 0 0 1-18 0zM2 11h20M8 7c0-1.5 1-2 1-3.5M12 7c0-1.5 1-2 1-3.5M16 7c0-1.5 1-2 1-3.5"/></svg></span>Platos</button>
+    <button data-go="ofertas"><span class="ni"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></span>Ofertas</button>
+    <button data-go="calc"><span class="ni"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="2" width="16" height="20" rx="3"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15v3"/></svg></span>Calcular</button>
+  </nav>
+
+  <!-- Sheets -->
+  <div class="scrim" id="scrim"></div>
+  <div class="sheet detail" id="detail"></div>
+  <div class="sheet cart" id="cart"></div>
+  <div class="sheet form" id="editor"></div>
+  <input type="file" id="photoInput" accept="image/*" hidden>
+  <input type="file" id="importFile" accept=".json,application/json" hidden>
+  <div class="busy" id="busy" hidden><div id="busyTxt">Guardando…</div></div>
+  <div class="toast" id="toast"></div>
+  <div class="ios-tip" id="iosTip" hidden>
+    <button class="x" data-closetip aria-label="Cerrar">✕</button>
+    <b>Instala la app en tu iPhone</b>
+    Toca <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0a7aff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 8l5-5 5 5M5 12v8h14v-8"/></svg> <b style="display:inline">Compartir</b> y luego <b style="display:inline">“Agregar a inicio”</b>.
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   CATÁLOGO INICIAL — con esto arranca la app la primera vez y es lo que
+   se sube a la nube al conectarla. Después todo se gestiona desde el
+   panel de administración (5 toques al logo "V").
+   ===================================================================== */
+const CORTES_BASE = [
+  // ---------- PARRILLA ----------
+  {id:"lomo", nombre:"Lomo", alias:"Filete · Tenderloin", animal:"Res", cat:"parrilla", precio:110, oferta:null, zona:"bife", forma:"roast",
+   uso:"El más tierno. Parrilla, medallones y plancha.", descripcion:"Corte magro y muy suave que se encuentra debajo del bife. Ideal para medallones a la parrilla, lomo saltado o al horno entero.", tags:["Muy tierno","Magro"], coc:["Parrilla","Plancha","Horno"]},
+  {id:"ojo", nombre:"Ojo de Bife", alias:"Rib eye", animal:"Res", cat:"parrilla", precio:95, oferta:85, zona:"aguja", forma:"steak", destacado:true,
+   uso:"Bife jugoso con marmoleado. Parrilla y plancha.", descripcion:"Corte del costillar alto con mucha grasa intramuscular, lo que lo hace jugoso y lleno de sabor. Cortar de 3 cm de grosor.", tags:["Marmoleado alto","Jugoso"], coc:["Parrilla","Plancha"]},
+  {id:"chorizo", nombre:"Bife de Chorizo", alias:"Churrasco · Strip loin", animal:"Res", cat:"parrilla", precio:92, oferta:null, zona:"bife", forma:"steak",
+   uso:"El clásico churrasco con su capa de grasa.", descripcion:"Bife ancho con un borde de grasa que se dora en la parrilla. Sabor intenso y textura firme.", tags:["Clásico","Capa de grasa"], coc:["Parrilla","Plancha"]},
+  {id:"picana", nombre:"Punta de S", alias:"Picaña", animal:"Res", cat:"parrilla", precio:88, oferta:null, zona:"cuadril", forma:"steak", destacado:true,
+   uso:"Corte triangular con grasa. Parrilla y horno.", descripcion:"Triángulo del cuadril con una capa de grasa que lo mantiene jugoso. Se asa entero o en churrascos gruesos.", tags:["Favorito","Con grasa"], coc:["Parrilla","Horno"]},
+  {id:"tbone", nombre:"T-Bone", alias:"Bife con lomo y hueso", animal:"Res", cat:"parrilla", precio:90, oferta:null, zona:"bife", forma:"bone",
+   uso:"Lomo y bife en un solo corte con hueso en T.", descripcion:"Dos cortes en uno: de un lado lomo y del otro bife de chorizo, unidos por el hueso en forma de T.", tags:["Con hueso","Para compartir"], coc:["Parrilla"]},
+  {id:"tomahawk", nombre:"Tomahawk", alias:"Ojo de bife con hueso largo", animal:"Res", cat:"parrilla", precio:120, oferta:null, zona:"aguja", forma:"bone",
+   uso:"Corte premium para impresionar en la parrilla.", descripcion:"Ojo de bife con el hueso de la costilla largo y limpio. Ideal para cocción lenta y cortar en la mesa.", tags:["Premium","Con hueso"], coc:["Parrilla","Horno"]},
+  {id:"cuadril", nombre:"Colita de Cuadril", alias:"Tri-tip", animal:"Res", cat:"parrilla", precio:84, oferta:null, zona:"cuadril", forma:"roast",
+   uso:"Tierna y magra. Parrilla entera u horno.", descripcion:"Pieza pequeña y tierna del cuadril. Se cocina entera y se corta en láminas contra la fibra.", tags:["Tierno","Pieza entera"], coc:["Parrilla","Horno"]},
+  {id:"asadotira", nombre:"Costilla / Asado de Tira", alias:"Short ribs", animal:"Res", cat:"parrilla", precio:62, oferta:55, zona:"costillar", forma:"rib",
+   uso:"Tiras de costilla para asar a fuego lento.", descripcion:"Tiras transversales del costillar con hueso, carne y grasa. El clásico de toda parrillada.", tags:["Con hueso","Fuego lento"], coc:["Parrilla","Horno"]},
+  {id:"vacio", nombre:"Vacío", alias:"Flank", animal:"Res", cat:"parrilla", precio:74, oferta:null, zona:"falda", forma:"strip",
+   uso:"Pieza jugosa, crocante por fuera. Parrilla.", descripcion:"Corte del flanco con fibras largas y una capa de grasa. Se asa entero, primero del lado de la grasa.", tags:["Jugoso","Fibra larga"], coc:["Parrilla"]},
+  {id:"matambre", nombre:"Matambre", alias:"Matambre de res", animal:"Res", cat:"parrilla", precio:70, oferta:null, zona:"falda", forma:"strip",
+   uso:"Capa fina para parrilla o enrollado relleno.", descripcion:"Capa delgada entre el cuero y las costillas. A la parrilla, a la pizza o enrollado y relleno.", tags:["Fino","Versátil"], coc:["Parrilla","Horno"]},
+  {id:"entrana", nombre:"Entraña", alias:"Skirt steak", animal:"Res", cat:"parrilla", precio:98, oferta:null, zona:"costillar", forma:"strip",
+   uso:"Muy sabrosa, se cocina rápido a fuego fuerte.", descripcion:"Músculo del diafragma, delgado y de sabor intenso. Fuego fuerte y pocos minutos por lado.", tags:["Sabor intenso","Rápida"], coc:["Parrilla","Plancha"]},
+  {id:"costcerdo", nombre:"Costilla de Cerdo", alias:"Pechito de cerdo", animal:"Cerdo", cat:"parrilla", precio:55, oferta:48, zona:null, forma:"rib",
+   uso:"Costillar de cerdo para parrilla o barbacoa.", descripcion:"Costillas de cerdo con buena carne. A la parrilla con salsa barbacoa o al horno.", tags:["Cerdo","Con hueso"], coc:["Parrilla","Horno"]},
+  {id:"bondiola", nombre:"Bondiola", alias:"Cuello de cerdo", animal:"Cerdo", cat:"parrilla", precio:58, oferta:null, zona:null, forma:"pork",
+   uso:"Cerdo jugoso para sándwich o parrilla.", descripcion:"Corte del cuello del cerdo con grasa infiltrada. Para bondiola a la parrilla, al horno o en sándwich.", tags:["Cerdo","Jugoso"], coc:["Parrilla","Horno"]},
+  {id:"chorizop", nombre:"Chorizo Parrillero", alias:"Chorizo de res y cerdo", animal:"Embutido", cat:"parrilla", precio:52, oferta:null, zona:null, forma:"pork",
+   uso:"Infaltable de entrada en la parrillada.", descripcion:"Chorizo fresco artesanal para la parrilla. Calcula 1 por persona como entrada.", tags:["Entrada","Artesanal"], coc:["Parrilla"]},
+  // ---------- PLATOS COMUNES ----------
+  {id:"pulpa", nombre:"Pulpa Negra", alias:"Nalga · Pulpa de pierna", animal:"Res", cat:"platos", precio:72, oferta:null, zona:"pierna", forma:"roast",
+   uso:"Para silpancho, milanesa y apanado.", descripcion:"Carne magra de la pierna, ideal para golpear y hacer silpancho o milanesas finas.", tags:["Magra","Silpancho"], coc:["Sartén","Apanado"]},
+  {id:"peceto", nombre:"Peceto", alias:"Muchacho · Lagarto", animal:"Res", cat:"platos", precio:78, oferta:null, zona:"pierna", forma:"roast",
+   uso:"Al horno, mechado o para picantes.", descripcion:"Pieza cilíndrica y magra. Perfecta para carne mechada, asado al horno o en salsa.", tags:["Magro","Pieza entera"], coc:["Horno","Olla"]},
+  {id:"molida", nombre:"Carne Molida", alias:"Especial · Primera", animal:"Res", cat:"platos", precio:60, oferta:52, zona:"paleta", forma:"ground",
+   uso:"Hamburguesas, salteñas, tallarines y albóndigas.", descripcion:"Molida del día. Para hamburguesas, salsa boloñesa, relleno de salteñas, empanadas y albóndigas.", tags:["Molida del día","Versátil"], coc:["Sartén","Olla"]},
+  {id:"pecho", nombre:"Pecho", alias:"Brisket", animal:"Res", cat:"platos", precio:58, oferta:null, zona:"pecho", forma:"strip",
+   uso:"Para guisos, sopas y cocción lenta.", descripcion:"Corte con fibras y grasa que se ablanda con cocción larga. Excelente para guisos y estofados.", tags:["Cocción lenta","Sabroso"], coc:["Olla","Horno"]},
+  {id:"osobuco", nombre:"Osobuco", alias:"Corte de canilla", animal:"Res", cat:"platos", precio:48, oferta:42, zona:"osobuco", forma:"bone",
+   uso:"Caldos y sopas con hueso y médula.", descripcion:"Rodaja de la pierna con hueso y médula. Da mucho sabor a caldos, chairo y sopas.", tags:["Con hueso","Sopas"], coc:["Olla"]},
+  {id:"paleta", nombre:"Brazuelo / Paleta", alias:"Pulpa de brazo", animal:"Res", cat:"platos", precio:66, oferta:null, zona:"paleta", forma:"roast",
+   uso:"Estofados, picantes y carne en trozos.", descripcion:"Corte de la paleta con buen sabor. Ideal en trozos para picante, estofado o ají de carne.", tags:["Trozos","Guisos"], coc:["Olla","Sartén"]},
+  {id:"falda", nombre:"Falda", alias:"Carne para caldo", animal:"Res", cat:"platos", precio:50, oferta:null, zona:"falda", forma:"strip",
+   uso:"Para sopas, caldos y carne deshilachada.", descripcion:"Carne con fibra que se deshilacha fácilmente. Para sopas, ropa vieja y saice.", tags:["Deshilachar","Económico"], coc:["Olla"]},
+  {id:"cogote", nombre:"Cogote", alias:"Pescuezo", animal:"Res", cat:"platos", precio:44, oferta:null, zona:"cogote", forma:"bone",
+   uso:"Económico, ideal para sopas y pucheros.", descripcion:"Corte del cuello con hueso y mucho sabor. Da cuerpo a sopas, pucheros y fricasé.", tags:["Económico","Sopas"], coc:["Olla"]},
+  {id:"lengua", nombre:"Lengua", alias:"Lengua de res", animal:"Res", cat:"platos", precio:56, oferta:null, zona:"cabeza", forma:"roast",
+   uso:"Lengua en salsa o a la vinagreta.", descripcion:"Se cocina hervida, se pela y se sirve en salsa, picante de lengua o a la vinagreta.", tags:["Tradicional"], coc:["Olla"]},
+  {id:"chuleta", nombre:"Chuleta de Cerdo", alias:"Chuleta con hueso", animal:"Cerdo", cat:"platos", precio:52, oferta:null, zona:null, forma:"pork",
+   uso:"Frita, apanada o a la plancha.", descripcion:"Chuleta de cerdo con hueso, para freír, apanar o a la plancha con papas y ensalada.", tags:["Cerdo","Rápida"], coc:["Sartén","Plancha"]},
+  {id:"piernacerdo", nombre:"Pierna de Cerdo", alias:"Para horno", animal:"Cerdo", cat:"platos", precio:50, oferta:45, zona:null, forma:"pork",
+   uso:"Lechón al horno, chicharrón y fricasé.", descripcion:"Pierna de cerdo para hornear entera, en trozos para chicharrón o fricasé.", tags:["Cerdo","Para fiestas"], coc:["Horno","Olla"]},
+];
+
+/* Banners del inicio (el primero es el grande) */
+const BANNERS_BASE = [
+  {id:"combo1", pill:"COMBO PARRILLERO", titulo:"Parrillada para 10", descripcion:"2 kg costilla + 1.5 kg vacío + 1 kg chorizo", precio:420, antes:470, unidad:"", ir:"parrilla"},
+  {id:"combo2", pill:"ECONÓMICO", titulo:"Combo semanal casero", descripcion:"", precio:260, antes:290, unidad:"", ir:"platos"},
+  {id:"combo3", pill:"SEMANA", titulo:"Ojo de Bife", descripcion:"", precio:85, antes:95, unidad:"/kg", ir:"ojo"},
+];
+
+const AJUSTES_BASE = {whatsapp:"59170000000", direccion:"", horario:"Lun a Sáb 7:00 – 20:00 · Dom 7:00 – 13:00"};
+
+const ZONAS = {
+  cabeza:   {n:"Cabeza",        d:"Lengua"},
+  cogote:   {n:"Cogote",        d:"Sopas y pucheros"},
+  aguja:    {n:"Aguja",         d:"Ojo de bife, tomahawk"},
+  paleta:   {n:"Paleta",        d:"Brazuelo, molida, estofado"},
+  pecho:    {n:"Pecho",         d:"Guisos y cocción lenta"},
+  bife:     {n:"Bife / Lomo",   d:"Lomo, bife de chorizo, T-bone"},
+  costillar:{n:"Costillar",     d:"Asado de tira, entraña"},
+  falda:    {n:"Vacío / Falda", d:"Vacío, matambre, falda"},
+  cuadril:  {n:"Cuadril",       d:"Punta de S, colita de cuadril"},
+  pierna:   {n:"Pierna",        d:"Pulpa negra, peceto"},
+  osobuco:  {n:"Osobuco",       d:"Caldos con hueso y médula"},
+};
+const ANIMALES = ["Res", "Cerdo", "Pollo", "Cordero", "Embutido", "Otro"];
+const FORMAS = {steak:"Bife", bone:"Con hueso", rib:"Costillar", ground:"Molida", roast:"Pieza / rollo", strip:"Corte plano", pork:"Cerdo"};
+const COLS_CORTE = ["id","nombre","alias","animal","cat","precio","oferta","oferta_hasta","zona","forma","uso","descripcion","tags","coc","disponible","destacado","orden","foto"];
+const COLS_BANNER = ["id","orden","pill","titulo","descripcion","precio","antes","unidad","ir","foto"];
+
+/* =====================================================================
+   Utilidades
+   ===================================================================== */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const clone = o => JSON.parse(JSON.stringify(o));
+const esc = s => String(s ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+const bs = n => "Bs " + (Math.round(n*100)/100).toLocaleString("es-BO", {minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2});
+const norm = s => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+const hoy = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; };
+const fechaCorta = iso => iso ? new Date(iso.length === 10 ? iso + "T12:00:00" : iso).toLocaleDateString("es-BO", {day:"numeric", month:"short"}) : "";
+const store = {
+  get(k, d){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch { return false; } },
+  del(k){ try { localStorage.removeItem(k); } catch {} },
+};
+function toast(msg, ms = 2400){ const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("show"), ms); }
+async function ocupado(txt, fn){
+  $("#busyTxt").textContent = txt; $("#busy").hidden = false;
+  try { return await fn(); } finally { $("#busy").hidden = true; }
+}
+function normCorte(c, i = 0){
+  return {
+    id: String(c.id), nombre: c.nombre || "", alias: c.alias || "", animal: c.animal || "Res",
+    cat: c.cat === "platos" ? "platos" : "parrilla",
+    precio: +c.precio || 0, oferta: c.oferta != null && c.oferta !== "" && +c.oferta > 0 ? +c.oferta : null,
+    oferta_hasta: c.oferta_hasta || null, zona: c.zona || null, forma: c.forma || "steak",
+    uso: c.uso || "", descripcion: c.descripcion ?? c.desc ?? "",
+    tags: Array.isArray(c.tags) ? c.tags : [], coc: Array.isArray(c.coc) ? c.coc : [],
+    disponible: c.disponible !== false, destacado: !!c.destacado,
+    orden: Number.isFinite(+c.orden) && c.orden !== undefined && c.orden !== null ? +c.orden : i, foto: c.foto || null,
+  };
+}
+function normBanner(b, i = 0){
+  return {id: String(b.id || "combo" + (i+1)), orden: b.orden ?? i, pill: b.pill || "", titulo: b.titulo || "", descripcion: b.descripcion ?? b.desc ?? "",
+    precio: +b.precio || 0, antes: +b.antes > 0 ? +b.antes : null, unidad: b.unidad || "", ir: b.ir || "parrilla", foto: b.foto || null};
+}
+const fila = (o, cols) => Object.fromEntries(cols.map(k => [k, o[k] ?? null]));
+const sinFoto = o => { const x = {...o}; delete x.foto; return x; };
+
+/* Precios y ofertas */
+const ofertaVigente = c => !!(c.oferta && c.oferta < c.precio && (!c.oferta_hasta || hoy() <= c.oferta_hasta));
+const precioDe = c => ofertaVigente(c) ? c.oferta : c.precio;
+const ordenPublico = (a, b) => (b.destacado - a.destacado) || (a.orden - b.orden);
+const ordenAdmin = (a, b) => a.orden - b.orden;
+
+/* =====================================================================
+   Estado de la app
+   ===================================================================== */
+let CORTES = [], BANNERS = [], AJUSTES = clone(AJUSTES_BASE);
+const byId = id => CORTES.find(c => c.id === id);
+
+/* =====================================================================
+   FOTOS LOCALES (modo sin nube): se guardan dentro del teléfono
+   ===================================================================== */
+const fotoDB = {
+  db: null,
+  open(){
+    if (this._p) return this._p;
+    return this._p = new Promise(res => {
+      try {
+        const rq = indexedDB.open("valeriano-fotos", 1);
+        rq.onupgradeneeded = () => rq.result.createObjectStore("fotos");
+        rq.onsuccess = () => { this.db = rq.result; res(true); };
+        rq.onerror = () => res(false);
+      } catch { res(false); }
+    });
+  },
+  tx(mode, fn){
+    return new Promise((res, rej) => {
+      if (!this.db) return rej(new Error("sin base de datos local"));
+      const t = this.db.transaction("fotos", mode); fn(t.objectStore("fotos"));
+      t.oncomplete = () => res(); t.onerror = () => rej(t.error);
+    });
+  },
+  put(id, blob){ return this.tx("readwrite", s => s.put(blob, id)); },
+  del(id){ return this.tx("readwrite", s => s.delete(id)); },
+  clear(){ return this.tx("readwrite", s => s.clear()); },
+  async all(){
+    if (!(await this.open())) return {};
+    return new Promise(res => {
+      const out = {}, t = this.db.transaction("fotos", "readonly"), cur = t.objectStore("fotos").openCursor();
+      cur.onsuccess = () => { const c = cur.result; if (c){ out[c.key] = c.value; c.continue(); } };
+      t.oncomplete = () => res(out); t.onerror = () => res(out);
+    });
+  },
+};
+const urlsLocales = {};
+function urlLocal(id, blob){ if (urlsLocales[id]) URL.revokeObjectURL(urlsLocales[id]); return urlsLocales[id] = URL.createObjectURL(blob); }
+
+function comprimirFoto(file, max = 1200){
+  return new Promise((res, rej) => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => {
+      const k = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+      const cv = document.createElement("canvas");
+      cv.width = Math.round(img.naturalWidth * k); cv.height = Math.round(img.naturalHeight * k);
+      cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height);
+      URL.revokeObjectURL(url);
+      cv.toBlob(b => b ? res(b) : rej(new Error("no se pudo procesar")), "image/jpeg", .84);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error("imagen no válida")); };
+    img.src = url;
+  });
+}
+const blobToDataURL = b => new Promise(r => { const f = new FileReader(); f.onload = () => r(f.result); f.readAsDataURL(b); });
+const dataURLToBlob = async d => (await fetch(d)).blob();
+
+/* =====================================================================
+   NUBE (Supabase) — API REST directa, sin librerías
+   ===================================================================== */
+const CLOUD = (window.VALERIANO_CLOUD && VALERIANO_CLOUD.url && VALERIANO_CLOUD.anonKey)
+  ? {url: VALERIANO_CLOUD.url.trim().replace(/\/+$/, "").replace(/\/rest\/v1$/, ""), key: VALERIANO_CLOUD.anonKey.trim()} : null;
+
+const nube = {
+  ses: store.get("valeriano.sesion", null),
+  guardarSes(j){
+    this.ses = {access_token: j.access_token, refresh_token: j.refresh_token,
+      expira: Date.now() + (j.expires_in || 3600) * 1000, email: (j.user && j.user.email) || (this.ses && this.ses.email) || ""};
+    store.set("valeriano.sesion", this.ses);
+  },
+  async auth(grant, body){
+    const r = await fetch(`${CLOUD.url}/auth/v1/token?grant_type=${grant}`, {method: "POST", headers: {apikey: CLOUD.key, "Content-Type": "application/json"}, body: JSON.stringify(body)});
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.error_description || j.msg || j.message || "No se pudo iniciar sesión");
+    this.guardarSes(j); return j;
+  },
+  async refrescar(){
+    if (!this.ses) return false;
+    try { await this.auth("refresh_token", {refresh_token: this.ses.refresh_token}); return true; }
+    catch { this.ses = null; store.del("valeriano.sesion"); return false; }
+  },
+  async req(path, opt = {}){
+    if (this.ses && Date.now() > this.ses.expira - 60000) await this.refrescar();
+    const hacer = () => fetch(CLOUD.url + path, {...opt, headers: {apikey: CLOUD.key, Authorization: "Bearer " + (this.ses ? this.ses.access_token : CLOUD.key), "Content-Type": "application/json", ...(opt.headers || {})}});
+    let r = await hacer();
+    if (r.status === 401 && this.ses && await this.refrescar()) r = await hacer();
+    const txt = await r.text();
+    if (!r.ok){
+      let m = txt; try { const j = JSON.parse(txt); m = j.message || j.error || j.msg || txt; } catch {}
+      throw new Error(r.status === 401 || r.status === 403 ? "Sin permiso: vuelve a iniciar sesión" : String(m).slice(0, 160));
+    }
+    try { return txt ? JSON.parse(txt) : null; } catch { return txt; }
+  },
+  get: p => nube.req("/rest/v1/" + p),
+  upsert: (tabla, filas) => nube.req(`/rest/v1/${tabla}?on_conflict=id`, {method: "POST", headers: {Prefer: "resolution=merge-duplicates,return=minimal"}, body: JSON.stringify(filas)}),
+  borrar: (tabla, id) => nube.req(`/rest/v1/${tabla}?id=eq.${encodeURIComponent(id)}`, {method: "DELETE"}),
+  async login(email, password){
+    await this.auth("password", {email, password});
+    if (!(await this.esAdmin())){ await this.salir(); throw new Error("Esta cuenta no tiene permiso de administrador"); }
+  },
+  async esAdmin(){ try { return (await this.req("/rest/v1/rpc/es_admin", {method: "POST", body: "{}"})) === true; } catch { return false; } },
+  async salir(){
+    if (this.ses) try { await fetch(`${CLOUD.url}/auth/v1/logout`, {method: "POST", headers: {apikey: CLOUD.key, Authorization: "Bearer " + this.ses.access_token}}); } catch {}
+    this.ses = null; store.del("valeriano.sesion");
+  },
+  async subirFoto(id, blob){
+    const ruta = `${id.replace(/[^\w-]/g, "")}-${Date.now()}.jpg`;
+    await this.req(`/storage/v1/object/fotos/${ruta}`, {method: "POST", headers: {"Content-Type": "image/jpeg", "x-upsert": "true"}, body: blob});
+    return `${CLOUD.url}/storage/v1/object/public/fotos/${ruta}`;
+  },
+  async borrarFoto(url){
+    const pre = `${CLOUD.url}/storage/v1/object/public/fotos/`;
+    if (!url || !url.startsWith(pre)) return;
+    try { await this.req(`/storage/v1/object/fotos/${url.slice(pre.length)}`, {method: "DELETE"}); } catch {}
+  },
+};
+
+/* =====================================================================
+   REPOSITORIO: la misma interfaz guarda en la nube o en el teléfono
+   ===================================================================== */
+const repoLocal = {
+  nube: false,
+  async cargar(){
+    const cortes = (store.get("valeriano.cortes", null) || clone(CORTES_BASE)).map(normCorte);
+    const banners = (store.get("valeriano.combos", null) || clone(BANNERS_BASE)).map(normBanner);
+    const viejo = store.get("valeriano.config", {});
+    const ajustes = Object.assign(clone(AJUSTES_BASE), viejo.whatsapp ? {whatsapp: viejo.whatsapp} : {}, store.get("valeriano.ajustes", {}));
+    const blobs = await fotoDB.all();
+    for (const x of [...cortes, ...banners]) x.foto = blobs[x.id] ? urlLocal(x.id, blobs[x.id]) : null;
+    return {cortes, banners, ajustes, blobs};
+  },
+  persistir(){ store.set("valeriano.cortes", CORTES.map(sinFoto)); store.set("valeriano.combos", BANNERS.map(sinFoto)); store.set("valeriano.ajustes", AJUSTES); },
+  async cambiarFoto(id, blob){
+    if (blob){ await fotoDB.put(id, blob); return urlLocal(id, blob); }
+    try { await fotoDB.del(id); } catch {}
+    return null;
+  },
+  async guardarCortes(){ this.persistir(); },
+  async borrarCorte(id){ try { await fotoDB.del(id); } catch {} this.persistir(); },
+  async guardarBanners(){ this.persistir(); },
+  async guardarAjustes(){ this.persistir(); },
+  async log(accion, detalle = ""){ const l = store.get("valeriano.log", []); l.unshift({fecha: new Date().toISOString(), usuario: "este teléfono", accion, detalle}); store.set("valeriano.log", l.slice(0, 200)); },
+  async leerLog(){ return store.get("valeriano.log", []); },
+};
+const repoNube = {
+  nube: true,
+  async cargar(){
+    const [cortes, banners, aj] = await Promise.all([
+      nube.get("cortes?select=*&order=orden.asc,nombre.asc"),
+      nube.get("banners?select=*&order=orden.asc"),
+      nube.get("ajustes?select=*&id=eq.1"),
+    ]);
+    return {cortes: cortes.map(normCorte), banners: banners.map(normBanner), ajustes: Object.assign(clone(AJUSTES_BASE), (aj && aj[0]) || {})};
+  },
+  async cambiarFoto(id, blob, anterior){
+    const url = blob ? await nube.subirFoto(id, blob) : null;
+    if (anterior && anterior !== url) nube.borrarFoto(anterior);
+    return url;
+  },
+  async guardarCortes(lista){ const ahora = new Date().toISOString(); await nube.upsert("cortes", lista.map(c => ({...fila(c, COLS_CORTE), updated_at: ahora}))); },
+  async borrarCorte(id, foto){ await nube.borrar("cortes", id); if (foto) nube.borrarFoto(foto); },
+  async guardarBanners(lista){ const ahora = new Date().toISOString(); await nube.upsert("banners", lista.map(b => ({...fila(b, COLS_BANNER), updated_at: ahora}))); },
+  async guardarAjustes(){ await nube.upsert("ajustes", [{id: 1, whatsapp: AJUSTES.whatsapp, direccion: AJUSTES.direccion, horario: AJUSTES.horario, updated_at: new Date().toISOString()}]); },
+  async log(accion, detalle = ""){ try { await nube.req("/rest/v1/actividad", {method: "POST", headers: {Prefer: "return=minimal"}, body: JSON.stringify({accion, detalle})}); } catch {} },
+  async leerLog(){ return nube.get("actividad?select=*&order=fecha.desc&limit=150"); },
+};
+const repo = CLOUD ? repoNube : repoLocal;
+
+let sinConexion = false, ultimaCarga = 0;
+function aplicarDatos(d){
+  CORTES = d.cortes; BANNERS = d.banners.length ? d.banners : clone(BANNERS_BASE).map(normBanner); AJUSTES = d.ajustes;
+  while (BANNERS.length < 3) BANNERS.push(normBanner(BANNERS_BASE[BANNERS.length], BANNERS.length));
+}
+async function cargarDatos(){
+  if (!CLOUD){ aplicarDatos(await repoLocal.cargar()); return; }
+  try {
+    const d = await repoNube.cargar();
+    aplicarDatos(d); sinConexion = false; ultimaCarga = Date.now();
+    store.set("valeriano.cache", d);
+  } catch (e) {
+    sinConexion = true;
+    const cache = store.get("valeriano.cache", null);
+    aplicarDatos(cache ? {cortes: cache.cortes.map(normCorte), banners: cache.banners.map(normBanner), ajustes: cache.ajustes} : {cortes: clone(CORTES_BASE).map(normCorte), banners: [], ajustes: clone(AJUSTES_BASE)});
+  }
+  $("#offlineNote").hidden = !sinConexion;
+}
+
+/* =====================================================================
+   Ilustraciones de carne (cuando un corte no tiene foto)
+   ===================================================================== */
+let svgId = 0;
+function rng(seed){ let s = 0; for (const c of String(seed)) s = (s*31 + c.charCodeAt(0)) >>> 0; return () => ((s = (s*1103515245 + 12345) >>> 0) / 4294967296); }
+function meatSVG(forma, seed = forma, cls = ""){
+  const r = rng(seed), id = "m" + (++svgId);
+  const isPork = forma === "pork";
+  const c1 = isPork ? "#f08a86" : "#c2252c", c2 = isPork ? "#d8605d" : "#8e1218", c3 = isPork ? "#f7b3ae" : "#e0454b";
+  const defs = `<defs>
+    <radialGradient id="${id}g" cx="40%" cy="35%" r="75%"><stop offset="0" stop-color="${c3}"/><stop offset=".55" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></radialGradient>
+    <linearGradient id="${id}f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff7ee"/><stop offset="1" stop-color="#ead2bd"/></linearGradient>
+  </defs>`;
+  const marble = (cx, cy, rx, ry, n = 9) => {
+    let p = "";
+    for (let i = 0; i < n; i++){
+      const x = cx - rx*.75 + r()*rx*1.5, y = cy - ry*.7 + r()*ry*1.4, l = 10 + r()*26, a = r()*Math.PI;
+      const x2 = x + Math.cos(a)*l, y2 = y + Math.sin(a)*l, qx = (x+x2)/2 + (r()-.5)*14, qy = (y+y2)/2 + (r()-.5)*14;
+      p += `<path d="M${x.toFixed(1)} ${y.toFixed(1)}Q${qx.toFixed(1)} ${qy.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}" stroke="#fff3ea" stroke-opacity="${(.45+r()*.4).toFixed(2)}" stroke-width="${(1.2+r()*2.4).toFixed(1)}" fill="none" stroke-linecap="round"/>`;
+    }
+    return p;
+  };
+  const clip = (d, inner) => `<clipPath id="${id}c"><path d="${d}"/></clipPath><g clip-path="url(#${id}c)">${inner}</g>`;
+  let body = "";
+  if (forma === "steak"){
+    const d = "M30 92C22 58 52 30 98 26c46-4 84 14 92 44 8 32-14 60-58 66-48 6-94-6-102-44z";
+    body = `<path d="M34 104C26 70 56 42 102 38c46-4 84 14 92 44 8 32-14 60-58 66-48 6-94-6-102-44z" fill="${c2}"/>
+      <path d="${d}" fill="url(#${id}f)"/>
+      <g transform="translate(-8 -5) scale(1.075)">
+      <path d="M40 90C34 62 60 40 98 37c40-3 72 12 79 37 6 26-12 48-50 53-40 5-80-4-87-37z" fill="url(#${id}g)"/>
+      ${clip("M40 90C34 62 60 40 98 37c40-3 72 12 79 37 6 26-12 48-50 53-40 5-80-4-87-37z", marble(108, 80, 60, 38, 12))}
+      <ellipse cx="${80 + r()*40}" cy="${66 + r()*20}" rx="9" ry="5" fill="#fff3ea" opacity=".75"/></g>`;
+  } else if (forma === "bone"){
+    const d = "M28 86C24 52 60 28 104 28c44 0 80 22 82 54 2 34-30 56-76 58-46 2-78-20-82-54z";
+    body = `<path d="M30 98C26 64 62 40 106 40c44 0 80 22 82 54 2 34-30 56-76 58-46 2-78-20-82-54z" fill="${c2}"/>
+      <path d="${d}" fill="url(#${id}f)"/>
+      <path d="M38 86C35 58 66 38 104 38c38 0 70 19 72 46 2 29-26 47-66 49-40 2-68-17-72-47z" fill="url(#${id}g)"/>
+      ${clip("M38 86C35 58 66 38 104 38c38 0 70 19 72 46 2 29-26 47-66 49-40 2-68-17-72-47z", marble(106, 86, 62, 40, 11))}
+      <path d="M100 40 L112 40 L114 132 L98 132z" fill="#f4e6d4" stroke="#d9c2a6" stroke-width="2"/>
+      <ellipse cx="106" cy="86" rx="15" ry="13" fill="#f4e6d4" stroke="#d9c2a6" stroke-width="2"/>
+      <ellipse cx="106" cy="86" rx="7" ry="6" fill="#c98d6d"/>`;
+  } else if (forma === "rib"){
+    let bones = "";
+    for (let i = 0; i < 5; i++){ const x = 46 + i*30; bones += `<rect x="${x}" y="40" width="12" height="96" rx="6" fill="#f4e6d4" stroke="#d9c2a6" stroke-width="2"/>`; }
+    const d = "M24 58c40-24 120-28 172-8 8 3 10 12 8 22l-6 44c-2 12-10 18-22 18H42c-12 0-20-8-21-20z";
+    body = `<path d="M24 70c40-24 120-28 172-8 8 3 10 12 8 22l-6 44c-2 12-10 18-22 18H42c-12 0-20-8-21-20z" fill="${c2}"/>
+      <path d="${d}" fill="url(#${id}g)"/>
+      ${clip(d, marble(110, 92, 80, 40, 14) + bones)}
+      <path d="M26 60c40-22 116-26 168-8" stroke="url(#${id}f)" stroke-width="10" fill="none" stroke-linecap="round"/>`;
+  } else if (forma === "ground"){
+    let dots = "";
+    for (let i = 0; i < 120; i++){ const a = r()*Math.PI*2, rr = Math.sqrt(r()); const x = 110 + Math.cos(a)*rr*78, y = 86 + Math.sin(a)*rr*40 - (1-rr)*10; dots += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(1.5+r()*3).toFixed(1)}" fill="${r()<.25 ? "#f6d4c9" : (r()<.5 ? c2 : c3)}"/>`; }
+    body = `<ellipse cx="110" cy="112" rx="96" ry="24" fill="#fff" opacity=".9"/>
+      <path d="M26 104C30 70 70 42 110 42s80 28 84 62c-30 14-138 14-168 0z" fill="url(#${id}g)"/>
+      ${clip("M26 104C30 70 70 42 110 42s80 28 84 62c-30 14-138 14-168 0z", dots)}`;
+  } else if (forma === "roast"){
+    const d = "M30 70c0-20 40-32 80-32s80 12 80 32v34c0 22-40 34-80 34s-80-12-80-34z";
+    body = `<path d="${d}" fill="${c2}"/>
+      ${clip(d, `<rect x="0" y="0" width="240" height="180" fill="url(#${id}g)"/>` + marble(110, 100, 70, 30, 8))}
+      <ellipse cx="110" cy="70" rx="80" ry="30" fill="url(#${id}g)"/>
+      <g>${marble(110, 70, 60, 20, 8)}</g>
+      <path d="M30 70c0 18 36 30 80 30s80-12 80-30" stroke="url(#${id}f)" stroke-width="5" fill="none"/>`;
+  } else if (forma === "strip"){
+    const d = "M16 92c20-34 70-52 120-48 30 2 60 14 70 30 6 10-2 22-16 28-40 18-104 26-150 14-16-4-28-12-24-24z";
+    body = `<path d="M16 104c20-34 70-52 120-48 30 2 60 14 70 30 6 10-2 22-16 28-40 18-104 26-150 14-16-4-28-12-24-24z" fill="${c2}"/>
+      <path d="${d}" fill="url(#${id}g)"/>
+      ${clip(d, (() => { let s = ""; for (let i = 0; i < 16; i++){ const x = 20 + i*12; s += `<path d="M${x} 50 q${6 + r()*6} 40 ${-4 + r()*8} 90" stroke="#fff3ea" stroke-opacity=".35" stroke-width="1.6" fill="none"/>`; } return s; })())}
+      <path d="M20 90c22-30 70-46 116-42" stroke="url(#${id}f)" stroke-width="8" fill="none" stroke-linecap="round"/>`;
+  } else {
+    const d = "M26 86c0-30 38-50 84-50s86 20 86 50-38 50-86 50-84-20-84-50z";
+    body = `<path d="M26 98c0-30 38-50 84-50s86 20 86 50-38 50-86 50-84-20-84-50z" fill="${c2}"/>
+      <path d="${d}" fill="url(#${id}f)"/>
+      <path d="M38 86c0-24 32-40 72-40s74 16 74 40-32 40-74 40-72-16-72-40z" fill="url(#${id}g)"/>
+      ${clip("M38 86c0-24 32-40 72-40s74 16 74 40-32 40-74 40-72-16-72-40z", marble(110, 86, 60, 30, 7))}`;
+  }
+  return `<svg class="${cls}" viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${defs}${body}</svg>`;
+}
+const imgDe = (x, fallback) => x.foto ? `<img src="${esc(x.foto)}" alt="${esc(x.nombre || x.titulo || "")}" loading="lazy">` : meatSVG(x.forma || fallback || "steak", x.id);
+
+/* =====================================================================
+   Mapa de la res — silueta de perfil estilo lámina de carnicería
+   ===================================================================== */
+function cowSVG(){
+  const body = `M56 64 C62 57 70 56 76 60 C92 67 116 66 142 59 C182 50 238 58 272 57 C292 56 306 52 320 58
+    C336 61 348 63 356 71 C364 86 364 112 358 132 C354 146 348 158 346 174 L344 212 C345 219 348 224 348 231 L329 231
+    C329 223 331 217 330 211 L327 184 C323 170 316 161 305 157 C281 166 237 171 201 169 C177 169 161 167 153 165
+    L151 212 C151 219 155 224 155 231 L136 231 C136 223 138 217 137 211 L134 181 C130 171 124 167 118 167
+    C108 161 100 151 96 139 C88 133 76 131 66 131 C56 132 44 135 33 135 C25 135 19 129 19 120
+    C19 111 25 104 29 96 C35 84 45 73 56 64 Z`;
+  const farLegs = `M286 150 C292 170 296 190 296 210 L297 229 L313 229 C312 214 311 196 314 176 Z
+    M160 160 L163 212 C163 219 166 224 166 229 L181 229 C180 220 178 210 178 196 L176 162 Z`;
+  const zonas = [
+    ["cabeza",   "M0 0 L76 0 L72 60 L70 140 L0 140 Z"],
+    ["cogote",   "M76 0 L124 0 L118 104 L112 150 L80 132 L70 140 L72 60 Z"],
+    ["aguja",    "M124 0 L196 0 L194 100 L120 96 Z"],
+    ["paleta",   "M120 96 L194 100 L182 132 L176 172 L150 172 L132 160 L112 150 L118 104 Z"],
+    ["pecho",    "M60 128 L80 132 L112 150 L132 160 L150 172 L150 190 L60 190 Z"],
+    ["bife",     "M196 0 L276 0 L274 96 L194 100 Z"],
+    ["costillar","M194 100 L274 96 L268 132 L182 132 Z"],
+    ["falda",    "M182 132 L268 132 L274 96 L300 108 L308 160 L300 190 L176 190 L176 172 Z"],
+    ["cuadril",  "M276 0 L332 0 L326 66 L300 108 L274 96 Z"],
+    ["pierna",   "M332 0 L400 0 L400 190 L330 190 L308 160 L300 108 L326 66 Z"],
+    ["osobuco",  "M0 188 L400 188 L400 260 L0 260 Z"],
+  ];
+  const labels = {cabeza:[46,112], cogote:[98,98], aguja:[158,80], paleta:[152,130], pecho:[112,163], bife:[234,80], costillar:[228,118], falda:[240,154], cuadril:[302,74], pierna:[338,122]};
+  let regions = "", txt = "";
+  for (const [z, d] of zonas){
+    regions += `<path class="cow-region" data-z="${z}" d="${d}"><title>${ZONAS[z].n}</title></path>`;
+    if (labels[z]){ const [x, y] = labels[z]; txt += `<text class="cow-label" x="${x}" y="${y}" text-anchor="middle">${ZONAS[z].n.split(" /")[0].toUpperCase()}</text>`; }
+  }
+  const muscles = `M150 74 C170 92 172 120 160 150 M196 108 C232 104 258 104 270 112 M300 74 C320 96 330 130 322 160
+    M246 62 C262 76 270 92 272 104 M120 78 C112 98 104 120 104 132`;
+  return `<svg viewBox="0 0 380 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa de cortes de la res">
+    <defs>
+      <clipPath id="cowclip"><path d="${body}"/></clipPath>
+      <radialGradient id="cowShade" cx="45%" cy="30%" r="80%"><stop offset="0" stop-color="#2c2c2c"/><stop offset="1" stop-color="#161616"/></radialGradient>
+      <linearGradient id="cowFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b1b1b"/><stop offset="1" stop-color="#0f0f0f"/></linearGradient>
+    </defs>
+    <ellipse cx="200" cy="234" rx="170" ry="6" fill="#000" opacity=".6"/>
+    <path d="${farLegs}" fill="url(#cowFar)" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/>
+    <path d="M292 223h22v6h-22zM162 223h20v6h-20z" fill="#000"/>
+    <path d="M355 72 C368 92 372 130 366 172" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M366 168 C360 176 360 190 366 198 C372 190 374 178 366 168 Z" fill="#fff"/>
+    <path d="M60 60 C56 46 48 38 38 35 C44 42 49 50 51 62 Z" fill="#e9e1d4" stroke="#fff" stroke-width="1"/>
+    <path d="M72 60 C74 48 80 40 90 36 C86 44 82 52 80 62 Z" fill="#d9d0c2" opacity=".8"/>
+    <g clip-path="url(#cowclip)">${regions}
+      <path d="${muscles}" fill="none" stroke="#fff" stroke-opacity=".12" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+    <path d="${body}" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M74 68 C86 60 100 60 108 64 C100 72 88 76 78 76 Z" fill="#1d1d1d" stroke="#fff" stroke-width="1.6"/>
+    <path d="M80 70 C88 66 96 66 101 67" stroke="#d71920" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
+    <ellipse cx="50" cy="86" rx="3.6" ry="3" fill="#fff"/>
+    <path d="M45 82 C48 79 53 79 56 82" stroke="#fff" stroke-width="1.2" fill="none"/>
+    <ellipse cx="26" cy="116" rx="3" ry="2" fill="#fff" opacity=".85"/>
+    <path d="M22 127 C28 129 34 129 40 127" stroke="#fff" stroke-opacity=".6" stroke-width="1.2" fill="none"/>
+    <path d="M330 225h18v6h-18zM137 225h18v6h-18z" fill="#fff"/>
+    ${txt}
+    <text class="cow-label" x="146" y="245" text-anchor="middle" style="font-size:8px">OSOBUCO</text>
+    <text class="cow-label" x="338" y="245" text-anchor="middle" style="font-size:8px">OSOBUCO</text>
+  </svg>`;
+}
+
+/* =====================================================================
+   Vista pública: tarjetas, secciones, banners
+   ===================================================================== */
+let carrito = store.get("valeriano.carrito", []);
+let filtroInicio = "todos", filtroZona = null, busqueda = "";
+const subFiltro = {parrilla: "todos", platos: "todos"};
+let esAdmin = false;
+
+const icoEdit = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>`;
+function cardHTML(c){
+  const of = ofertaVigente(c), off = of ? Math.round((1 - c.oferta / c.precio) * 100) : 0;
+  const agot = !c.disponible;
+  return `<article class="card ${agot ? "soldout" : ""}" data-id="${esc(c.id)}">
+    <div class="ph">${off > 0 && !agot ? `<span class="off">-${off}%</span>` : ""}<span class="cat">${esc(c.animal)}</span>${imgDe(c)}
+      ${agot ? `<span class="sold">AGOTADO</span>` : (c.destacado ? `<span class="star">★ Destacado</span>` : "")}</div>
+    <h5>${esc(c.nombre)}</h5>
+    <p class="use">${esc(c.uso)}</p>
+    <div class="foot">
+      <div class="price">${of ? `<s>${bs(c.precio)}</s>` : ""}${bs(precioDe(c))} <small>/kg</small></div>
+      ${esAdmin
+        ? `<button class="add edit" data-edit="${esc(c.id)}" aria-label="Editar ${esc(c.nombre)}">${icoEdit}</button>`
+        : agot ? "" : `<button class="add" data-quick="${esc(c.id)}" aria-label="Agregar ${esc(c.nombre)}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>`}
+    </div>
+  </article>`;
+}
+function renderGrid(el, list){ el.innerHTML = list.length ? list.map(cardHTML).join("") : `<div class="empty">No encontramos cortes aquí.</div>`; }
+const matchBusqueda = c => !busqueda || norm(c.nombre + " " + c.alias + " " + c.uso + " " + c.animal).includes(busqueda);
+function chipsHTML(opts, sel){ return opts.map(([v, l]) => `<button class="chip ${v === sel ? "on" : ""}" data-v="${v}">${l}</button>`).join(""); }
+const publicos = () => [...CORTES].sort(ordenPublico);
+
+function renderInicio(){
+  const opts = [["todos","Todos"],["parrilla","Parrilla"],["platos","Platos comunes"],["ofertas","Ofertas"],["Res","Res"],["Cerdo","Cerdo"]];
+  $("#filterChips").innerHTML = chipsHTML(opts, filtroInicio);
+  let list = publicos().filter(matchBusqueda);
+  if (filtroInicio === "parrilla" || filtroInicio === "platos") list = list.filter(c => c.cat === filtroInicio);
+  else if (filtroInicio === "ofertas") list = list.filter(ofertaVigente);
+  else if (filtroInicio !== "todos") list = list.filter(c => c.animal === filtroInicio);
+  if (filtroZona) list = list.filter(c => c.zona === filtroZona);
+  $("#countAll").textContent = list.length + " cortes";
+  renderGrid($("#gridAll"), list);
+}
+function renderSeccion(cat){
+  const opts = [["todos","Todos"],["Res","Res"],["Cerdo","Cerdo"],["oferta","En oferta"]];
+  if (cat === "parrilla") opts.splice(3, 0, ["Embutido","Embutidos"]);
+  const sel = subFiltro[cat];
+  $(cat === "parrilla" ? "#chipsParrilla" : "#chipsPlatos").innerHTML = chipsHTML(opts, sel);
+  let list = publicos().filter(c => c.cat === cat && matchBusqueda(c));
+  if (sel === "oferta") list = list.filter(ofertaVigente); else if (sel !== "todos") list = list.filter(c => c.animal === sel);
+  renderGrid($(cat === "parrilla" ? "#gridParrilla" : "#gridPlatos"), list);
+}
+function renderOfertas(){ renderGrid($("#gridOfertas"), publicos().filter(c => ofertaVigente(c) && matchBusqueda(c))); }
+
+const destinoBanner = b => ["parrilla","platos","ofertas","calc"].includes(b.ir) ? `data-go="${b.ir}"` : `data-open="${esc(b.ir)}"`;
+function renderBanners(){
+  const [a, b, c] = BANNERS;
+  const pr = x => `${bs(x.precio)}${x.unidad ? " " + esc(x.unidad) : ""}${x.antes ? ` <s>${bs(x.antes)}</s>` : ""}`;
+  $("#homeBanners").innerHTML = `
+    <div class="banner" ${destinoBanner(a)}>
+      <div class="dots"></div>
+      <span class="pill">${esc(a.pill)}</span>
+      <h3>${esc(a.titulo)}</h3>
+      ${a.descripcion ? `<div class="ds">${esc(a.descripcion)}</div>` : ""}
+      <div class="pr">${pr(a)}</div>
+      <span class="cta">Ver oferta</span>
+      <div class="img ${a.foto ? "photo" : ""}">${imgDe(a, "bone")}</div>
+    </div>
+    <div class="duo">
+      <div class="mini dark" ${destinoBanner(b)}><span class="pill">${esc(b.pill)}</span><div><h4>${esc(b.titulo)}</h4><div class="pr">${pr(b)}</div></div></div>
+      <div class="mini light" ${destinoBanner(c)}><span class="pill">${esc(c.pill)}</span><div><h4>${esc(c.titulo)}</h4><div class="pr">${pr(c)}</div></div></div>
+    </div>`;
+}
+function renderTienda(){
+  const a = AJUSTES;
+  $("#storeInfo").innerHTML = `<h3>Visítanos</h3>
+    ${a.direccion ? `<p><b>DIRECCIÓN</b><span>${esc(a.direccion)}</span></p>` : ""}
+    ${a.horario ? `<p><b>HORARIO</b><span>${esc(a.horario)}</span></p>` : ""}
+    <p><b>WHATSAPP</b><span>+${esc(a.whatsapp)}</span></p>
+    <button class="big-btn sm" data-wachat>Escríbenos por WhatsApp</button>`;
+}
+function renderCowInfo(){
+  const z = filtroZona, cortesZona = z ? publicos().filter(c => c.zona === z) : [], n = cortesZona.length;
+  $("#cowInfo").innerHTML = z
+    ? `<div><b>${ZONAS[z].n}</b><small>${n} corte${n === 1 ? "" : "s"} de esta zona · toca uno para ver todo</small></div>${n ? `<button data-seezone>Ver en catálogo</button>` : ""}`
+    : `<div><b>Elige una zona</b><small>Toca la vaca o una etiqueta de abajo</small></div>`;
+  // Los cortes de la zona aparecen enseguida, debajo de la vaca
+  $("#zoneCuts").innerHTML = !z ? "" : n
+    ? `<div class="zone-cuts">${cortesZona.map(c => `<button class="zc" data-open="${esc(c.id)}">
+        <div class="t">${imgDe(c)}</div><b>${esc(c.nombre)}</b><small>${esc(c.uso)}</small>
+        <em>${c.disponible ? bs(precioDe(c)) + " /kg" : "Agotado"}</em></button>`).join("")}</div>`
+    : `<div class="zone-empty">Por ahora no hay cortes cargados de esta zona.</div>`;
+  $("#zoneChips").innerHTML = Object.entries(ZONAS).map(([k, v]) => `<button data-zone="${k}" class="${k === z ? "on" : ""}">${v.n}</button>`).join("");
+  $$(".cow-region").forEach(r => r.classList.toggle("on", r.dataset.z === z));
+}
+function elegirZona(z){ filtroZona = filtroZona === z ? null : z; filtroInicio = "todos"; renderCowInfo(); renderInicio(); }
+
+function renderAll(){
+  renderBanners(); renderInicio(); renderSeccion("parrilla"); renderSeccion("platos"); renderOfertas(); renderTienda(); renderCowInfo();
+  guardarCarrito();
+  if (esAdmin && vistaActual === "admin") renderAdmin();
+}
+
+/* =====================================================================
+   Navegación
+   ===================================================================== */
+let vistaActual = "inicio";
+function go(v){
+  if (v === "admin" && !esAdmin) return pedirAcceso();
+  vistaActual = v;
+  $$(".view").forEach(x => x.classList.toggle("active", x.id === "v-" + v));
+  $$("#nav button").forEach(b => b.classList.toggle("on", b.dataset.go === v));
+  $("#searchBox").style.display = (v === "calc" || v === "admin") ? "none" : "";
+  if (v === "admin") renderAdmin();
+  window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+/* =====================================================================
+   Detalle del producto
+   ===================================================================== */
+let det = null;
+function abrirDetalle(id){ const c = byId(id); if (!c) return; det = {c, peso: 1, cant: 1}; pintarDetalle(); abrir("#detail"); }
+function pintarDetalle(){
+  const {c, peso, cant} = det, of = ofertaVigente(c);
+  const total = precioDe(c) * peso * cant;
+  const pesos = [[.5,"500 g"],[1,"1 kg"],[2,"2 kg"],[5,"5 kg"]];
+  $("#detail").innerHTML = `
+    <div class="photo ${c.foto ? "real" : ""}">
+      <button class="icon-btn dark back" data-close aria-label="Volver"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
+      ${esAdmin ? `<button class="icon-btn light editb" data-edit="${esc(c.id)}" aria-label="Editar">${icoEdit}</button>` : ""}
+      <button class="icon-btn cartb" data-cart aria-label="Mi pedido"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a2 2 0 0 0 2 1.6h8.3a2 2 0 0 0 2-1.5L22 7H6"/></svg></button>
+      ${imgDe(c)}
+    </div>
+    <div class="panel">
+      <div class="row1">
+        <div><h2>${esc(c.nombre)}</h2><div class="alt">${esc(c.alias)}${c.alias ? " · " : ""}${esc(c.animal)}</div></div>
+        <div class="pp">${of ? `<s>${bs(c.precio)}</s>` : ""}<b>${bs(precioDe(c))}</b><small>por kg</small>${of && c.oferta_hasta ? `<div class="until">Oferta hasta el ${fechaCorta(c.oferta_hasta)}</div>` : ""}</div>
+      </div>
+      <div class="usefor"><b>¿PARA QUÉ ES?</b>${esc(c.uso)}</div>
+      ${c.descripcion ? `<p class="desc">${esc(c.descripcion)}</p>` : ""}
+      <div class="tags">${c.tags.map(t => `<span class="r">${esc(t)}</span>`).join("")}${c.coc.map(t => `<span>${esc(t)}</span>`).join("")}</div>
+      ${c.disponible ? `
+      <div class="lab">PESO</div>
+      <div class="weights">${pesos.map(([v, l]) => `<button data-peso="${v}" class="${v === peso ? "on" : ""}">${l}</button>`).join("")}</div>
+      <div class="qty-row" style="margin-top:20px">
+        <div class="lab" style="margin:0">CANTIDAD</div>
+        <div class="qty"><button data-cant="-1">−</button><b>${cant}</b><button data-cant="1">+</button></div>
+      </div>
+      <div class="tot"><span>Total estimado<br><small style="color:#8d8d8d">${(peso*cant).toLocaleString("es-BO")} kg × ${bs(precioDe(c))}</small></span><b>${bs(total)}</b></div>
+      <button class="big-btn" data-addcart>Añadir al pedido</button>
+      <div class="disclaimer">El precio final se ajusta al pesar el corte.</div>`
+      : `<button class="big-btn dark" disabled>Agotado por ahora</button><div class="disclaimer">Consúltanos por WhatsApp cuándo vuelve.</div>`}
+    </div>`;
+}
+
+/* =====================================================================
+   Pedido
+   ===================================================================== */
+const itemsCarrito = () => carrito.filter(x => byId(x.id) && byId(x.id).disponible);
+function guardarCarrito(){ store.set("valeriano.carrito", carrito); const n = itemsCarrito().length; const b = $("#cartCount"); b.hidden = !n; b.textContent = n; }
+function agregar(id, kg){
+  const ex = carrito.find(x => x.id === id);
+  if (ex) ex.kg = Math.round((ex.kg + kg)*100)/100; else carrito.push({id, kg});
+  guardarCarrito(); toast(`✓ ${byId(id).nombre} · ${kg.toLocaleString("es-BO")} kg agregado`);
+}
+function pintarCarrito(){
+  const items = itemsCarrito();
+  const total = items.reduce((s, x) => s + precioDe(byId(x.id)) * x.kg, 0);
+  $("#cart").innerHTML = `<div class="handle"></div>
+    <h3>Mi pedido</h3>
+    <p class="page-sub" style="margin:0 0 6px">${items.length ? "Revisa tu pedido y envíalo por WhatsApp." : "Todavía no agregaste cortes."}</p>
+    ${items.map(x => { const c = byId(x.id); return `<div class="ci"><div class="th">${imgDe(c)}</div>
+      <div class="nf"><b>${esc(c.nombre)}</b><small>${x.kg.toLocaleString("es-BO")} kg × ${bs(precioDe(c))}</small></div>
+      <div class="pr">${bs(precioDe(c) * x.kg)}<button class="rm" data-rm="${esc(c.id)}">Quitar</button></div></div>`; }).join("")}
+    ${items.length ? `<div class="sum"><span>Total estimado</span><span>${bs(total)}</span></div>
+      <button class="big-btn" data-wa>Enviar pedido por WhatsApp</button>
+      <button class="big-btn dark" data-close style="margin-top:10px">Seguir comprando</button>
+      <p class="note" style="text-align:center">El precio final se ajusta al pesar cada corte.${AJUSTES.direccion ? "<br>Retiro en: " + esc(AJUSTES.direccion) : ""}</p>`
+    : `<button class="big-btn dark" data-close>Ver catálogo</button>`}`;
+}
+function abrirUrl(url){ if (window.AndroidBridge && AndroidBridge.openUrl) AndroidBridge.openUrl(url); else window.open(url, "_blank"); }
+const waNum = () => String(AJUSTES.whatsapp).replace(/\D/g, "");
+function enviarWhatsApp(){
+  const items = itemsCarrito();
+  const total = items.reduce((s, x) => s + precioDe(byId(x.id)) * x.kg, 0);
+  const txt = "Hola Valeriano Carnes, quiero hacer este pedido:\n" + items.map(x => `• ${byId(x.id).nombre}: ${x.kg} kg`).join("\n") + `\nTotal estimado: ${bs(total)}`;
+  abrirUrl(`https://wa.me/${waNum()}?text=${encodeURIComponent(txt)}`);
+}
+
+function abrir(sel){ $$(".sheet").forEach(s => s.classList.remove("show")); $("#scrim").classList.add("show"); $(sel).classList.add("show"); $(sel).scrollTop = 0; }
+function cerrar(){ $("#scrim").classList.remove("show"); $$(".sheet").forEach(s => s.classList.remove("show")); }
+const hayHojaAbierta = () => $$(".sheet.show").length > 0;
+
+/* =====================================================================
+   Calculadora
+   ===================================================================== */
+const calc = {mode: "kg", type: "parrilla", app: 1};
+const GRAMOS = {parrilla: 450, platos: 250};
+const MIX = {
+  parrilla: [["asadotira", .35], ["vacio", .25], ["picana", .20], ["chorizop", .20]],
+  platos:   [["pulpa", .40], ["molida", .30], ["paleta", .30]],
+};
+function num(id){ const v = parseFloat($("#" + id).value); return isFinite(v) && v > 0 ? v : 0; }
+function fmtKg(kg){ return kg >= 10 ? Math.round(kg*10)/10 : Math.round(kg*100)/100; }
+const mixActual = () => MIX[calc.type].filter(([id]) => byId(id) && byId(id).disponible);
+function calcular(){
+  const g = GRAMOS[calc.type] * calc.app;
+  let kg;
+  if (calc.mode === "kg"){
+    const a = num("adults"), k = num("kids");
+    kg = (a + k*.5) * g / 1000;
+    $("#resLbl").textContent = "NECESITAS APROXIMADAMENTE";
+    $("#resNum").innerHTML = `${fmtKg(kg).toLocaleString("es-BO")}<small>kg</small>`;
+    $("#resDet").innerHTML = `Para <b>${a} adulto${a === 1 ? "" : "s"}</b>${k ? ` y <b>${k} niño${k === 1 ? "" : "s"}</b>` : ""} · ${Math.round(g)} g por adulto en ${calc.type === "parrilla" ? "parrillada" : "plato común"}.`;
+  } else {
+    kg = num("kilos");
+    const personas = Math.floor(kg * 1000 / g);
+    $("#resLbl").textContent = "ALCANZA PARA";
+    $("#resNum").innerHTML = `${personas.toLocaleString("es-BO")}<small>personas</small>`;
+    $("#resDet").innerHTML = `Con <b>${kg.toLocaleString("es-BO")} kg</b> en ${calc.type === "parrilla" ? "parrillada" : "plato común"} (${Math.round(g)} g por persona). Si son niños, alcanza para unos <b>${Math.floor(personas*2).toLocaleString("es-BO")}</b>.`;
+  }
+  const mix = mixActual();
+  const total = mix.reduce((s, [id, p]) => s + precioDe(byId(id)) * kg * p, 0);
+  $("#mixBox").hidden = !mix.length;
+  $("#mixBox").innerHTML = `<h4>Sugerencia de cortes para ${fmtKg(kg).toLocaleString("es-BO")} kg</h4>
+    ${mix.map(([id, p]) => { const c = byId(id); return `<div class="mix-row"><span class="nm">${esc(c.nombre)}</span><span class="bar"><span style="width:${p*100}%"></span></span><span class="kg">${fmtKg(kg*p).toLocaleString("es-BO")} kg</span></div>`; }).join("")}
+    <div class="total"><span>Costo estimado</span><span>${bs(Math.round(total))}</span></div>
+    ${kg > 0 ? `<button class="big-btn" data-addmix>Agregar esta selección al pedido</button>` : ""}`;
+  calc._kg = kg;
+}
+
+/* =====================================================================
+   ACCESO DE ADMINISTRADOR
+   Con nube: correo y contraseña de Supabase. Sin nube: PIN del teléfono.
+   Se entra tocando 5 veces el logo "V".
+   ===================================================================== */
+let pinBuf = "";
+const pinLocal = () => store.get("valeriano.pin", null) || (store.get("valeriano.config", {}).pin) || "1234";
+function pedirAcceso(){ CLOUD ? pintarLogin("") : (pinBuf = "", pintarPin("")); abrir("#editor"); }
+function pintarLogin(err){
+  edit = {tipo: "login"};
+  $("#editor").innerHTML = `<div class="handle"></div>
+    <h3>Acceso de administrador</h3>
+    <p class="page-sub">Ingresa con la cuenta del encargado del catálogo.</p>
+    <div class="fg"><label>Correo</label><input id="l_email" type="email" autocomplete="username" inputmode="email" value="${esc((nube.ses && nube.ses.email) || store.get("valeriano.ultimoEmail", ""))}"></div>
+    <div class="fg"><label>Contraseña</label><input id="l_pass" type="password" autocomplete="current-password"></div>
+    <div class="err">${esc(err || "")}</div>
+    <button class="big-btn" data-dologin>Entrar</button>
+    <button class="big-btn line" data-close>Cancelar</button>`;
+}
+async function hacerLogin(){
+  const email = $("#l_email").value.trim(), pass = $("#l_pass").value;
+  if (!email || !pass) return pintarLogin("Escribe tu correo y contraseña");
+  try {
+    await ocupado("Entrando…", () => nube.login(email, pass));
+    store.set("valeriano.ultimoEmail", email);
+    cerrar(); setAdmin(true); go("admin"); toast("✓ Bienvenido, " + email);
+    repo.log("Inició sesión");
+  } catch (e) { pintarLogin(e.message.includes("Invalid") ? "Correo o contraseña incorrectos" : e.message); }
+}
+function pintarPin(err){
+  edit = {tipo: "pin"};
+  $("#editor").innerHTML = `<div class="handle"></div>
+    <h3 style="text-align:center">Modo administrador</h3>
+    <p class="page-sub" style="text-align:center;margin:0">Ingresa tu PIN para gestionar el catálogo</p>
+    <div class="pin-dots">${[0,1,2,3].map(i => `<i class="${i < pinBuf.length ? "f" : ""}"></i>`).join("")}</div>
+    <div class="pin-err">${err || ""}</div>
+    <div class="pin-pad">${[1,2,3,4,5,6,7,8,9].map(n => `<button data-pin="${n}">${n}</button>`).join("")}<button data-close style="font-size:13px">Cancelar</button><button data-pin="0">0</button><button data-pin="del" aria-label="Borrar">⌫</button></div>`;
+}
+function teclaPin(k){
+  if (k === "del") pinBuf = pinBuf.slice(0, -1); else if (pinBuf.length < 4) pinBuf += k;
+  if (pinBuf.length === 4){
+    if (pinBuf === String(pinLocal())){ cerrar(); setAdmin(true); go("admin"); toast("✓ Modo administrador activado"); return; }
+    pinBuf = ""; return pintarPin("PIN incorrecto");
+  }
+  pintarPin("");
+}
+function setAdmin(on){
+  esAdmin = on;
+  if (!CLOUD) try { on ? sessionStorage.setItem("valeriano.admin", "1") : sessionStorage.removeItem("valeriano.admin"); } catch {}
+  $("#adminBar").hidden = !on;
+  $("#adminBarTxt").textContent = "✎ " + (CLOUD && nube.ses ? nube.ses.email : "Administrador");
+  renderAll();
+  if (!on && vistaActual === "admin") go("inicio");
+}
+async function salirAdmin(){
+  if (CLOUD){ if (!confirm("¿Cerrar la sesión de administrador en este teléfono?")) return; await nube.salir(); }
+  setAdmin(false); toast("Sesión de administrador cerrada");
+}
+
+/* =====================================================================
+   PANEL DE GESTIÓN
+   ===================================================================== */
+let admTab = "cortes", admFiltro = "todos", admBusca = "";
+let borrador = {};      // cambios de precio sin guardar: id -> {precio, oferta}
+let logCache = null;
+
+function renderAdmin(){
+  $("#admStatus").className = "adm-status " + (CLOUD ? "cloud" : "local");
+  $("#admStatus").innerHTML = CLOUD
+    ? `<i></i>Conectado a la nube · los cambios se ven en todos los teléfonos`
+    : `<i></i>Sin nube: los cambios quedan solo en este teléfono`;
+  $$("#admTabs button").forEach(b => b.classList.toggle("on", b.dataset.tab === admTab));
+  ({cortes: tabCortes, precios: tabPrecios, banners: tabBanners, actividad: tabActividad, ajustes: tabAjustes})[admTab]();
+}
+
+/* ---- Pestaña: Cortes (CRUD, disponibilidad, orden) ---- */
+function tabCortes(){
+  const n = CORTES.length, of = CORTES.filter(ofertaVigente).length, ag = CORTES.filter(c => !c.disponible).length, sf = CORTES.filter(c => !c.foto).length;
+  const vacia = CLOUD && n === 0;
+  $("#admBody").innerHTML = `
+    ${vacia ? `<div class="adm-card warn"><h4>La nube está vacía</h4><p>Sube el catálogo inicial (los ${CORTES_BASE.length} cortes, banners y las fotos que tengas guardadas en este teléfono) para empezar.</p><button class="big-btn sm" data-migrar>Subir catálogo inicial</button></div>` : ""}
+    <div class="adm-stats" style="margin-top:12px">
+      <div data-af="todos"><b>${n}</b><small>cortes</small></div>
+      <div data-af="ofertas"><b>${of}</b><small>en oferta</small></div>
+      <div data-af="agotados"><b>${ag}</b><small>agotados</small></div>
+      <div data-af="sinfoto"><b>${sf}</b><small>sin foto</small></div>
+    </div>
+    <button class="big-btn" data-newcut>＋ Agregar corte nuevo</button>
+    <div class="adm-search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="admBusca" placeholder="Buscar corte…" value="${esc(admBusca)}"></div>
+    <div class="chips" id="admChips" style="margin-top:10px">${chipsHTML([["todos","Todos"],["parrilla","Parrilla"],["platos","Platos"],["ofertas","Ofertas"],["agotados","Agotados"],["sinfoto","Sin foto"],["destacados","Destacados"]], admFiltro)}</div>
+    <div class="adm-box" id="admList"></div>
+    <p class="note">Usa ▲▼ para cambiar el orden en que aparecen. Los destacados se muestran primero a los clientes.</p>`;
+  pintarListaAdmin();
+}
+function listaAdminFiltrada(){
+  let list = [...CORTES].sort(ordenAdmin);
+  if (admFiltro === "parrilla" || admFiltro === "platos") list = list.filter(c => c.cat === admFiltro);
+  else if (admFiltro === "ofertas") list = list.filter(ofertaVigente);
+  else if (admFiltro === "agotados") list = list.filter(c => !c.disponible);
+  else if (admFiltro === "sinfoto") list = list.filter(c => !c.foto);
+  else if (admFiltro === "destacados") list = list.filter(c => c.destacado);
+  if (admBusca) list = list.filter(c => norm(c.nombre + " " + c.alias).includes(norm(admBusca)));
+  return list;
+}
+function pintarListaAdmin(){
+  const list = listaAdminFiltrada();
+  $("#admList").innerHTML = list.map((c, i) => `<div class="adm-row" data-edit="${esc(c.id)}">
+      <div class="th">${imgDe(c)}${c.foto ? "" : `<span class="nophoto" title="Sin foto">!</span>`}</div>
+      <div class="nf"><b>${esc(c.nombre)}</b><small>${c.cat === "parrilla" ? "Parrilla" : "Platos"} · ${esc(c.animal)}${!c.disponible ? `<span class="tg sold">AGOTADO</span>` : ""}${c.destacado ? `<span class="tg star">★</span>` : ""}${ofertaVigente(c) ? `<span class="tg off">OFERTA</span>` : ""}</small></div>
+      <div class="pr">${ofertaVigente(c) ? `<s>${bs(c.precio)}</s>` : ""}${bs(precioDe(c))}</div>
+      <div class="ord"><button data-mover="${esc(c.id)}" data-dir="-1" ${i === 0 ? "disabled" : ""} aria-label="Subir">▲</button><button data-mover="${esc(c.id)}" data-dir="1" ${i === list.length - 1 ? "disabled" : ""} aria-label="Bajar">▼</button></div>
+    </div>`).join("") || `<div class="empty">Nada por aquí.</div>`;
+}
+async function mover(id, dir){
+  const list = listaAdminFiltrada(), i = list.findIndex(c => c.id === id), j = i + dir;
+  if (i < 0 || j < 0 || j >= list.length) return;
+  // Normaliza el orden y luego intercambia los dos cortes
+  [...CORTES].sort(ordenAdmin).forEach((c, k) => c.orden = k);
+  const a = list[i], b = list[j]; [a.orden, b.orden] = [b.orden, a.orden];
+  pintarListaAdmin(); renderInicio(); renderSeccion("parrilla"); renderSeccion("platos"); renderOfertas();
+  try { await repo.guardarCortes(CORTES); } catch (e) { toast("⚠ " + e.message); recargar(); }
+}
+
+/* ---- Editor de un corte ---- */
+let edit = null;
+function nuevoCorte(){
+  const maxOrden = CORTES.reduce((m, c) => Math.max(m, c.orden), -1);
+  return normCorte({id: "c" + Date.now().toString(36), nombre: "", animal: "Res", cat: admFiltro === "platos" ? "platos" : "parrilla", precio: 0, forma: "steak", orden: maxOrden + 1});
+}
+function abrirEditor(id, base){
+  const c = base || (id ? byId(id) : nuevoCorte());
+  edit = {tipo: "corte", nuevo: !id, original: id ? clone(byId(id)) : null, data: clone(c), nuevaFoto: undefined};
+  pintarEditor(); abrir("#editor");
+}
+function fotoPreview(){
+  if (edit.nuevaFoto) return `<img src="${edit._preview}">`;
+  if (edit.nuevaFoto === undefined && edit.data.foto) return `<img src="${esc(edit.data.foto)}">`;
+  return meatSVG(edit.data.forma || "steak", edit.data.id, "meat");
+}
+const tieneFoto = () => !!(edit.nuevaFoto || (edit.nuevaFoto === undefined && edit.data.foto));
+const camIcon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`;
+const fotoBloque = () => `<div class="photo-pick" data-pickphoto>${fotoPreview()}<span class="lbl">${camIcon}${tieneFoto() ? "Cambiar foto" : "Tomar o elegir foto"}</span></div>
+  ${tieneFoto() ? `<div class="photo-actions"><button data-delphoto>Quitar foto</button></div>` : `<div class="hint">Usa fotos con buena luz y el corte centrado. Sin foto se muestra un dibujo.</div>`}`;
+function pintarEditor(){
+  const c = edit.data;
+  const opt = (arr, sel) => arr.map(([v, l]) => `<option value="${esc(v)}" ${v === sel ? "selected" : ""}>${esc(l)}</option>`).join("");
+  $("#editor").innerHTML = `<div class="handle"></div>
+    <h3>${edit.nuevo ? "Nuevo corte" : "Editar corte"}</h3>
+    <div class="fg"><label>Foto del corte</label>${fotoBloque()}</div>
+    <label class="sw"><div><b>Disponible</b><small>Si lo apagas, se muestra como “Agotado”</small></div><input type="checkbox" id="f_disp" ${c.disponible ? "checked" : ""}><span class="k"></span></label>
+    <label class="sw"><div><b>Destacado</b><small>Aparece primero y con estrella</small></div><input type="checkbox" id="f_dest" ${c.destacado ? "checked" : ""}><span class="k"></span></label>
+    <div class="fg" style="margin-top:14px"><label>Nombre del corte *</label><input id="f_nombre" value="${esc(c.nombre)}" placeholder="Ej.: Ojo de Bife"></div>
+    <div class="fg"><label>Otros nombres</label><input id="f_alias" value="${esc(c.alias)}" placeholder="Ej.: Rib eye"></div>
+    <div class="fg"><label>¿Para qué es? *</label><input id="f_uso" value="${esc(c.uso)}" placeholder="Ej.: Para silpancho, milanesa y apanado"></div>
+    <div class="fg"><label>Descripción</label><textarea id="f_desc" placeholder="Detalles del corte, cómo cocinarlo…">${esc(c.descripcion)}</textarea></div>
+    <div class="fg2">
+      <div class="fg"><label>Precio Bs/kg *</label><input id="f_precio" type="number" inputmode="decimal" min="0" step="0.5" value="${c.precio || ""}"></div>
+      <div class="fg"><label>Precio oferta</label><input id="f_oferta" type="number" inputmode="decimal" min="0" step="0.5" value="${c.oferta ?? ""}" placeholder="Sin oferta"></div>
+    </div>
+    <div class="fg"><label>Oferta válida hasta</label><input id="f_hasta" type="date" value="${esc(c.oferta_hasta || "")}"><div class="hint">Opcional. Pasada la fecha, vuelve solo al precio normal.</div></div>
+    <div class="fg"><label>Sección</label>
+      <div class="seg light" id="f_cat"><button data-fcat="parrilla" class="${c.cat === "parrilla" ? "on" : ""}">Parrilla</button><button data-fcat="platos" class="${c.cat === "platos" ? "on" : ""}">Platos comunes</button></div>
+    </div>
+    <div class="fg2">
+      <div class="fg"><label>Animal</label><select id="f_animal">${opt(ANIMALES.map(a => [a, a]), c.animal)}</select></div>
+      <div class="fg"><label>Zona en la vaca</label><select id="f_zona"><option value="">Ninguna</option>${opt(Object.entries(ZONAS).map(([k, v]) => [k, v.n]), c.zona)}</select></div>
+    </div>
+    <div class="fg"><label>Etiquetas</label><input id="f_tags" value="${esc(c.tags.join(", "))}" placeholder="Ej.: Jugoso, Con hueso"><div class="hint">Separadas por coma.</div></div>
+    <div class="fg"><label>Formas de cocinar</label><input id="f_coc" value="${esc(c.coc.join(", "))}" placeholder="Ej.: Parrilla, Horno"></div>
+    <div class="fg"><label>Dibujo si no hay foto</label><select id="f_forma">${opt(Object.entries(FORMAS), c.forma)}</select></div>
+    <button class="big-btn" data-savecut>Guardar</button>
+    ${edit.nuevo ? "" : `<button class="big-btn line sm" data-dupcut>Duplicar este corte</button><button class="big-btn danger sm" data-delcut>Eliminar este corte</button>`}
+    <button class="big-btn line sm" data-close>Cancelar</button>`;
+}
+function leerFormCorte(){
+  const c = edit.data, v = id => ($("#" + id) ? $("#" + id).value.trim() : "");
+  const lista = s => (s || "").split(",").map(x => x.trim()).filter(Boolean);
+  c.nombre = v("f_nombre"); c.alias = v("f_alias"); c.uso = v("f_uso"); c.descripcion = v("f_desc");
+  c.precio = parseFloat(v("f_precio")) || 0;
+  const of = parseFloat(v("f_oferta")); c.oferta = isFinite(of) && of > 0 ? of : null;
+  c.oferta_hasta = c.oferta ? (v("f_hasta") || null) : null;
+  c.animal = v("f_animal"); c.zona = v("f_zona") || null; c.forma = v("f_forma") || c.forma;
+  c.tags = lista(v("f_tags")); c.coc = lista(v("f_coc"));
+  c.disponible = $("#f_disp").checked; c.destacado = $("#f_dest").checked;
+}
+function describirCambios(a, b){
+  if (!a) return `Precio ${bs(b.precio)}/kg`;
+  const out = [];
+  if (a.nombre !== b.nombre) out.push(`nombre “${a.nombre}” → “${b.nombre}”`);
+  if (a.precio !== b.precio) out.push(`precio ${bs(a.precio)} → ${bs(b.precio)}`);
+  if (a.oferta !== b.oferta) out.push(b.oferta ? `oferta ${bs(b.oferta)}${b.oferta_hasta ? " hasta " + b.oferta_hasta : ""}` : "quitó la oferta");
+  if (a.disponible !== b.disponible) out.push(b.disponible ? "disponible" : "agotado");
+  if (a.destacado !== b.destacado) out.push(b.destacado ? "destacado" : "ya no destacado");
+  if (a.cat !== b.cat) out.push(`sección ${b.cat}`);
+  if (a.foto !== b.foto) out.push(b.foto ? "foto nueva" : "quitó la foto");
+  if (["alias","uso","descripcion","animal","zona","forma"].some(k => a[k] !== b[k]) || a.tags.join() !== b.tags.join() || a.coc.join() !== b.coc.join()) out.push("datos del corte");
+  return out.join(", ") || "sin cambios";
+}
+async function guardarCorte(){
+  leerFormCorte();
+  const c = edit.data;
+  if (!c.nombre) return toast("Escribe el nombre del corte");
+  if (!c.uso) return toast("Escribe para qué es el corte");
+  if (!(c.precio > 0)) return toast("Escribe el precio por kg");
+  if (c.oferta && c.oferta >= c.precio) return toast("La oferta debe ser menor que el precio");
+  if (c.oferta_hasta && c.oferta_hasta < hoy()) return toast("La fecha de la oferta ya pasó");
+  if (CORTES.some(x => x.id !== c.id && norm(x.nombre) === norm(c.nombre)) && !confirm(`Ya existe un corte llamado "${c.nombre}". ¿Guardar igual?`)) return;
+  try {
+    await ocupado(edit.nuevaFoto ? "Subiendo foto…" : "Guardando…", async () => {
+      if (edit.nuevaFoto !== undefined) c.foto = await repo.cambiarFoto(c.id, edit.nuevaFoto, edit.original && edit.original.foto);
+      await repo.guardarCortes([c]);
+    });
+  } catch (e) { return toast("⚠ No se guardó: " + e.message, 4000); }
+  const i = CORTES.findIndex(x => x.id === c.id);
+  if (i >= 0) CORTES[i] = c; else CORTES.push(c);
+  if (!repo.nube) repo.persistir();
+  repo.log(edit.nuevo ? "Creó corte" : "Editó corte", `${c.nombre}: ${describirCambios(edit.original, c)}`);
+  logCache = null; cerrar(); renderAll(); calcular();
+  toast("✓ Guardado: " + c.nombre);
+}
+function duplicarCorte(){
+  leerFormCorte();
+  const copia = {...clone(edit.data), id: "c" + Date.now().toString(36), nombre: edit.data.nombre + " (copia)", foto: null, orden: CORTES.reduce((m, c) => Math.max(m, c.orden), -1) + 1};
+  abrirEditor(null, copia);
+  toast("Copia lista: cambia lo que necesites y guarda");
+}
+async function eliminarCorte(){
+  const c = edit.original || edit.data;
+  if (!confirm(`¿Eliminar "${c.nombre}" del catálogo? Esta acción no se puede deshacer.`)) return;
+  try { await ocupado("Eliminando…", () => repo.borrarCorte(c.id, c.foto)); }
+  catch (e) { return toast("⚠ No se eliminó: " + e.message, 4000); }
+  CORTES = CORTES.filter(x => x.id !== c.id);
+  if (!repo.nube) repo.persistir();
+  repo.log("Eliminó corte", c.nombre);
+  logCache = null; cerrar(); renderAll(); calcular();
+  toast("Corte eliminado");
+}
+
+/* ---- Pestaña: Precios (edición rápida y ajuste masivo) ---- */
+function tabPrecios(){
+  const alc = [["todos","Todos los cortes"],["parrilla","Solo parrilla"],["platos","Solo platos"], ...ANIMALES.filter(a => CORTES.some(c => c.animal === a)).map(a => [a, "Solo " + a])];
+  $("#admBody").innerHTML = `
+    <div class="adm-card">
+      <h4>Ajuste masivo de precios</h4>
+      <p>Sube o baja varios precios a la vez. Primero se muestran en la lista; se guardan cuando tocas “Guardar”.</p>
+      <div class="fg"><label>Aplicar a</label><select id="m_alc">${alc.map(([v, l]) => `<option value="${v}">${l}</option>`).join("")}</select></div>
+      <div class="mass">
+        <div class="fg" style="margin:0"><label>Porcentaje %</label><input id="m_pct" type="number" inputmode="decimal" placeholder="Ej.: 10 o -5" style="width:100%;border:1.5px solid #e2e2e2;border-radius:14px;padding:13px 14px;font-size:15px;background:#fafafa"></div>
+        <div class="fg" style="margin:0"><label>Redondeo</label><select id="m_red" style="width:100%;border:1.5px solid #e2e2e2;border-radius:14px;padding:13px 14px;font-size:15px;background:#fafafa"><option value="1">Bs entero</option><option value="0.5">Bs 0.50</option><option value="0">Sin redondear</option></select></div>
+      </div>
+      <label class="sw" style="margin-top:10px"><div><b>Ajustar también las ofertas</b><small>Si no, las ofertas quedan igual</small></div><input type="checkbox" id="m_of"><span class="k"></span></label>
+      <button class="big-btn dark sm" data-masivo>Previsualizar ajuste</button>
+    </div>
+    <div class="adm-box" id="peList"></div>
+    <div class="savebar" id="peBar" hidden><button class="big-btn line sm" data-pediscard style="flex:1">Descartar</button><button class="big-btn sm" data-pesave style="flex:2">Guardar cambios</button></div>
+    <button class="big-btn line sm" data-sharelist>Compartir lista de precios</button>
+    <p class="note">Deja el campo de oferta vacío para quitar la oferta.</p>`;
+  pintarPrecios();
+}
+function pintarPrecios(){
+  const list = [...CORTES].sort((a, b) => a.cat.localeCompare(b.cat) || ordenAdmin(a, b));
+  $("#peList").innerHTML = `<div class="pe-row head"><span>CORTE</span><span style="text-align:right">PRECIO</span><span style="text-align:right">OFERTA</span></div>` +
+    list.map(c => { const d = borrador[c.id] || {}; const p = d.precio ?? c.precio, o = "oferta" in d ? d.oferta : c.oferta;
+      return `<div class="pe-row"><span class="nm">${esc(c.nombre)}<small>${c.cat === "parrilla" ? "Parrilla" : "Platos"}${!c.disponible ? " · agotado" : ""}</small></span>
+        <input data-pe="${esc(c.id)}" data-k="precio" type="number" inputmode="decimal" step="0.5" value="${p}" class="${d.precio !== undefined && d.precio !== c.precio ? "chg" : ""}">
+        <input data-pe="${esc(c.id)}" data-k="oferta" type="number" inputmode="decimal" step="0.5" value="${o ?? ""}" placeholder="—" class="${"oferta" in d && d.oferta !== c.oferta ? "chg" : ""}"></div>`; }).join("");
+  actualizarBarraPrecios();
+}
+function cambiosPrecio(){
+  return Object.entries(borrador).map(([id, d]) => {
+    const c = byId(id); if (!c) return null;
+    const precio = d.precio ?? c.precio, oferta = "oferta" in d ? d.oferta : c.oferta;
+    return precio !== c.precio || oferta !== c.oferta ? {c, precio, oferta} : null;
+  }).filter(Boolean);
+}
+function actualizarBarraPrecios(){
+  const n = cambiosPrecio().length, bar = $("#peBar");
+  if (!bar) return;
+  bar.hidden = !n; bar.querySelector("[data-pesave]").textContent = `Guardar ${n} cambio${n === 1 ? "" : "s"}`;
+}
+function aplicarMasivo(){
+  const alc = $("#m_alc").value, pct = parseFloat($("#m_pct").value), red = parseFloat($("#m_red").value), conOf = $("#m_of").checked;
+  if (!isFinite(pct) || pct === 0) return toast("Escribe un porcentaje, por ejemplo 10 o -5");
+  const redondear = v => red ? Math.round(v / red) * red : Math.round(v * 100) / 100;
+  const objetivo = CORTES.filter(c => alc === "todos" || c.cat === alc || c.animal === alc);
+  for (const c of objetivo){
+    const d = borrador[c.id] = borrador[c.id] || {};
+    d.precio = redondear((d.precio ?? c.precio) * (1 + pct / 100));
+    if (conOf && (("oferta" in d) ? d.oferta : c.oferta)) d.oferta = redondear((("oferta" in d) ? d.oferta : c.oferta) * (1 + pct / 100));
+  }
+  borrador._masivo = `${pct > 0 ? "+" : ""}${pct}% en ${$("#m_alc").selectedOptions[0].textContent.toLowerCase()} (${objetivo.length} cortes)`;
+  pintarPrecios(); toast(`Vista previa: ${objetivo.length} precios ajustados. Revisa y guarda.`);
+}
+async function guardarPrecios(){
+  const cambios = cambiosPrecio();
+  for (const {c, precio, oferta} of cambios){
+    if (!(precio > 0)) return toast(`Precio no válido en ${c.nombre}`);
+    if (oferta != null && oferta >= precio) return toast(`La oferta de ${c.nombre} debe ser menor que el precio`);
+  }
+  const nuevos = cambios.map(({c, precio, oferta}) => ({...c, precio, oferta, oferta_hasta: oferta ? c.oferta_hasta : null}));
+  try { await ocupado("Guardando precios…", () => repo.guardarCortes(nuevos)); }
+  catch (e) { return toast("⚠ No se guardó: " + e.message, 4000); }
+  for (const n of nuevos){ const i = CORTES.findIndex(x => x.id === n.id); CORTES[i] = n; }
+  if (!repo.nube) repo.persistir();
+  const detalle = cambios.map(({c, precio, oferta}) => `${c.nombre}: ${c.precio !== precio ? `${bs(c.precio)} → ${bs(precio)}` : ""}${c.oferta !== oferta ? ` oferta ${oferta ? bs(oferta) : "quitada"}` : ""}`.trim()).join("; ");
+  repo.log(borrador._masivo ? "Ajuste masivo " + borrador._masivo : `Cambió ${cambios.length} precio${cambios.length === 1 ? "" : "s"}`, detalle);
+  borrador = {}; logCache = null;
+  renderAll(); calcular(); toast(`✓ ${cambios.length} precio${cambios.length === 1 ? "" : "s"} actualizados`);
+}
+function textoListaPrecios(){
+  const sec = cat => [...CORTES].filter(c => c.cat === cat && c.disponible).sort(ordenPublico)
+    .map(c => `• ${c.nombre}: ${bs(precioDe(c))}/kg${ofertaVigente(c) ? ` (antes ${bs(c.precio)})` : ""}`).join("\n");
+  return `*VALERIANO CARNES PREMIUM*\nLista de precios ${new Date().toLocaleDateString("es-BO")}\n\n*PARRILLA*\n${sec("parrilla")}\n\n*PLATOS COMUNES*\n${sec("platos")}\n\nPedidos: wa.me/${waNum()}`;
+}
+async function compartirLista(){
+  const txt = textoListaPrecios();
+  if (window.AndroidBridge && AndroidBridge.share) return AndroidBridge.share(txt);
+  if (navigator.share) try { return await navigator.share({text: txt}); } catch { return; }
+  try { await navigator.clipboard.writeText(txt); toast("✓ Lista copiada: pégala en WhatsApp"); } catch { abrirUrl("https://wa.me/?text=" + encodeURIComponent(txt)); }
+}
+
+/* ---- Pestaña: Banners ---- */
+function tabBanners(){
+  $("#admBody").innerHTML = `<div class="adm-box">${BANNERS.slice(0, 3).map((b, i) => `<div class="adm-row" data-editbanner="${i}">
+      <div class="th">${imgDe(b, i === 0 ? "bone" : "steak")}</div>
+      <div class="nf"><b>${esc(b.titulo)}</b><small>${i === 0 ? "Banner grande" : "Banner pequeño " + i} · ${esc(b.pill)}</small></div>
+      <div class="pr">${bs(b.precio)}</div></div>`).join("")}</div>
+    <p class="note">Son las ofertas que se ven arriba en el inicio. Toca uno para cambiar texto, precio, foto o a dónde lleva.</p>`;
+}
+function abrirEditorBanner(i){
+  edit = {tipo: "banner", idx: i, original: clone(BANNERS[i]), data: clone(BANNERS[i]), nuevaFoto: undefined};
+  pintarEditorBanner(); abrir("#editor");
+}
+function pintarEditorBanner(){
+  const b = edit.data;
+  const destinos = [["parrilla","Sección Parrilla"],["platos","Sección Platos"],["ofertas","Sección Ofertas"],["calc","Calculadora"], ...[...CORTES].sort(ordenAdmin).map(c => [c.id, "Corte: " + c.nombre])];
+  $("#editor").innerHTML = `<div class="handle"></div>
+    <h3>${edit.idx === 0 ? "Banner grande" : "Banner pequeño"}</h3>
+    ${edit.idx === 0 ? `<div class="fg"><label>Foto</label>${fotoBloque()}</div>` : ""}
+    <div class="fg"><label>Etiqueta</label><input id="b_pill" value="${esc(b.pill)}" placeholder="Ej.: COMBO PARRILLERO"></div>
+    <div class="fg"><label>Título</label><input id="b_titulo" value="${esc(b.titulo)}"></div>
+    ${edit.idx === 0 ? `<div class="fg"><label>Detalle</label><input id="b_desc" value="${esc(b.descripcion)}" placeholder="Qué incluye"></div>` : ""}
+    <div class="fg2">
+      <div class="fg"><label>Precio Bs</label><input id="b_precio" type="number" inputmode="decimal" value="${b.precio || ""}"></div>
+      <div class="fg"><label>Precio antes</label><input id="b_antes" type="number" inputmode="decimal" value="${b.antes || ""}" placeholder="Opcional"></div>
+    </div>
+    <div class="fg"><label>Unidad</label><input id="b_unidad" value="${esc(b.unidad)}" placeholder="Ej.: /kg (vacío si es precio total)"></div>
+    <div class="fg"><label>Al tocar, abrir</label><select id="b_ir">${destinos.map(([v, l]) => `<option value="${esc(v)}" ${v === b.ir ? "selected" : ""}>${esc(l)}</option>`).join("")}</select></div>
+    <button class="big-btn" data-savebanner>Guardar banner</button>
+    <button class="big-btn line sm" data-close>Cancelar</button>`;
+}
+function leerFormBanner(){
+  const b = edit.data, v = id => ($("#" + id) ? $("#" + id).value.trim() : "");
+  b.pill = v("b_pill").toUpperCase(); b.titulo = v("b_titulo"); if ($("#b_desc")) b.descripcion = v("b_desc");
+  b.precio = parseFloat(v("b_precio")) || 0; b.antes = parseFloat(v("b_antes")) || null;
+  b.unidad = v("b_unidad"); b.ir = v("b_ir");
+}
+async function guardarBanner(){
+  leerFormBanner();
+  const b = edit.data;
+  if (!b.titulo) return toast("Escribe un título");
+  try {
+    await ocupado(edit.nuevaFoto ? "Subiendo foto…" : "Guardando…", async () => {
+      if (edit.nuevaFoto !== undefined) b.foto = await repo.cambiarFoto(b.id, edit.nuevaFoto, edit.original.foto);
+      await repo.guardarBanners([b]);
+    });
+  } catch (e) { return toast("⚠ No se guardó: " + e.message, 4000); }
+  BANNERS[edit.idx] = b;
+  if (!repo.nube) repo.persistir();
+  repo.log("Editó banner", `${b.titulo} · ${bs(b.precio)}`);
+  logCache = null; cerrar(); renderAll(); toast("✓ Banner guardado");
+}
+
+/* ---- Pestaña: Historial ---- */
+async function tabActividad(){
+  $("#admBody").innerHTML = `<div class="adm-box" id="logList"><div class="empty">Cargando…</div></div>`;
+  try { logCache = logCache || await repo.leerLog(); }
+  catch (e) { $("#logList").innerHTML = `<div class="empty">No se pudo cargar el historial.<br>${esc(e.message)}</div>`; return; }
+  if (admTab !== "actividad") return;
+  const ico = a => /precio|ajuste/i.test(a) ? "Bs" : /elimin/i.test(a) ? "✕" : /cre/i.test(a) ? "＋" : /sesi/i.test(a) ? "→" : "✎";
+  $("#logList").innerHTML = logCache.length ? logCache.map(e => `<div class="log"><i>${ico(e.accion)}</i><div style="min-width:0">
+      <b>${esc(e.accion)}</b><small>${new Date(e.fecha).toLocaleString("es-BO", {dateStyle: "short", timeStyle: "short"})} · ${esc(e.usuario || "")}</small>
+      ${e.detalle ? `<div class="d">${esc(e.detalle)}</div>` : ""}</div></div>`).join("") : `<div class="empty">Todavía no hay cambios registrados.</div>`;
+}
+
+/* ---- Pestaña: Ajustes ---- */
+function tabAjustes(){
+  $("#admBody").innerHTML = `
+    <div class="adm-card">
+      <h4>Datos de la tienda</h4>
+      <p>Se muestran a los clientes en el inicio y en el pedido.</p>
+      <div class="fg"><label>WhatsApp de pedidos</label><input id="s_wa" inputmode="tel" value="${esc(AJUSTES.whatsapp)}"><div class="hint">Con código de país, sin + ni espacios. Ej.: 59171234567</div></div>
+      <div class="fg"><label>Dirección</label><input id="s_dir" value="${esc(AJUSTES.direccion)}" placeholder="Ej.: Av. América #123, Cochabamba"></div>
+      <div class="fg"><label>Horario</label><input id="s_hor" value="${esc(AJUSTES.horario)}"></div>
+      <button class="big-btn sm" data-savesettings>Guardar datos</button>
+    </div>
+    ${CLOUD ? `
+    <div class="adm-card">
+      <h4>Cuenta</h4>
+      <p>Sesión iniciada como <b>${esc(nube.ses ? nube.ses.email : "")}</b>. Para agregar otro administrador, usa el panel de Supabase.</p>
+      <div class="fg"><label>Nueva contraseña</label><input id="s_pass1" type="password" autocomplete="new-password" placeholder="Mínimo 8 caracteres"></div>
+      <div class="fg"><label>Repetir contraseña</label><input id="s_pass2" type="password" autocomplete="new-password"></div>
+      <button class="big-btn line sm" data-savepass>Cambiar mi contraseña</button>
+      <button class="big-btn line sm" data-recargar>Actualizar datos desde la nube</button>
+      <button class="big-btn line sm" data-migrar>Subir catálogo de este teléfono a la nube</button>
+    </div>` : `
+    <div class="adm-card">
+      <h4>PIN de administrador</h4>
+      <div class="fg"><label>Nuevo PIN (4 números)</label><input id="s_pin" inputmode="numeric" maxlength="4" value="${esc(pinLocal())}"></div>
+      <button class="big-btn line sm" data-savepin>Cambiar PIN</button>
+    </div>`}
+    <div class="adm-card">
+      <h4>Copias de seguridad</h4>
+      <p>Guarda todo el catálogo en un archivo, o restaura uno guardado antes.</p>
+      <button class="big-btn line sm" data-export>Guardar copia (.json)</button>
+      <button class="big-btn line sm" data-import>Restaurar copia</button>
+      ${CLOUD ? "" : `<button class="big-btn danger sm" data-reset>Volver al catálogo original</button>`}
+    </div>
+    <button class="big-btn dark" data-adminexit>${CLOUD ? "Cerrar sesión" : "Salir del modo administrador"}</button>`;
+}
+async function guardarAjustes(){
+  const wa = $("#s_wa").value.replace(/\D/g, "");
+  if (wa.length < 8) return toast("Número de WhatsApp no válido");
+  const antes = clone(AJUSTES);
+  AJUSTES = {...AJUSTES, whatsapp: wa, direccion: $("#s_dir").value.trim(), horario: $("#s_hor").value.trim()};
+  try { await ocupado("Guardando…", () => repo.guardarAjustes()); }
+  catch (e) { AJUSTES = antes; return toast("⚠ No se guardó: " + e.message, 4000); }
+  repo.log("Cambió datos de la tienda", `WhatsApp +${wa}${AJUSTES.direccion ? " · " + AJUSTES.direccion : ""}`);
+  logCache = null; renderTienda(); toast("✓ Datos guardados");
+}
+async function cambiarClave(){
+  const a = $("#s_pass1").value, b = $("#s_pass2").value;
+  if (a.length < 8) return toast("La contraseña debe tener al menos 8 caracteres");
+  if (a !== b) return toast("Las contraseñas no coinciden");
+  try { await ocupado("Cambiando…", () => nube.req("/auth/v1/user", {method: "PUT", body: JSON.stringify({password: a})})); }
+  catch (e) { return toast("⚠ No se pudo cambiar: " + e.message, 4000); }
+  $("#s_pass1").value = $("#s_pass2").value = "";
+  repo.log("Cambió su contraseña"); logCache = null;
+  toast("✓ Contraseña cambiada");
+}
+function guardarPin(){
+  const pin = $("#s_pin").value.trim();
+  if (!/^\d{4}$/.test(pin)) return toast("El PIN debe tener 4 números");
+  store.set("valeriano.pin", pin); toast("✓ PIN cambiado");
+}
+
+/* ---- Subir a la nube el catálogo que está en este teléfono ---- */
+async function migrarANube(){
+  const local = await repoLocal.cargar();
+  const tieneLocal = !!store.get("valeriano.cortes", null);
+  if (!confirm(`Se subirán ${local.cortes.length} cortes${Object.keys(local.blobs).length ? ` y ${Object.keys(local.blobs).length} fotos` : ""} ${tieneLocal ? "de este teléfono" : "del catálogo inicial"} a la nube. Los cortes con el mismo nombre interno se reemplazan. ¿Continuar?`)) return;
+  try {
+    await ocupado("Subiendo catálogo…", async () => {
+      for (const x of [...local.cortes, ...local.banners]){
+        x.foto = local.blobs[x.id] ? await nube.subirFoto(x.id, local.blobs[x.id]) : null;
+      }
+      local.cortes.forEach((c, i) => c.orden = i);
+      await repoNube.guardarCortes(local.cortes);
+      await repoNube.guardarBanners(local.banners);
+      AJUSTES = local.ajustes; await repoNube.guardarAjustes();
+    });
+  } catch (e) { return toast("⚠ Falló la subida: " + e.message, 5000); }
+  repo.log("Subió catálogo a la nube", `${local.cortes.length} cortes`);
+  logCache = null; await recargar(); toast("✓ Catálogo subido a la nube");
+}
+
+/* ---- Copias de seguridad ---- */
+async function exportar(){
+  const fotos = {};
+  if (!repo.nube){ const blobs = await fotoDB.all(); for (const [id, b] of Object.entries(blobs)) fotos[id] = await blobToDataURL(b); }
+  const data = JSON.stringify({app: "valeriano", version: 2, fecha: new Date().toISOString(),
+    cortes: CORTES.map(c => repo.nube ? c : sinFoto(c)), banners: BANNERS.map(b => repo.nube ? b : sinFoto(b)), ajustes: AJUSTES, fotos});
+  const nombre = `valeriano-catalogo-${hoy()}.json`;
+  if (window.AndroidBridge && AndroidBridge.saveFile){
+    const ok = AndroidBridge.saveFile(nombre, data);
+    return toast(ok ? "✓ Guardado en Descargas: " + nombre : "⚠ No se pudo guardar la copia");
+  }
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([data], {type: "application/json"}));
+  a.download = nombre; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  toast("✓ Copia descargada");
+}
+async function importar(file){
+  let d;
+  try { d = JSON.parse(await file.text()); if (d.app !== "valeriano" || !Array.isArray(d.cortes)) throw 0; }
+  catch { return toast("⚠ Ese archivo no es una copia del catálogo"); }
+  if (!confirm(`¿Reemplazar el catálogo actual por la copia del ${String(d.fecha || "").slice(0, 10)} (${d.cortes.length} cortes)?`)) return;
+  const cortes = d.cortes.map(normCorte), banners = (d.banners || d.combos || []).map(normBanner);
+  const ajustes = Object.assign(clone(AJUSTES), d.ajustes || d.config || {});
+  try {
+    await ocupado("Restaurando…", async () => {
+      for (const x of [...cortes, ...banners]){
+        const f = d.fotos && d.fotos[x.id];
+        if (f) x.foto = await repo.cambiarFoto(x.id, await dataURLToBlob(f), null);
+        else if (!repo.nube) { x.foto = null; try { await fotoDB.del(x.id); } catch {} }
+      }
+      if (repo.nube){
+        const nuevos = new Set(cortes.map(c => c.id));
+        for (const c of CORTES) if (!nuevos.has(c.id)) await nube.borrar("cortes", c.id);
+      }
+      CORTES = cortes; BANNERS = banners.length ? banners : BANNERS; AJUSTES = ajustes;
+      await repo.guardarCortes(CORTES); await repo.guardarBanners(BANNERS); await repo.guardarAjustes();
+    });
+  } catch (e) { toast("⚠ No se pudo restaurar: " + e.message, 5000); return recargar(); }
+  repo.log("Restauró copia de seguridad", `${cortes.length} cortes`);
+  logCache = null; renderAll(); calcular(); toast("✓ Catálogo restaurado");
+}
+async function restaurarOriginal(){
+  if (!confirm("¿Borrar todos tus cambios y fotos y volver al catálogo original?")) return;
+  store.del("valeriano.cortes"); store.del("valeriano.combos"); store.del("valeriano.ajustes");
+  try { await fotoDB.clear(); } catch {}
+  await recargar(); repo.log("Volvió al catálogo original"); toast("Catálogo original restaurado");
+}
+async function recargar(){ await cargarDatos(); renderAll(); calcular(); }
+
+/* =====================================================================
+   Eventos
+   ===================================================================== */
+document.addEventListener("click", e => {
+  const t = e.target.closest("button, [data-go], [data-open], [data-edit], [data-editbanner], [data-af], [data-pickphoto], .card, .cow-region, #scrim");
+  if (!t || t.disabled) return;
+  const d = t.dataset, has = a => t.hasAttribute(a);
+  if (t.id === "scrim" || has("data-close")) return cerrar();
+  if (d.quick){ e.stopPropagation(); return agregar(d.quick, 1); }
+  if (d.mover){ e.stopPropagation(); return mover(d.mover, +d.dir); }
+  if (d.edit){ e.stopPropagation(); return abrirEditor(d.edit); }
+  if (d.editbanner) return abrirEditorBanner(+d.editbanner);
+  if (d.go){ cerrar(); return go(d.go); }
+  if (d.open) return abrirDetalle(d.open);
+  if (t.classList.contains("card")) return abrirDetalle(d.id);
+  if (has("data-cart") || t.id === "cartBtn"){ pintarCarrito(); return abrir("#cart"); }
+  if (d.peso){ det.peso = +d.peso; return pintarDetalle(); }
+  if (d.cant){ det.cant = Math.max(1, det.cant + +d.cant); return pintarDetalle(); }
+  if (has("data-addcart")){ agregar(det.c.id, det.peso * det.cant); return cerrar(); }
+  if (d.rm){ carrito = carrito.filter(x => x.id !== d.rm); guardarCarrito(); return pintarCarrito(); }
+  if (has("data-wa")) return enviarWhatsApp();
+  if (has("data-wachat")) return abrirUrl(`https://wa.me/${waNum()}`);
+  if (has("data-addmix")){
+    for (const [id, p] of mixActual()){ const kg = fmtKg(calc._kg * p); if (kg > 0){ const ex = carrito.find(x => x.id === id); ex ? ex.kg = Math.round((ex.kg + kg)*100)/100 : carrito.push({id, kg}); } }
+    guardarCarrito(); return toast("✓ Selección agregada al pedido");
+  }
+  if (t.classList.contains("cow-region")) return elegirZona(d.z);
+  if (d.zone) return elegirZona(d.zone);
+  if (has("data-seezone")) return $("#gridAll").scrollIntoView({behavior: "smooth", block: "start"});
+
+  // acceso
+  if (d.pin) return teclaPin(d.pin);
+  if (has("data-dologin")) return hacerLogin();
+  if (has("data-adminexit")) return salirAdmin();
+  // panel
+  if (d.tab){ admTab = d.tab; return renderAdmin(); }
+  if (d.af){ admFiltro = d.af; return tabCortes(); }
+  if (has("data-newcut")) return abrirEditor(null);
+  if (has("data-pickphoto")){ $("#photoInput").value = ""; return $("#photoInput").click(); }
+  if (has("data-delphoto")){
+    if (edit.tipo === "corte") leerFormCorte(); else leerFormBanner();
+    edit.nuevaFoto = null; return edit.tipo === "banner" ? pintarEditorBanner() : pintarEditor();
+  }
+  if (d.fcat){ edit.data.cat = d.fcat; $$("#f_cat button").forEach(b => b.classList.toggle("on", b === t)); return; }
+  if (has("data-savecut")) return guardarCorte();
+  if (has("data-dupcut")) return duplicarCorte();
+  if (has("data-delcut")) return eliminarCorte();
+  if (has("data-savebanner")) return guardarBanner();
+  if (has("data-masivo")) return aplicarMasivo();
+  if (has("data-pesave")) return guardarPrecios();
+  if (has("data-pediscard")){ borrador = {}; return pintarPrecios(); }
+  if (has("data-sharelist")) return compartirLista();
+  if (has("data-savesettings")) return guardarAjustes();
+  if (has("data-savepin")) return guardarPin();
+  if (has("data-savepass")) return cambiarClave();
+  if (has("data-migrar")) return migrarANube();
+  if (has("data-recargar")) return ocupado("Actualizando…", recargar).then(() => toast("✓ Datos actualizados"));
+  if (has("data-export")) return exportar();
+  if (has("data-import")){ $("#importFile").value = ""; return $("#importFile").click(); }
+  if (has("data-reset")) return restaurarOriginal();
+
+  if (t.classList.contains("chip")){
+    const box = t.parentElement.id;
+    if (box === "filterChips"){ filtroInicio = d.v; filtroZona = null; renderCowInfo(); return renderInicio(); }
+    if (box === "chipsParrilla"){ subFiltro.parrilla = d.v; return renderSeccion("parrilla"); }
+    if (box === "chipsPlatos"){ subFiltro.platos = d.v; return renderSeccion("platos"); }
+    if (box === "admChips"){ admFiltro = d.v; return tabCortes(); }
+  }
+
+  if (d.mode){ calc.mode = d.mode; $$("#calcMode button").forEach(b => b.classList.toggle("on", b === t)); $("#modeKg").hidden = calc.mode !== "kg"; $("#modePeople").hidden = calc.mode !== "people"; return calcular(); }
+  if (d.type){ calc.type = d.type; $$("#calcType .opt").forEach(b => b.classList.toggle("on", b === t)); return calcular(); }
+  if (d.app){ calc.app = +d.app; $$("#calcApp .opt").forEach(b => b.classList.toggle("on", b === t)); return calcular(); }
+  if (d.step){ const i = $("#" + d.step); const step = d.step === "kilos" && num("kilos") >= 10 ? 5 : 1; i.value = Math.max(0, Math.round((num(d.step) + +d.d * step)*10)/10); return calcular(); }
+  if (d.p){ $("#adults").value = d.p; $("#kids").value = 0; return calcular(); }
+  if (d.k){ $("#kilos").value = d.k; return calcular(); }
+});
+
+document.addEventListener("input", e => {
+  const t = e.target;
+  if (t.dataset.pe){
+    const c = byId(t.dataset.pe), d = borrador[c.id] = borrador[c.id] || {};
+    const v = parseFloat(t.value);
+    if (t.dataset.k === "precio") d.precio = isFinite(v) ? v : 0;
+    else d.oferta = isFinite(v) && v > 0 ? v : null;
+    t.classList.toggle("chg", t.dataset.k === "precio" ? d.precio !== c.precio : d.oferta !== c.oferta);
+    return actualizarBarraPrecios();
+  }
+  if (t.id === "admBusca"){ admBusca = t.value; return pintarListaAdmin(); }
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") cerrar();
+  if (e.key === "Enter" && (e.target.id === "l_pass" || e.target.id === "l_email")) hacerLogin();
+});
+
+$("#photoInput").addEventListener("change", async e => {
+  const f = e.target.files && e.target.files[0];
+  if (!f || !edit) return;
+  try {
+    if (edit.tipo === "corte") leerFormCorte(); else leerFormBanner();
+    const blob = await comprimirFoto(f);
+    if (edit._preview) URL.revokeObjectURL(edit._preview);
+    edit.nuevaFoto = blob; edit._preview = URL.createObjectURL(blob);
+    edit.tipo === "banner" ? pintarEditorBanner() : pintarEditor();
+  } catch { toast("⚠ No se pudo usar esa imagen"); }
+});
+$("#importFile").addEventListener("change", e => { const f = e.target.files && e.target.files[0]; if (f) importar(f); });
+
+let taps = 0, tapT;
+$("#logoTap").addEventListener("click", () => {
+  taps++; clearTimeout(tapT); tapT = setTimeout(() => taps = 0, 1500);
+  if (taps >= 5){ taps = 0; esAdmin ? go("admin") : pedirAcceso(); }
+});
+
+["adults", "kids", "kilos"].forEach(id => $("#" + id).addEventListener("input", calcular));
+$("#search").addEventListener("input", e => {
+  busqueda = norm(e.target.value.trim());
+  if (busqueda && (vistaActual === "calc" || vistaActual === "admin")) go("inicio");
+  renderInicio(); renderSeccion("parrilla"); renderSeccion("platos"); renderOfertas();
+});
+
+/* Al volver a la app, trae precios nuevos de la nube (si no hay nada sin guardar) */
+document.addEventListener("visibilitychange", () => {
+  if (CLOUD && document.visibilityState === "visible" && Date.now() - ultimaCarga > 60000 && !hayHojaAbierta() && !cambiosPrecio().length) recargar();
+});
+
+window.onAndroidBack = () => {
+  if (hayHojaAbierta()){ cerrar(); return true; }
+  if (!$("#splash").classList.contains("hide")) return false;
+  if (vistaActual !== "inicio"){ go("inicio"); return true; }
+  return false;
+};
+
+$("#enterBtn").addEventListener("click", () => {
+  $("#splash").classList.add("hide");
+  // En iPhone (Safari, sin instalar) se explica cómo agregarla a la pantalla de inicio
+  const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const instalada = navigator.standalone || matchMedia("(display-mode: standalone)").matches;
+  if (ios && !instalada && !store.get("valeriano.tipVisto", false)) setTimeout(() => $("#iosTip").hidden = false, 1200);
+});
+document.addEventListener("click", e => {
+  if (e.target.closest("[data-closetip]")){ $("#iosTip").hidden = true; store.set("valeriano.tipVisto", true); }
+});
+
+/* App web: guarda los archivos para abrir sin internet (no aplica dentro de la APK) */
+if ("serviceWorker" in navigator && location.protocol === "https:" && !window.AndroidBridge)
+  navigator.serviceWorker.register("sw.js").catch(() => {});
+
+/* Arranque */
+(async () => {
+  $("#cowMap").innerHTML = cowSVG();
+  $$("[data-meat]").forEach(el => el.innerHTML = meatSVG(el.dataset.meat, el.parentElement.className));
+  $("#splashMeat").innerHTML = meatSVG("steak", "splash-ojo");
+  await cargarDatos();
+  if (CLOUD) esAdmin = !!nube.ses && await nube.esAdmin();
+  else try { esAdmin = sessionStorage.getItem("valeriano.admin") === "1"; } catch {}
+  setAdmin(esAdmin);
+  calcular();
+  const portada = (byId("ojo") && byId("ojo").foto) || (BANNERS[0] && BANNERS[0].foto);
+  if (portada) $("#splashMeat").innerHTML = `<img src="${esc(portada)}" alt="">`;
+})();
+</script>
+</body>
+</html>
