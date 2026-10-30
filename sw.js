@@ -1,7 +1,7 @@
 /* Service worker: permite abrir la app sin internet (con el último catálogo guardado).
    La página siempre intenta bajar la versión nueva primero. Los datos de Supabase
    no pasan por aquí: la app los guarda por su cuenta. */
-const CACHE = "valeriano-v4";
+const CACHE = "valeriano-v5";
 const ARCHIVOS = ["./", "./index.html", "./config.js", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/apple-touch-icon.png"];
 
 self.addEventListener("install", e => {
