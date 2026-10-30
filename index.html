@@ -113,33 +113,36 @@
   .sc.k i{background:#111;color:#fff}
 
   /* ---------- Cow map (estilo lámina de carnicería) ---------- */
-  .cow-card{background:#0d0d0d;color:#fff;border-radius:var(--radius);padding:18px 14px 14px;position:relative;overflow:hidden}
+  .cow-card{background:#eceef1;color:#111;border-radius:var(--radius);padding:18px 14px 14px;position:relative;overflow:hidden;border:1px solid #e0e2e6}
   .cow-card h3{font-family:var(--display);font-size:22px;margin:0 4px;line-height:1}
-  .cow-card p{margin:6px 4px 0;color:#bdbdbd;font-size:13px}
-  .cow-card svg{width:100%;height:auto;margin-top:6px;display:block;overflow:visible}
+  .cow-card p{margin:6px 4px 0;color:#5c5f66;font-size:13px}
+  .cow-card svg{width:100%;height:auto;margin-top:8px;display:block;overflow:visible}
   .cow-card svg *{pointer-events:none}
   .cow-card svg .cow-region{pointer-events:all}
-  .cow-region{fill:url(#cowShade);stroke:#fff;stroke-width:1.1;stroke-dasharray:4 3;stroke-opacity:.75;cursor:pointer;transition:fill .2s}
-  .cow-region:hover{fill:#3a1517}
+  .cow-region{fill:url(#cowShade);stroke:#fff;stroke-width:1.2;stroke-linejoin:round;cursor:pointer;transition:fill .2s}
+  .cow-region:hover{fill:#4a2023}
   .cow-region.on{fill:var(--red)}
-  .cow-label{fill:#fff;font-size:9px;font-weight:800;pointer-events:none;font-family:var(--text);letter-spacing:.02em;paint-order:stroke;stroke:#0d0d0d;stroke-width:2.5px}
-  .cow-info{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:4px 4px 0;min-height:44px}
-  .cow-info b{font-size:15px}
-  .cow-info small{display:block;color:#bdbdbd;font-size:12px;margin-top:2px}
+  .cow-num{fill:#fff;font-size:10.5px;font-weight:800;font-family:var(--text)}
+  .cow-info{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:6px 4px 0;min-height:44px}
+  .cow-info b{font-size:15px;display:flex;align-items:center;gap:8px}
+  .cow-info b i{width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;font-style:normal;font-size:12px;display:grid;place-items:center;flex:none}
+  .cow-info small{display:block;color:#5c5f66;font-size:12px;margin-top:3px;line-height:1.35}
   .cow-info button{background:var(--red);color:#fff;font-weight:800;font-size:12px;padding:10px 14px;border-radius:999px;flex:none}
   .zone-cuts{display:flex;gap:8px;overflow-x:auto;margin:10px 4px 0;padding-bottom:4px;scrollbar-width:none}
   .zone-cuts::-webkit-scrollbar{display:none}
-  .zc{flex:none;width:128px;background:#1b1b1b;border-radius:14px;padding:8px;text-align:left;color:#fff;animation:fade .25s ease}
-  .zc .t{aspect-ratio:1.3;border-radius:10px;background:#262626;display:grid;place-items:center;overflow:hidden;position:relative}
+  .zc{flex:none;width:128px;background:#fff;border:1px solid #e3e5e8;border-radius:14px;padding:8px;text-align:left;color:#111;animation:fade .25s ease}
+  .zc .t{aspect-ratio:1.3;border-radius:10px;background:#f0f0f0;display:grid;place-items:center;overflow:hidden;position:relative}
   .zc .t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .zc .t svg{width:92%}
   .zc b{display:block;font-size:12.5px;margin-top:7px;line-height:1.15}
-  .zc small{display:block;color:#bdbdbd;font-size:11px;margin-top:2px;line-height:1.25}
-  .zc em{display:block;font-style:normal;color:#ff5a5f;font-weight:800;font-size:12.5px;margin-top:4px}
-  .zone-empty{color:#bdbdbd;font-size:12.5px;margin:10px 4px 0}
-  .zone-chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 4px 0}
-  .zone-chips button{background:#1f1f1f;color:#ddd;font-size:11.5px;font-weight:700;padding:6px 10px;border-radius:999px}
-  .zone-chips button.on{background:var(--red);color:#fff}
+  .zc small{display:block;color:#6b6b6b;font-size:11px;margin-top:2px;line-height:1.25}
+  .zc em{display:block;font-style:normal;color:var(--red);font-weight:800;font-size:12.5px;margin-top:4px}
+  .zone-empty{color:#5c5f66;font-size:12.5px;margin:10px 4px 0;background:#fff;border-radius:12px;padding:10px 12px}
+  .zone-legend{display:grid;grid-template-columns:1fr 1fr;gap:2px 6px;margin:12px 0 0;padding-top:10px;border-top:1px solid #dcdfe3}
+  .zone-legend button{display:flex;align-items:center;gap:8px;text-align:left;font-size:12.5px;font-weight:600;color:#222;padding:5px 6px;border-radius:10px;line-height:1.15}
+  .zone-legend button i{width:22px;height:22px;border-radius:50%;background:#2a2d31;color:#fff;font-style:normal;font-size:10.5px;font-weight:800;display:grid;place-items:center;flex:none}
+  .zone-legend button.on{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+  .zone-legend button.on i{background:var(--red)}
 
   /* ---------- Product grid ---------- */
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -460,12 +463,12 @@
 
     <div class="sec-h"><h2>Mapa de cortes</h2></div>
     <div class="cow-card">
-      <h3>Toca una parte de la res</h3>
-      <p>Descubre qué cortes salen de cada zona.</p>
+      <h3>Despiece del toro</h3>
+      <p>Toca una zona del toro o un número de la lista para ver sus cortes.</p>
       <div id="cowMap"></div>
       <div class="cow-info" id="cowInfo"></div>
       <div id="zoneCuts"></div>
-      <div class="zone-chips" id="zoneChips"></div>
+      <div class="zone-legend" id="zoneChips"></div>
     </div>
 
     <div class="sec-h"><h2>Catálogo de cortes</h2><span class="link" id="countAll"></span></div>
@@ -625,27 +628,27 @@
    ===================================================================== */
 const CORTES_BASE = [
   // ---------- PARRILLA ----------
-  {id:"lomo", nombre:"Lomo", alias:"Filete · Tenderloin", animal:"Res", cat:"parrilla", precio:110, oferta:null, zona:"bife", forma:"roast",
+  {id:"lomo", nombre:"Lomo", alias:"Filete · Tenderloin", animal:"Res", cat:"parrilla", precio:110, oferta:null, zona:"filet", forma:"roast",
    uso:"El más tierno. Parrilla, medallones y plancha.", descripcion:"Corte magro y muy suave que se encuentra debajo del bife. Ideal para medallones a la parrilla, lomo saltado o al horno entero.", tags:["Muy tierno","Magro"], coc:["Parrilla","Plancha","Horno"]},
-  {id:"ojo", nombre:"Ojo de Bife", alias:"Rib eye", animal:"Res", cat:"parrilla", precio:95, oferta:85, zona:"aguja", forma:"steak", destacado:true,
+  {id:"ojo", nombre:"Ojo de Bife", alias:"Rib eye", animal:"Res", cat:"parrilla", precio:95, oferta:85, zona:"ojobife", forma:"steak", destacado:true,
    uso:"Bife jugoso con marmoleado. Parrilla y plancha.", descripcion:"Corte del costillar alto con mucha grasa intramuscular, lo que lo hace jugoso y lleno de sabor. Cortar de 3 cm de grosor.", tags:["Marmoleado alto","Jugoso"], coc:["Parrilla","Plancha"]},
-  {id:"chorizo", nombre:"Bife de Chorizo", alias:"Churrasco · Strip loin", animal:"Res", cat:"parrilla", precio:92, oferta:null, zona:"bife", forma:"steak",
+  {id:"chorizo", nombre:"Bife de Chorizo", alias:"Churrasco · Strip loin", animal:"Res", cat:"parrilla", precio:92, oferta:null, zona:"bifechorizo", forma:"steak",
    uso:"El clásico churrasco con su capa de grasa.", descripcion:"Bife ancho con un borde de grasa que se dora en la parrilla. Sabor intenso y textura firme.", tags:["Clásico","Capa de grasa"], coc:["Parrilla","Plancha"]},
-  {id:"picana", nombre:"Punta de S", alias:"Picaña", animal:"Res", cat:"parrilla", precio:88, oferta:null, zona:"cuadril", forma:"steak", destacado:true,
+  {id:"picana", nombre:"Punta de S", alias:"Picaña", animal:"Res", cat:"parrilla", precio:88, oferta:null, zona:"picana", forma:"steak", destacado:true,
    uso:"Corte triangular con grasa. Parrilla y horno.", descripcion:"Triángulo del cuadril con una capa de grasa que lo mantiene jugoso. Se asa entero o en churrascos gruesos.", tags:["Favorito","Con grasa"], coc:["Parrilla","Horno"]},
-  {id:"tbone", nombre:"T-Bone", alias:"Bife con lomo y hueso", animal:"Res", cat:"parrilla", precio:90, oferta:null, zona:"bife", forma:"bone",
+  {id:"tbone", nombre:"T-Bone", alias:"Bife con lomo y hueso", animal:"Res", cat:"parrilla", precio:90, oferta:null, zona:"bifechorizo", forma:"bone",
    uso:"Lomo y bife en un solo corte con hueso en T.", descripcion:"Dos cortes en uno: de un lado lomo y del otro bife de chorizo, unidos por el hueso en forma de T.", tags:["Con hueso","Para compartir"], coc:["Parrilla"]},
-  {id:"tomahawk", nombre:"Tomahawk", alias:"Ojo de bife con hueso largo", animal:"Res", cat:"parrilla", precio:120, oferta:null, zona:"aguja", forma:"bone",
+  {id:"tomahawk", nombre:"Tomahawk", alias:"Ojo de bife con hueso largo", animal:"Res", cat:"parrilla", precio:120, oferta:null, zona:"ojobife", forma:"bone",
    uso:"Corte premium para impresionar en la parrilla.", descripcion:"Ojo de bife con el hueso de la costilla largo y limpio. Ideal para cocción lenta y cortar en la mesa.", tags:["Premium","Con hueso"], coc:["Parrilla","Horno"]},
-  {id:"cuadril", nombre:"Colita de Cuadril", alias:"Tri-tip", animal:"Res", cat:"parrilla", precio:84, oferta:null, zona:"cuadril", forma:"roast",
+  {id:"cuadril", nombre:"Colita de Cuadril", alias:"Tri-tip", animal:"Res", cat:"parrilla", precio:84, oferta:null, zona:"colita", forma:"roast",
    uso:"Tierna y magra. Parrilla entera u horno.", descripcion:"Pieza pequeña y tierna del cuadril. Se cocina entera y se corta en láminas contra la fibra.", tags:["Tierno","Pieza entera"], coc:["Parrilla","Horno"]},
-  {id:"asadotira", nombre:"Costilla / Asado de Tira", alias:"Short ribs", animal:"Res", cat:"parrilla", precio:62, oferta:55, zona:"costillar", forma:"rib",
+  {id:"asadotira", nombre:"Costilla / Asado de Tira", alias:"Short ribs", animal:"Res", cat:"parrilla", precio:62, oferta:55, zona:"vaciodelgado", forma:"rib",
    uso:"Tiras de costilla para asar a fuego lento.", descripcion:"Tiras transversales del costillar con hueso, carne y grasa. El clásico de toda parrillada.", tags:["Con hueso","Fuego lento"], coc:["Parrilla","Horno"]},
-  {id:"vacio", nombre:"Vacío", alias:"Flank", animal:"Res", cat:"parrilla", precio:74, oferta:null, zona:"falda", forma:"strip",
+  {id:"vacio", nombre:"Vacío", alias:"Flank", animal:"Res", cat:"parrilla", precio:74, oferta:null, zona:"vacio", forma:"strip",
    uso:"Pieza jugosa, crocante por fuera. Parrilla.", descripcion:"Corte del flanco con fibras largas y una capa de grasa. Se asa entero, primero del lado de la grasa.", tags:["Jugoso","Fibra larga"], coc:["Parrilla"]},
-  {id:"matambre", nombre:"Matambre", alias:"Matambre de res", animal:"Res", cat:"parrilla", precio:70, oferta:null, zona:"falda", forma:"strip",
+  {id:"matambre", nombre:"Matambre", alias:"Matambre de res", animal:"Res", cat:"parrilla", precio:70, oferta:null, zona:"vaciodelgado", forma:"strip",
    uso:"Capa fina para parrilla o enrollado relleno.", descripcion:"Capa delgada entre el cuero y las costillas. A la parrilla, a la pizza o enrollado y relleno.", tags:["Fino","Versátil"], coc:["Parrilla","Horno"]},
-  {id:"entrana", nombre:"Entraña", alias:"Skirt steak", animal:"Res", cat:"parrilla", precio:98, oferta:null, zona:"costillar", forma:"strip",
+  {id:"entrana", nombre:"Entraña", alias:"Skirt steak", animal:"Res", cat:"parrilla", precio:98, oferta:null, zona:"entrana", forma:"strip",
    uso:"Muy sabrosa, se cocina rápido a fuego fuerte.", descripcion:"Músculo del diafragma, delgado y de sabor intenso. Fuego fuerte y pocos minutos por lado.", tags:["Sabor intenso","Rápida"], coc:["Parrilla","Plancha"]},
   {id:"costcerdo", nombre:"Costilla de Cerdo", alias:"Pechito de cerdo", animal:"Cerdo", cat:"parrilla", precio:55, oferta:48, zona:null, forma:"rib",
    uso:"Costillar de cerdo para parrilla o barbacoa.", descripcion:"Costillas de cerdo con buena carne. A la parrilla con salsa barbacoa o al horno.", tags:["Cerdo","Con hueso"], coc:["Parrilla","Horno"]},
@@ -654,9 +657,9 @@ const CORTES_BASE = [
   {id:"chorizop", nombre:"Chorizo Parrillero", alias:"Chorizo de res y cerdo", animal:"Embutido", cat:"parrilla", precio:52, oferta:null, zona:null, forma:"pork",
    uso:"Infaltable de entrada en la parrillada.", descripcion:"Chorizo fresco artesanal para la parrilla. Calcula 1 por persona como entrada.", tags:["Entrada","Artesanal"], coc:["Parrilla"]},
   // ---------- PLATOS COMUNES ----------
-  {id:"pulpa", nombre:"Pulpa Negra", alias:"Nalga · Pulpa de pierna", animal:"Res", cat:"platos", precio:72, oferta:null, zona:"pierna", forma:"roast",
+  {id:"pulpa", nombre:"Pulpa Negra", alias:"Nalga · Pulpa de pierna", animal:"Res", cat:"platos", precio:72, oferta:null, zona:"nalga", forma:"roast",
    uso:"Para silpancho, milanesa y apanado.", descripcion:"Carne magra de la pierna, ideal para golpear y hacer silpancho o milanesas finas.", tags:["Magra","Silpancho"], coc:["Sartén","Apanado"]},
-  {id:"peceto", nombre:"Peceto", alias:"Muchacho · Lagarto", animal:"Res", cat:"platos", precio:78, oferta:null, zona:"pierna", forma:"roast",
+  {id:"peceto", nombre:"Peceto", alias:"Muchacho · Lagarto", animal:"Res", cat:"platos", precio:78, oferta:null, zona:"peceto", forma:"roast",
    uso:"Al horno, mechado o para picantes.", descripcion:"Pieza cilíndrica y magra. Perfecta para carne mechada, asado al horno o en salsa.", tags:["Magro","Pieza entera"], coc:["Horno","Olla"]},
   {id:"molida", nombre:"Carne Molida", alias:"Especial · Primera", animal:"Res", cat:"platos", precio:60, oferta:52, zona:"paleta", forma:"ground",
    uso:"Hamburguesas, salteñas, tallarines y albóndigas.", descripcion:"Molida del día. Para hamburguesas, salsa boloñesa, relleno de salteñas, empanadas y albóndigas.", tags:["Molida del día","Versátil"], coc:["Sartén","Olla"]},
@@ -666,11 +669,11 @@ const CORTES_BASE = [
    uso:"Caldos y sopas con hueso y médula.", descripcion:"Rodaja de la pierna con hueso y médula. Da mucho sabor a caldos, chairo y sopas.", tags:["Con hueso","Sopas"], coc:["Olla"]},
   {id:"paleta", nombre:"Brazuelo / Paleta", alias:"Pulpa de brazo", animal:"Res", cat:"platos", precio:66, oferta:null, zona:"paleta", forma:"roast",
    uso:"Estofados, picantes y carne en trozos.", descripcion:"Corte de la paleta con buen sabor. Ideal en trozos para picante, estofado o ají de carne.", tags:["Trozos","Guisos"], coc:["Olla","Sartén"]},
-  {id:"falda", nombre:"Falda", alias:"Carne para caldo", animal:"Res", cat:"platos", precio:50, oferta:null, zona:"falda", forma:"strip",
+  {id:"falda", nombre:"Falda", alias:"Carne para caldo", animal:"Res", cat:"platos", precio:50, oferta:null, zona:"vaciodelgado", forma:"strip",
    uso:"Para sopas, caldos y carne deshilachada.", descripcion:"Carne con fibra que se deshilacha fácilmente. Para sopas, ropa vieja y saice.", tags:["Deshilachar","Económico"], coc:["Olla"]},
   {id:"cogote", nombre:"Cogote", alias:"Pescuezo", animal:"Res", cat:"platos", precio:44, oferta:null, zona:"cogote", forma:"bone",
    uso:"Económico, ideal para sopas y pucheros.", descripcion:"Corte del cuello con hueso y mucho sabor. Da cuerpo a sopas, pucheros y fricasé.", tags:["Económico","Sopas"], coc:["Olla"]},
-  {id:"lengua", nombre:"Lengua", alias:"Lengua de res", animal:"Res", cat:"platos", precio:56, oferta:null, zona:"cabeza", forma:"roast",
+  {id:"lengua", nombre:"Lengua", alias:"Lengua de res", animal:"Res", cat:"platos", precio:56, oferta:null, zona:null, forma:"roast",
    uso:"Lengua en salsa o a la vinagreta.", descripcion:"Se cocina hervida, se pela y se sirve en salsa, picante de lengua o a la vinagreta.", tags:["Tradicional"], coc:["Olla"]},
   {id:"chuleta", nombre:"Chuleta de Cerdo", alias:"Chuleta con hueso", animal:"Cerdo", cat:"platos", precio:52, oferta:null, zona:null, forma:"pork",
    uso:"Frita, apanada o a la plancha.", descripcion:"Chuleta de cerdo con hueso, para freír, apanar o a la plancha con papas y ensalada.", tags:["Cerdo","Rápida"], coc:["Sartén","Plancha"]},
@@ -703,19 +706,44 @@ const fotoDe = x => x.foto || FOTOS_BASE[x.id] || "";
 
 const AJUSTES_BASE = {whatsapp:"59170000000", direccion:"", horario:"Lun a Sáb 7:00 – 20:00 · Dom 7:00 – 13:00"};
 
+/* Las 21 zonas del mapa del toro (despiece Nelore / cebú) */
 const ZONAS = {
-  cabeza:   {n:"Cabeza",        d:"Lengua"},
-  cogote:   {n:"Cogote",        d:"Sopas y pucheros"},
-  aguja:    {n:"Aguja",         d:"Ojo de bife, tomahawk"},
-  paleta:   {n:"Paleta",        d:"Brazuelo, molida, estofado"},
-  pecho:    {n:"Pecho",         d:"Guisos y cocción lenta"},
-  bife:     {n:"Bife / Lomo",   d:"Lomo, bife de chorizo, T-bone"},
-  costillar:{n:"Costillar",     d:"Asado de tira, entraña"},
-  falda:    {n:"Vacío / Falda", d:"Vacío, matambre, falda"},
-  cuadril:  {n:"Cuadril",       d:"Punta de S, colita de cuadril"},
-  pierna:   {n:"Pierna",        d:"Pulpa negra, peceto"},
-  osobuco:  {n:"Osobuco",       d:"Caldos con hueso y médula"},
+  cogote:       {num:1,  n:"Cogote / Cuello",   d:"Zona cervical superior"},
+  aguja:        {num:2,  n:"Aguja",             d:"Región dorsal delantera"},
+  pecho:        {num:3,  n:"Pecho",             d:"Sección pectoral e inferior delantera"},
+  paleta:       {num:4,  n:"Paleta / Espaldilla", d:"Cuarto delantero / brazo"},
+  entrana:      {num:5,  n:"Entraña",           d:"Músculo del diafragma"},
+  vaciodelgado: {num:6,  n:"Vacío delgado",     d:"Sección ventral e inferior de las costillas"},
+  filet:        {num:7,  n:"Filet",             d:"Corte interno del lomo bajo"},
+  ojobife:      {num:8,  n:"Ojo de bife",       d:"Porción central del lomo ancho"},
+  bifechorizo:  {num:9,  n:"Bife de chorizo",   d:"Corte exterior del lomo grueso"},
+  bifeancho:    {num:10, n:"Bife ancho",        d:"Región anterior del lomo"},
+  cuadril:      {num:11, n:"Cuadril",           d:"Anca / cuarto trasero superior"},
+  bolalomo:     {num:12, n:"Bola de lomo",      d:"Músculo anterior del muslo"},
+  cuadrada:     {num:13, n:"Cuadrada",          d:"Músculo externo de la pierna trasera"},
+  nalga:        {num:14, n:"Pulpa nalga",       d:"Cara interna del muslo trasero"},
+  peceto:       {num:15, n:"Peceto",            d:"Forma cilíndrica en la parte posterior del muslo"},
+  osobuco:      {num:16, n:"Osobuco",           d:"Brazuelo / extremidad delantera"},
+  garron:       {num:17, n:"Garrón",            d:"Parte baja de la pierna trasera"},
+  vacio:        {num:18, n:"Vacío",             d:"Región abdominal central y baja"},
+  colita:       {num:19, n:"Colita de cuadril", d:"Extremo inferior del cuadril"},
+  picana:       {num:20, n:"Picaña",            d:"Tapa de cuadril superior"},
+  giba:         {num:21, n:"Giba",              d:"Joroba dorsal característica del Nelore cebuino"},
 };
+/* Cortes guardados con el mapa anterior → zona nueva (solo si nadie la cambió) */
+const ZONA_MIGRAR = {
+  lomo:["bife","filet"], ojo:["aguja","ojobife"], chorizo:["bife","bifechorizo"], picana:["cuadril","picana"],
+  tbone:["bife","bifechorizo"], tomahawk:["aguja","ojobife"], cuadril:["cuadril","colita"], asadotira:["costillar","vaciodelgado"],
+  vacio:["falda","vacio"], matambre:["falda","vaciodelgado"], entrana:["costillar","entrana"], pulpa:["pierna","nalga"],
+  peceto:["pierna","peceto"], falda:["falda","vaciodelgado"], lengua:["cabeza",null],
+};
+const ZONA_VIEJA = {bife:"bifechorizo", costillar:"vaciodelgado", falda:"vacio", pierna:"nalga", cabeza:null};
+function zonaActual(c){
+  const m = ZONA_MIGRAR[c.id];
+  if (m && c.zona === m[0]) return m[1];
+  if (c.zona && !ZONAS[c.zona]) return ZONA_VIEJA[c.zona] ?? null;
+  return c.zona || null;
+}
 const ANIMALES = ["Res", "Cerdo", "Pollo", "Cordero", "Embutido", "Otro"];
 const FORMAS = {steak:"Bife", bone:"Con hueso", rib:"Costillar", ground:"Molida", roast:"Pieza / rollo", strip:"Corte plano", pork:"Cerdo"};
 const COLS_CORTE = ["id","nombre","alias","animal","cat","precio","oferta","oferta_hasta","zona","forma","uso","descripcion","tags","coc","disponible","destacado","orden","foto"];
@@ -747,7 +775,7 @@ function normCorte(c, i = 0){
     id: String(c.id), nombre: c.nombre || "", alias: c.alias || "", animal: c.animal || "Res",
     cat: c.cat === "platos" ? "platos" : "parrilla",
     precio: +c.precio || 0, oferta: c.oferta != null && c.oferta !== "" && +c.oferta > 0 ? +c.oferta : null,
-    oferta_hasta: c.oferta_hasta || null, zona: c.zona || null, forma: c.forma || "steak",
+    oferta_hasta: c.oferta_hasta || null, zona: zonaActual(c), forma: c.forma || "steak",
     uso: c.uso || "", descripcion: c.descripcion ?? c.desc ?? "",
     tags: Array.isArray(c.tags) ? c.tags : [], coc: Array.isArray(c.coc) ? c.coc : [],
     disponible: c.disponible !== false, destacado: !!c.destacado,
@@ -1044,65 +1072,70 @@ function meatSVG(forma, seed = forma, cls = ""){
 const imgDe = (x, fallback) => x.foto ? `<img src="${esc(x.foto)}" alt="${esc(x.nombre || x.titulo || "")}" loading="lazy">` : meatSVG(x.forma || fallback || "steak", x.id);
 
 /* =====================================================================
-   Mapa de la res — silueta de perfil estilo lámina de carnicería
+   Mapa del toro (cebú Nelore, de perfil) con las 21 zonas numeradas
    ===================================================================== */
 function cowSVG(){
-  const body = `M56 64 C62 57 70 56 76 60 C92 67 116 66 142 59 C182 50 238 58 272 57 C292 56 306 52 320 58
-    C336 61 348 63 356 71 C364 86 364 112 358 132 C354 146 348 158 346 174 L344 212 C345 219 348 224 348 231 L329 231
-    C329 223 331 217 330 211 L327 184 C323 170 316 161 305 157 C281 166 237 171 201 169 C177 169 161 167 153 165
-    L151 212 C151 219 155 224 155 231 L136 231 C136 223 138 217 137 211 L134 181 C130 171 124 167 118 167
-    C108 161 100 151 96 139 C88 133 76 131 66 131 C56 132 44 135 33 135 C25 135 19 129 19 120
-    C19 111 25 104 29 96 C35 84 45 73 56 64 Z`;
-  const farLegs = `M286 150 C292 170 296 190 296 210 L297 229 L313 229 C312 214 311 196 314 176 Z
-    M160 160 L163 212 C163 219 166 224 166 229 L181 229 C180 220 178 210 178 196 L176 162 Z`;
+  const body = `M44 60 C46 50 50 40 56 32 C60 26 68 23 78 24 C92 25 108 27 122 27 C128 20 140 13 156 12
+    C170 11 180 16 186 26 C190 34 196 38 210 38 C240 37 280 36 304 38 C316 39 326 42 332 50
+    C338 62 340 80 338 98 C336 116 330 130 322 140 C318 148 318 156 320 164 L318 198
+    C319 202 322 206 322 211 L304 211 C304 206 306 202 306 198 L304 170 C302 160 296 150 288 144
+    C280 140 272 138 264 140 C252 146 244 150 238 154 C234 159 228 159 225 154 C220 148 210 147 196 147
+    C180 147 166 146 160 146 L158 170 L157 198 C158 203 160 206 160 211 L141 211 C141 206 143 202 143 198
+    L141 170 C139 160 134 152 126 148 C116 144 106 136 100 124 C95 114 92 104 88 96
+    C84 88 79 83 72 80 C64 78 56 78 50 76 C44 75 40 70 40 65 C40 62 42 61 44 60 Z`;
+  const farLegs = `M162 146 L167 198 C168 203 170 206 170 211 L184 211 C184 206 182 202 181 198 L178 150 Z
+    M280 142 C286 156 290 172 288 198 C289 203 290 206 290 211 L302 211 C302 206 302 202 301 198 L300 162 C298 152 292 146 286 142 Z`;
+  // [zona, forma, x, y del número]  — el orden importa: las de abajo se pintan encima
   const zonas = [
-    ["cabeza",   "M0 0 L76 0 L72 60 L70 140 L0 140 Z"],
-    ["cogote",   "M76 0 L124 0 L118 104 L112 150 L80 132 L70 140 L72 60 Z"],
-    ["aguja",    "M124 0 L196 0 L194 100 L120 96 Z"],
-    ["paleta",   "M120 96 L194 100 L182 132 L176 172 L150 172 L132 160 L112 150 L118 104 Z"],
-    ["pecho",    "M60 128 L80 132 L112 150 L132 160 L150 172 L150 190 L60 190 Z"],
-    ["bife",     "M196 0 L276 0 L274 96 L194 100 Z"],
-    ["costillar","M194 100 L274 96 L268 132 L182 132 Z"],
-    ["falda",    "M182 132 L268 132 L274 96 L300 108 L308 160 L300 190 L176 190 L176 172 Z"],
-    ["cuadril",  "M276 0 L332 0 L326 66 L300 108 L274 96 Z"],
-    ["pierna",   "M332 0 L400 0 L400 190 L330 190 L308 160 L300 108 L326 66 Z"],
-    ["osobuco",  "M0 188 L400 188 L400 260 L0 260 Z"],
+    ["cogote",       "M84 0 L124 0 L122 30 L112 70 L100 116 L78 84 L84 64 L88 30 Z", 105, 78],
+    ["pecho",        "M78 84 L100 116 L112 70 L122 70 L120 132 L128 180 L30 180 L30 96 Z", 110, 128],
+    ["aguja",        "M122 28 L168 38 L166 72 L112 70 Z", 142, 56],
+    ["giba",         "M100 -20 L230 -20 L204 40 L186 40 L164 35 L122 29 L118 0 Z", 158, 28],
+    ["bifeancho",    "M164 35 L214 39 L214 70 L166 72 Z", 190, 58],
+    ["bifechorizo",  "M214 0 L268 0 L268 56 L214 56 Z", 241, 50],
+    ["filet",        "M214 56 L240 56 L240 72 L214 72 Z", 226, 68],
+    ["picana",       "M268 0 L314 0 L314 56 L268 56 Z", 291, 50],
+    ["cuadril",      "M268 56 L316 56 L318 82 L266 82 Z", 299, 75],
+    ["cuadrada",     "M314 30 L370 30 L370 82 L318 82 L316 56 Z", 328, 64],
+    ["ojobife",      "M166 72 L214 72 L214 110 L168 110 Z", 190, 94],
+    ["vacio",        "M214 72 L266 72 L266 82 L264 110 L214 110 Z", 240, 94],
+    ["vaciodelgado", "M168 110 L264 110 L272 126 L268 172 L168 172 Z", 214, 133],
+    ["bolalomo",     "M266 82 L300 82 L302 130 L278 140 L268 120 Z", 285, 106],
+    ["nalga",        "M300 82 L322 82 L322 130 L302 130 Z", 311, 106],
+    ["peceto",       "M322 82 L370 82 L370 150 L322 132 Z", 328.5, 112],
+    ["garron",       "M276 140 L302 130 L322 132 L332 168 L280 168 Z", 302, 154],
+    ["paleta",       "M124 66 L166 68 C174 84 176 110 170 132 L132 138 C122 120 116 90 124 66 Z", 146, 102],
+    ["osobuco",      "M118 134 L176 130 L174 170 L118 170 Z", 147, 155],
+    ["colita",       "M240 64 C240 58 252 55 262 55 C274 55 284 59 284 64 C284 69 274 72 262 72 C250 72 240 69 240 64 Z", 263, 68],
+    ["entrana",      "M260 118 C262 110 274 108 280 114 C286 122 280 134 270 134 C262 134 258 126 260 118 Z", 271, 126],
   ];
-  const labels = {cabeza:[46,112], cogote:[98,98], aguja:[158,80], paleta:[152,130], pecho:[112,163], bife:[234,80], costillar:[228,118], falda:[240,154], cuadril:[302,74], pierna:[338,122]};
-  let regions = "", txt = "";
-  for (const [z, d] of zonas){
-    regions += `<path class="cow-region" data-z="${z}" d="${d}"><title>${ZONAS[z].n}</title></path>`;
-    if (labels[z]){ const [x, y] = labels[z]; txt += `<text class="cow-label" x="${x}" y="${y}" text-anchor="middle">${ZONAS[z].n.split(" /")[0].toUpperCase()}</text>`; }
+  let regiones = "", numeros = "";
+  for (const [z, d, x, y] of zonas){
+    regiones += `<path class="cow-region" data-z="${z}" d="${d}"><title>${ZONAS[z].num}. ${ZONAS[z].n}</title></path>`;
+    numeros += `<text class="cow-num" data-n="${z}" x="${x}" y="${y}" text-anchor="middle">${ZONAS[z].num}</text>`;
   }
-  const muscles = `M150 74 C170 92 172 120 160 150 M196 108 C232 104 258 104 270 112 M300 74 C320 96 330 130 322 160
-    M246 62 C262 76 270 92 272 104 M120 78 C112 98 104 120 104 132`;
-  return `<svg viewBox="0 0 380 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa de cortes de la res">
+  return `<svg viewBox="24 2 340 218" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa de cortes del toro">
     <defs>
       <clipPath id="cowclip"><path d="${body}"/></clipPath>
-      <radialGradient id="cowShade" cx="45%" cy="30%" r="80%"><stop offset="0" stop-color="#2c2c2c"/><stop offset="1" stop-color="#161616"/></radialGradient>
-      <linearGradient id="cowFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b1b1b"/><stop offset="1" stop-color="#0f0f0f"/></linearGradient>
+      <linearGradient id="cowShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f3237"/><stop offset="1" stop-color="#1c1e22"/></linearGradient>
+      <linearGradient id="cowFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a1c1f"/><stop offset="1" stop-color="#101113"/></linearGradient>
     </defs>
-    <ellipse cx="200" cy="234" rx="170" ry="6" fill="#000" opacity=".6"/>
-    <path d="${farLegs}" fill="url(#cowFar)" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/>
-    <path d="M292 223h22v6h-22zM162 223h20v6h-20z" fill="#000"/>
-    <path d="M355 72 C368 92 372 130 366 172" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <path d="M366 168 C360 176 360 190 366 198 C372 190 374 178 366 168 Z" fill="#fff"/>
-    <path d="M60 60 C56 46 48 38 38 35 C44 42 49 50 51 62 Z" fill="#e9e1d4" stroke="#fff" stroke-width="1"/>
-    <path d="M72 60 C74 48 80 40 90 36 C86 44 82 52 80 62 Z" fill="#d9d0c2" opacity=".8"/>
-    <g clip-path="url(#cowclip)">${regions}
-      <path d="${muscles}" fill="none" stroke="#fff" stroke-opacity=".12" stroke-width="1.5" stroke-linecap="round"/>
-    </g>
-    <path d="${body}" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/>
-    <path d="M74 68 C86 60 100 60 108 64 C100 72 88 76 78 76 Z" fill="#1d1d1d" stroke="#fff" stroke-width="1.6"/>
-    <path d="M80 70 C88 66 96 66 101 67" stroke="#d71920" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"/>
-    <ellipse cx="50" cy="86" rx="3.6" ry="3" fill="#fff"/>
-    <path d="M45 82 C48 79 53 79 56 82" stroke="#fff" stroke-width="1.2" fill="none"/>
-    <ellipse cx="26" cy="116" rx="3" ry="2" fill="#fff" opacity=".85"/>
-    <path d="M22 127 C28 129 34 129 40 127" stroke="#fff" stroke-opacity=".6" stroke-width="1.2" fill="none"/>
-    <path d="M330 225h18v6h-18zM137 225h18v6h-18z" fill="#fff"/>
-    ${txt}
-    <text class="cow-label" x="146" y="245" text-anchor="middle" style="font-size:8px">OSOBUCO</text>
-    <text class="cow-label" x="338" y="245" text-anchor="middle" style="font-size:8px">OSOBUCO</text>
+    <ellipse cx="200" cy="212" rx="150" ry="4" fill="#000" opacity=".55"/>
+    <path d="M330 46 C344 62 348 104 344 150" stroke="#2f3237" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+    <path d="M330 46 C344 62 348 104 344 150" stroke="#fff" stroke-opacity=".9" stroke-width="1" fill="none" stroke-linecap="round" transform="translate(1.6 0)"/>
+    <path d="M344 146 C337 158 337 174 343 188 C350 174 352 158 344 146 Z" fill="#2f3237" stroke="#fff" stroke-width="1"/>
+    <path d="${farLegs}" fill="url(#cowFar)" stroke="#fff" stroke-opacity=".55" stroke-width="1"/>
+    <path d="M66 26 C63 18 65 11 71 7 C71 13 72 19 74 25 Z" fill="#2f3237" stroke="#fff" stroke-width="1"/>
+    <path d="${body}" fill="#1c1e22"/>
+    <g clip-path="url(#cowclip)">${regiones}</g>
+    <path d="${body}" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M77 33 C86 32 96 38 101 50 C102 54 98 55 95 52 C89 47 82 42 76 39 Z" fill="#26292d" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
+    <path d="M81 37 C87 39 93 44 97 49" stroke="#fff" stroke-opacity=".45" stroke-width=".8" fill="none"/>
+    <path d="M51 41 C54 38 58 38 61 41 C58 43 54 43 51 41 Z" fill="none" stroke="#fff" stroke-width="1.1"/>
+    <path d="M42 62 C44 60 47 61 47 64" stroke="#fff" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+    <path d="M42 70 C46 72 50 73 56 72" stroke="#fff" stroke-opacity=".8" stroke-width="1" fill="none" stroke-linecap="round"/>
+    <path d="M141 209h19M157 209 M304 209h18M167 209h17M290 209h12" stroke="#fff" stroke-width="1" opacity=".8"/>
+    ${numeros}
   </svg>`;
 }
 
@@ -1198,15 +1231,15 @@ function renderTienda(){
 function renderCowInfo(){
   const z = filtroZona, cortesZona = z ? publicos().filter(c => c.zona === z) : [], n = cortesZona.length;
   $("#cowInfo").innerHTML = z
-    ? `<div><b>${ZONAS[z].n}</b><small>${n} corte${n === 1 ? "" : "s"} de esta zona · toca uno para ver todo</small></div>${n ? `<button data-seezone>Ver en catálogo</button>` : ""}`
-    : `<div><b>Elige una zona</b><small>Toca la vaca o una etiqueta de abajo</small></div>`;
+    ? `<div><b><i>${ZONAS[z].num}</i>${ZONAS[z].n}</b><small>${ZONAS[z].d}${n ? ` · ${n} corte${n === 1 ? "" : "s"}` : ""}</small></div>${n ? `<button data-seezone>Ver en catálogo</button>` : ""}`
+    : `<div><b>Elige una zona</b><small>Toca el toro o un número de la lista</small></div>`;
   // Los cortes de la zona aparecen enseguida, debajo de la vaca
   $("#zoneCuts").innerHTML = !z ? "" : n
     ? `<div class="zone-cuts">${cortesZona.map(c => `<button class="zc" data-open="${esc(c.id)}">
         <div class="t">${imgDe(c)}</div><b>${esc(c.nombre)}</b><small>${esc(c.uso)}</small>
         <em>${c.disponible ? bs(precioDe(c)) + " /kg" : "Agotado"}</em></button>`).join("")}</div>`
     : `<div class="zone-empty">Por ahora no hay cortes cargados de esta zona.</div>`;
-  $("#zoneChips").innerHTML = Object.entries(ZONAS).map(([k, v]) => `<button data-zone="${k}" class="${k === z ? "on" : ""}">${v.n}</button>`).join("");
+  $("#zoneChips").innerHTML = Object.entries(ZONAS).map(([k, v]) => `<button data-zone="${k}" class="${k === z ? "on" : ""}"><i>${v.num}</i>${v.n}</button>`).join("");
   $$(".cow-region").forEach(r => r.classList.toggle("on", r.dataset.z === z));
 }
 function elegirZona(z){ filtroZona = filtroZona === z ? null : z; filtroInicio = "todos"; renderCowInfo(); renderInicio(); }
@@ -1510,7 +1543,7 @@ function pintarEditor(){
     </div>
     <div class="fg2">
       <div class="fg"><label>Animal</label><select id="f_animal">${opt(ANIMALES.map(a => [a, a]), c.animal)}</select></div>
-      <div class="fg"><label>Zona en la vaca</label><select id="f_zona"><option value="">Ninguna</option>${opt(Object.entries(ZONAS).map(([k, v]) => [k, v.n]), c.zona)}</select></div>
+      <div class="fg"><label>Zona en la vaca</label><select id="f_zona"><option value="">Ninguna</option>${opt(Object.entries(ZONAS).map(([k, v]) => [k, `${v.num}. ${v.n}`]), c.zona)}</select></div>
     </div>
     <div class="fg"><label>Etiquetas</label><input id="f_tags" value="${esc(c.tags.join(", "))}" placeholder="Ej.: Jugoso, Con hueso"><div class="hint">Separadas por coma.</div></div>
     <div class="fg"><label>Formas de cocinar</label><input id="f_coc" value="${esc(c.coc.join(", "))}" placeholder="Ej.: Parrilla, Horno"></div>
