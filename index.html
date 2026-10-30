@@ -650,6 +650,12 @@ const CORTES_BASE = [
    uso:"Capa fina para parrilla o enrollado relleno.", descripcion:"Capa delgada entre el cuero y las costillas. A la parrilla, a la pizza o enrollado y relleno.", tags:["Fino","Versátil"], coc:["Parrilla","Horno"]},
   {id:"entrana", nombre:"Entraña", alias:"Skirt steak", animal:"Res", cat:"parrilla", precio:98, oferta:null, zona:"entrana", forma:"strip",
    uso:"Muy sabrosa, se cocina rápido a fuego fuerte.", descripcion:"Músculo del diafragma, delgado y de sabor intenso. Fuego fuerte y pocos minutos por lado.", tags:["Sabor intenso","Rápida"], coc:["Parrilla","Plancha"]},
+  {id:"bifeancho", nombre:"Bife Ancho", alias:"Entrecot · Prime rib", animal:"Res", cat:"parrilla", precio:86, oferta:null, zona:"bifeancho", forma:"steak",
+   uso:"Bife con grasa y sabor intenso para la parrilla.", descripcion:"Parte delantera del lomo, junto al ojo de bife. Tiene más grasa y nervio, por eso es muy sabroso a la parrilla bien caliente.", tags:["Sabroso","Con grasa"], coc:["Parrilla","Plancha"]},
+  {id:"anca", nombre:"Cuadril", alias:"Anca · Bife de cuadril", animal:"Res", cat:"parrilla", precio:80, oferta:null, zona:"cuadril", forma:"steak",
+   uso:"Bifes tiernos para parrilla, plancha o milanesa.", descripcion:"Corte magro y tierno del anca. Se usa en bifes a la parrilla o a la plancha y también en milanesas.", tags:["Magro","Tierno"], coc:["Parrilla","Plancha","Sartén"]},
+  {id:"giba", nombre:"Giba", alias:"Cupim · Joroba", animal:"Res", cat:"parrilla", precio:75, oferta:null, zona:"giba", forma:"roast",
+   uso:"Asado lento a la parrilla u horno, muy jugoso.", descripcion:"Joroba típica del ganado cebú, con grasa entreverada. Se cocina lento (3 a 4 horas) envuelta en papel aluminio o al horno hasta quedar muy tierna.", tags:["Típico cebú","Cocción lenta"], coc:["Parrilla","Horno"]},
   {id:"costcerdo", nombre:"Costilla de Cerdo", alias:"Pechito de cerdo", animal:"Cerdo", cat:"parrilla", precio:55, oferta:48, zona:null, forma:"rib",
    uso:"Costillar de cerdo para parrilla o barbacoa.", descripcion:"Costillas de cerdo con buena carne. A la parrilla con salsa barbacoa o al horno.", tags:["Cerdo","Con hueso"], coc:["Parrilla","Horno"]},
   {id:"bondiola", nombre:"Bondiola", alias:"Cuello de cerdo", animal:"Cerdo", cat:"parrilla", precio:58, oferta:null, zona:null, forma:"pork",
@@ -665,6 +671,14 @@ const CORTES_BASE = [
    uso:"Hamburguesas, salteñas, tallarines y albóndigas.", descripcion:"Molida del día. Para hamburguesas, salsa boloñesa, relleno de salteñas, empanadas y albóndigas.", tags:["Molida del día","Versátil"], coc:["Sartén","Olla"]},
   {id:"pecho", nombre:"Pecho", alias:"Brisket", animal:"Res", cat:"platos", precio:58, oferta:null, zona:"pecho", forma:"strip",
    uso:"Para guisos, sopas y cocción lenta.", descripcion:"Corte con fibras y grasa que se ablanda con cocción larga. Excelente para guisos y estofados.", tags:["Cocción lenta","Sabroso"], coc:["Olla","Horno"]},
+  {id:"aguja", nombre:"Aguja", alias:"Chuck · Carne de aguja", animal:"Res", cat:"platos", precio:64, oferta:null, zona:"aguja", forma:"roast",
+   uso:"Estofados, carne a la olla y molida casera.", descripcion:"Corte de la parte dorsal delantera, con algo de grasa y mucho sabor. Ideal para estofados, picantes, carne a la olla y para moler.", tags:["Sabroso","Rinde"], coc:["Olla","Horno"]},
+  {id:"bolalomo", nombre:"Bola de Lomo", alias:"Pulpa blanda · Peceto redondo", animal:"Res", cat:"platos", precio:70, oferta:null, zona:"bolalomo", forma:"roast",
+   uso:"Milanesas, bifes finos y carne al horno.", descripcion:"Músculo redondo y magro de la parte delantera del muslo. Rinde muy bien en milanesas, bifes finos y asados al horno.", tags:["Magra","Rinde"], coc:["Sartén","Horno"]},
+  {id:"cuadrada", nombre:"Cuadrada", alias:"Pulpa de pierna externa", animal:"Res", cat:"platos", precio:70, oferta:null, zona:"cuadrada", forma:"roast",
+   uso:"Milanesas, estofados y guisos.", descripcion:"Corte magro de la parte externa de la pierna trasera. Ideal para milanesas, estofados y guisos de cocción media.", tags:["Magra","Milanesa"], coc:["Sartén","Olla"]},
+  {id:"garron", nombre:"Garrón", alias:"Osobuco trasero", animal:"Res", cat:"platos", precio:45, oferta:null, zona:"garron", forma:"bone",
+   uso:"Caldos, pucheros y estofados con hueso.", descripcion:"Parte baja de la pierna trasera, con hueso, tendón y médula. Da mucho sabor y cuerpo a caldos, chairo y pucheros.", tags:["Con hueso","Económico"], coc:["Olla"]},
   {id:"osobuco", nombre:"Osobuco", alias:"Corte de canilla", animal:"Res", cat:"platos", precio:48, oferta:42, zona:"osobuco", forma:"bone",
    uso:"Caldos y sopas con hueso y médula.", descripcion:"Rodaja de la pierna con hueso y médula. Da mucho sabor a caldos, chairo y sopas.", tags:["Con hueso","Sopas"], coc:["Olla"]},
   {id:"paleta", nombre:"Brazuelo / Paleta", alias:"Pulpa de brazo", animal:"Res", cat:"platos", precio:66, oferta:null, zona:"paleta", forma:"roast",
@@ -1456,9 +1470,12 @@ function renderAdmin(){
 /* ---- Pestaña: Cortes (CRUD, disponibilidad, orden) ---- */
 function tabCortes(){
   const n = CORTES.length, of = CORTES.filter(ofertaVigente).length, ag = CORTES.filter(c => !c.disponible).length, sf = CORTES.filter(c => !c.foto).length;
-  const vacia = CLOUD && n === 0;
+  const vacia = CLOUD && n === 0, faltan = vacia ? [] : cortesBaseFaltantes();
   $("#admBody").innerHTML = `
     ${vacia ? `<div class="adm-card warn"><h4>La nube está vacía</h4><p>Sube el catálogo inicial (los ${CORTES_BASE.length} cortes, banners y las fotos que tengas guardadas en este teléfono) para empezar.</p><button class="big-btn sm" data-migrar>Subir catálogo inicial</button></div>` : ""}
+    ${faltan.length ? `<div class="adm-card warn"><h4>${faltan.length} corte${faltan.length === 1 ? " nuevo" : "s nuevos"} para el mapa del toro</h4>
+      <p>${faltan.map(c => `<b>${esc(c.nombre)}</b> (${ZONAS[c.zona] ? ZONAS[c.zona].num : "–"})`).join(", ")}. Puedes cambiar sus precios después.</p>
+      <div style="display:flex;gap:8px"><button class="big-btn line sm" data-ocultarbase style="flex:1">Ocultar</button><button class="big-btn sm" data-agregarbase style="flex:2">Agregar al catálogo</button></div></div>` : ""}
     <div class="adm-stats" style="margin-top:12px">
       <div data-af="todos"><b>${n}</b><small>cortes</small></div>
       <div data-af="ofertas"><b>${of}</b><small>en oferta</small></div>
@@ -1471,6 +1488,27 @@ function tabCortes(){
     <div class="adm-box" id="admList"></div>
     <p class="note">Usa ▲▼ para cambiar el orden en que aparecen. Los destacados se muestran primero a los clientes.</p>`;
   pintarListaAdmin();
+}
+/* Cortes de fábrica que todavía no están en el catálogo (y que no se ocultaron) */
+function cortesBaseFaltantes(){
+  const ocultos = store.get("valeriano.baseOculta", []);
+  return CORTES_BASE.filter(b => !byId(b.id) && !ocultos.includes(b.id)).map(b => normCorte(clone(b)));
+}
+async function agregarCortesBase(){
+  const faltan = cortesBaseFaltantes();
+  let orden = CORTES.reduce((m, c) => Math.max(m, c.orden), -1);
+  faltan.forEach(c => c.orden = ++orden);
+  try { await ocupado("Agregando cortes…", () => repo.guardarCortes(faltan)); }
+  catch (e) { return toast("⚠ No se agregaron: " + e.message, 4000); }
+  CORTES.push(...faltan);
+  if (!repo.nube) repo.persistir();
+  repo.log("Agregó cortes de fábrica", faltan.map(c => c.nombre).join(", "));
+  logCache = null; renderAll(); calcular();
+  toast(`✓ ${faltan.length} cortes agregados`);
+}
+function ocultarCortesBase(){
+  store.set("valeriano.baseOculta", [...store.get("valeriano.baseOculta", []), ...cortesBaseFaltantes().map(c => c.id)]);
+  tabCortes();
 }
 function listaAdminFiltrada(){
   let list = [...CORTES].sort(ordenAdmin);
@@ -1967,6 +2005,8 @@ document.addEventListener("click", e => {
   if (d.tab){ admTab = d.tab; return renderAdmin(); }
   if (d.af){ admFiltro = d.af; return tabCortes(); }
   if (has("data-newcut")) return abrirEditor(null);
+  if (has("data-agregarbase")) return agregarCortesBase();
+  if (has("data-ocultarbase")) return ocultarCortesBase();
   if (has("data-pickphoto")){ $("#photoInput").value = ""; return $("#photoInput").click(); }
   if (has("data-delphoto")){
     if (edit.tipo === "corte") leerFormCorte(); else leerFormBanner();
