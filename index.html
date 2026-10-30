@@ -119,10 +119,10 @@
   .cow-card svg{width:100%;height:auto;margin-top:8px;display:block;overflow:visible}
   .cow-card svg *{pointer-events:none}
   .cow-card svg .cow-region{pointer-events:all}
-  .cow-region{fill:url(#cowShade);stroke:#fff;stroke-width:1.2;stroke-linejoin:round;cursor:pointer;transition:fill .2s}
-  .cow-region:hover{fill:#4a2023}
-  .cow-region.on{fill:var(--red)}
-  .cow-num{fill:#fff;font-size:10.5px;font-weight:800;font-family:var(--text)}
+  .cow-region{fill:url(#cowHide);stroke:#fff;stroke-opacity:.8;stroke-width:.9;stroke-linejoin:round;cursor:pointer;transition:fill .2s}
+  .cow-region:hover{fill:#5b2427}
+  .cow-region.on{fill:#cf1d24;stroke-opacity:1}
+  .cow-num{fill:#fff;font-size:10px;font-weight:800;font-family:var(--text);paint-order:stroke;stroke:rgba(0,0,0,.55);stroke-width:2.6px;stroke-linejoin:round}
   .cow-info{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:6px 4px 0;min-height:44px}
   .cow-info b{font-size:15px;display:flex;align-items:center;gap:8px}
   .cow-info b i{width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;font-style:normal;font-size:12px;display:grid;place-items:center;flex:none}
@@ -1089,16 +1089,21 @@ const imgDe = (x, fallback) => x.foto ? `<img src="${esc(x.foto)}" alt="${esc(x.
    Mapa del toro (cebú Nelore, de perfil) con las 21 zonas numeradas
    ===================================================================== */
 function cowSVG(){
-  const body = `M44 60 C46 50 50 40 56 32 C60 26 68 23 78 24 C92 25 108 27 122 27 C128 20 140 13 156 12
-    C170 11 180 16 186 26 C190 34 196 38 210 38 C240 37 280 36 304 38 C316 39 326 42 332 50
-    C338 62 340 80 338 98 C336 116 330 130 322 140 C318 148 318 156 320 164 L318 198
-    C319 202 322 206 322 211 L304 211 C304 206 306 202 306 198 L304 170 C302 160 296 150 288 144
-    C280 140 272 138 264 140 C252 146 244 150 238 154 C234 159 228 159 225 154 C220 148 210 147 196 147
-    C180 147 166 146 160 146 L158 170 L157 198 C158 203 160 206 160 211 L141 211 C141 206 143 202 143 198
-    L141 170 C139 160 134 152 126 148 C116 144 106 136 100 124 C95 114 92 104 88 96
-    C84 88 79 83 72 80 C64 78 56 78 50 76 C44 75 40 70 40 65 C40 62 42 61 44 60 Z`;
-  const farLegs = `M162 146 L167 198 C168 203 170 206 170 211 L184 211 C184 206 182 202 181 198 L178 150 Z
-    M280 142 C286 156 290 172 288 198 C289 203 290 206 290 211 L302 211 C302 206 302 202 301 198 L300 162 C298 152 292 146 286 142 Z`;
+  const body = `M41 58 C42 52 46 46 50 40 C53 34 57 29 62 26 C66 23 72 22 78 24 C90 27 106 30 120 28
+    C128 20 140 12 154 11 C168 10 179 15 185 24 C189 31 196 36 210 37 C230 38 250 41 270 39 C288 37 302 36 314 39
+    C324 41 330 45 334 52 C340 64 341 82 338 100 C335 116 330 128 324 138 C320 145 319 153 321 160
+    C323 166 321 172 319 178 L318 197 C318 201 320 203 322 206 C323 208 323 210 321 211 L304 211
+    C303 209 304 205 306 202 C306 196 305 188 305 180 C304 172 302 166 300 160 C298 152 294 146 288 143
+    C280 139 272 138 264 140 C254 144 246 149 240 152 C236 157 231 160 227 158 C223 155 222 150 214 149
+    C200 148 180 148 164 147 C161 150 160 156 160 162 C159 170 158 176 158 182 C157 188 157 194 158 198
+    C158 202 160 204 161 207 C162 209 161 211 159 211 L142 211 C141 209 142 205 143 202 C143 196 142 190 141 184
+    C140 180 139 177 140 174 C141 168 139 160 135 154 C132 150 128 148 124 147 C116 144 108 139 103 131
+    C99 124 96 116 92 108 C89 101 86 94 82 89 C78 84 73 81 67 80 C61 79 56 79 51 77 C46 75 42 71 41 66
+    C40 63 40 60 41 58 Z`;
+  const farLegs = `M164 148 C166 160 168 172 169 182 C170 190 170 196 170 199 C170 203 172 205 173 208 L174 211 L186 211
+    C186 208 185 205 184 202 C183 196 182 188 181 180 C180 168 179 156 178 150 Z
+    M282 142 C287 152 291 162 292 172 C292 182 291 192 290 199 C290 203 291 206 292 209 L292 211 L303 211
+    C302 207 302 203 302 199 L301 176 C300 164 296 152 290 145 Z`;
   // [zona, forma, x, y del número] — ubicación según el boceto (la cabeza es parte del 1).
   // El orden importa: las de abajo se pintan encima de las de arriba.
   const zonas = [
@@ -1129,27 +1134,58 @@ function cowSVG(){
     regiones += `<path class="cow-region" data-z="${z}" d="${d}"><title>${ZONAS[z].num}. ${ZONAS[z].n}</title></path>`;
     numeros += `<text class="cow-num" data-n="${z}" x="${x}" y="${y}" text-anchor="middle">${ZONAS[z].num}</text>`;
   }
+  // Volumen: brillos (luz desde arriba) y sombras suaves, recortados a la silueta
+  const brillos = [[152, 92, 24, 30, .30], [302, 64, 28, 20, .32], [240, 46, 62, 9, .26], [156, 22, 22, 9, .30],
+    [98, 52, 16, 22, .22], [320, 100, 12, 26, .22], [62, 40, 14, 12, .22], [208, 72, 30, 14, .14]];
+  const sombras = [[214, 150, 70, 9, .55], [178, 112, 7, 32, .35], [272, 122, 12, 22, .35], [120, 118, 10, 22, .30],
+    [300, 150, 14, 10, .35], [100, 112, 8, 16, .30], [150, 182, 10, 30, .25], [312, 186, 9, 24, .25]];
+  const elipses = (arr, color) => arr.map(([x, y, rx, ry, o]) => `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="${color}" opacity="${o}"/>`).join("");
+  // Contornos de músculo: escápula, costillas, cadera, rodilla, pliegues del cuello y la papada
+  const musculos = `M128 70 C140 60 160 62 170 74 C176 92 172 116 162 136 M178 84 C190 100 192 120 186 140
+    M196 92 C204 108 206 124 202 142 M214 94 C222 110 224 126 220 144 M262 82 C276 70 300 66 318 72
+    M296 66 C292 84 296 104 306 120 M282 120 C290 128 296 136 300 146 M86 44 C92 56 94 70 92 84
+    M96 92 C104 100 108 112 108 124 M108 60 C116 72 120 86 120 100 M140 176 C142 178 142 180 141 182
+    M303 170 C305 172 305 176 304 178`;
   return `<svg viewBox="24 2 340 218" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa de cortes del toro">
     <defs>
       <clipPath id="cowclip"><path d="${body}"/></clipPath>
-      <linearGradient id="cowShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f3237"/><stop offset="1" stop-color="#1c1e22"/></linearGradient>
-      <linearGradient id="cowFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a1c1f"/><stop offset="1" stop-color="#101113"/></linearGradient>
+      <linearGradient id="cowHide" gradientUnits="userSpaceOnUse" x1="0" y1="10" x2="0" y2="211"><stop offset="0" stop-color="#5d6168"/><stop offset=".42" stop-color="#383b41"/><stop offset="1" stop-color="#18191c"/></linearGradient>
+      <linearGradient id="cowFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2c30"/><stop offset="1" stop-color="#0e0f11"/></linearGradient>
+      <linearGradient id="cowHorn" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#3c3833"/><stop offset="1" stop-color="#a59d90"/></linearGradient>
+      <linearGradient id="cowEar" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#55595f"/><stop offset="1" stop-color="#202226"/></linearGradient>
+      <filter id="cowBlur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5"/></filter>
+      <filter id="cowSoft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="1.1"/></filter>
+      <filter id="cowGrain"><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/>
+        <feComponentTransfer><feFuncA type="table" tableValues="0 .22"/></feComponentTransfer></filter>
+      <radialGradient id="cowGround" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
     </defs>
-    <ellipse cx="200" cy="212" rx="150" ry="4" fill="#000" opacity=".55"/>
-    <path d="M330 46 C344 62 348 104 344 150" stroke="#2f3237" stroke-width="3.2" fill="none" stroke-linecap="round"/>
-    <path d="M330 46 C344 62 348 104 344 150" stroke="#fff" stroke-opacity=".9" stroke-width="1" fill="none" stroke-linecap="round" transform="translate(1.6 0)"/>
-    <path d="M344 146 C337 158 337 174 343 188 C350 174 352 158 344 146 Z" fill="#2f3237" stroke="#fff" stroke-width="1"/>
-    <path d="${farLegs}" fill="url(#cowFar)" stroke="#fff" stroke-opacity=".55" stroke-width="1"/>
-    <path d="M66 26 C63 18 65 11 71 7 C71 13 72 19 74 25 Z" fill="#2f3237" stroke="#fff" stroke-width="1"/>
-    <path d="${body}" fill="#1c1e22"/>
-    <g clip-path="url(#cowclip)">${regiones}</g>
-    <path d="${body}" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
-    <path d="M77 33 C86 32 96 38 101 50 C102 54 98 55 95 52 C89 47 82 42 76 39 Z" fill="#26292d" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/>
-    <path d="M81 37 C87 39 93 44 97 49" stroke="#fff" stroke-opacity=".45" stroke-width=".8" fill="none"/>
-    <path d="M51 41 C54 38 58 38 61 41 C58 43 54 43 51 41 Z" fill="none" stroke="#fff" stroke-width="1.1"/>
-    <path d="M42 62 C44 60 47 61 47 64" stroke="#fff" stroke-width="1.1" fill="none" stroke-linecap="round"/>
-    <path d="M42 70 C46 72 50 73 56 72" stroke="#fff" stroke-opacity=".8" stroke-width="1" fill="none" stroke-linecap="round"/>
-    <path d="M141 209h19M157 209 M304 209h18M167 209h17M290 209h12" stroke="#fff" stroke-width="1" opacity=".8"/>
+    <ellipse cx="232" cy="211" rx="150" ry="9" fill="url(#cowGround)"/>
+    <path d="M331 48 C342 62 347 100 345 146" stroke="#2a2c30" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+    <path d="M345 142 C339 152 338 168 341 182 C342 186 345 190 347 186 C350 176 352 160 347 146 Z" fill="#1d1e21"/>
+    <path d="M343 152 L342 180 M346 150 L346 184 M349 156 L349 178" stroke="#000" stroke-opacity=".5" stroke-width=".6"/>
+    <path d="${farLegs}" fill="url(#cowFar)"/>
+    <path d="M173 208h13M292 209h11" stroke="#000" stroke-width="3"/>
+    <path d="${body}" fill="url(#cowHide)"/>
+    <g clip-path="url(#cowclip)">
+      ${regiones}
+      <rect x="20" y="0" width="360" height="220" filter="url(#cowGrain)"/>
+      <g filter="url(#cowBlur)">${elipses(brillos, "#fff")}${elipses(sombras, "#000")}</g>
+      <path d="${musculos}" fill="none" stroke="#000" stroke-opacity=".32" stroke-width="1.6" stroke-linecap="round" filter="url(#cowSoft)"/>
+      <path d="${musculos}" fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="1" stroke-linecap="round" transform="translate(-1 -1)"/>
+    </g>
+    <path d="${body}" fill="none" stroke="#0b0c0e" stroke-opacity=".7" stroke-width="1"/>
+    <path d="M67 26 C65 19 67 13 72 10 C73 15 74 21 75 25 Z" fill="url(#cowHorn)"/>
+    <path d="M76 33 C84 33 94 39 100 49 C102 54 99 57 95 54 C89 50 82 44 76 39 Z" fill="url(#cowEar)" stroke="#0b0c0e" stroke-opacity=".6" stroke-width=".8"/>
+    <path d="M80 37 C86 40 92 45 96 51" stroke="#8a8e95" stroke-opacity=".5" stroke-width=".9" fill="none" stroke-linecap="round"/>
+    <path d="M51 40 C54 37 59 37 62 40 C59 43 54 43 51 40 Z" fill="#070708"/>
+    <circle cx="57.5" cy="39.4" r=".9" fill="#fff" opacity=".85"/>
+    <path d="M50 37 C54 34 60 34 64 37" stroke="#000" stroke-opacity=".45" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <ellipse cx="44" cy="62" rx="2.2" ry="1.5" fill="#050506" transform="rotate(-25 44 62)"/>
+    <path d="M42 70 C46 72 50 73 55 72" stroke="#000" stroke-opacity=".6" stroke-width="1" fill="none" stroke-linecap="round"/>
+    <path d="M41 58 C40 62 40 66 42 69" stroke="#9aa0a7" stroke-opacity=".35" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M142 211h17M304 211h17" stroke="#050506" stroke-width="3.2"/>
+    <path d="M150.5 205v6M312.5 205v6" stroke="#5d6168" stroke-width=".8"/>
+    <path d="M143 203h16M305 203h16" stroke="#000" stroke-opacity=".45" stroke-width="1.2"/>
     ${numeros}
   </svg>`;
 }
