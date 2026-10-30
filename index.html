@@ -107,7 +107,10 @@
   .mini .pr s{color:#bbb;font-weight:600;font-size:12px;margin-left:4px}
 
   /* ---------- Section shortcuts ---------- */
-  .shortcuts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .shortcuts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .emo{font-size:58px;line-height:1;filter:drop-shadow(0 6px 8px rgba(0,0,0,.18))}
+  .detail .photo .emo{font-size:120px;padding:10px 0 20px}
+  .ci .th .emo,.adm-row .th .emo,.zc .t .emo{font-size:30px}
   .sc{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 4px 10px;text-align:center;font-size:11.5px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:7px}
   .sc i{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:var(--red-soft);color:var(--red)}
   .sc.k i{background:#111;color:#fff}
@@ -457,6 +460,8 @@
     <div class="shortcuts">
       <button class="sc" data-go="parrilla"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 10h16M5 10a7 7 0 0 0 14 0M8 17l-2 4M16 17l2 4M9 3c0 2 2 2 2 4M13 3c0 2 2 2 2 4"/></svg></i>Parrilla</button>
       <button class="sc" data-go="platos"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 11h18a9 9 0 0 1-18 0zM2 11h20M8 7c0-1.5 1-2 1-3.5M12 7c0-1.5 1-2 1-3.5M16 7c0-1.5 1-2 1-3.5"/></svg></i>Platos</button>
+      <button class="sc" data-go="menudencias"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></i>Menudencias</button>
+      <button class="sc" data-go="complementos"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 10h8l-1.2 11H9.2zM9 10l1-5h4l1 5M11 2.5h2M10.5 14h.01M13.5 16h.01M11.5 18h.01"/></svg></i>Complementos</button>
       <button class="sc" data-go="ofertas"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></i>Ofertas</button>
       <button class="sc k" data-go="calc"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="2" width="16" height="20" rx="3"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15v3M8 18.5h.01M12 18.5h.01"/></svg></i>Calcular</button>
     </div>
@@ -492,6 +497,22 @@
     <div class="chips" id="chipsPlatos"></div>
     <div class="grid" id="gridPlatos" style="margin-top:12px"></div>
     <div class="tip"><i>!</i><div><b>Para platos comunes</b> calcula unos 200–250 g de carne por persona; en sopas y guisos con verduras alcanza con 150 g.</div></div>
+  </main>
+
+  <!-- MENUDENCIAS -->
+  <main class="view" id="v-menudencias">
+    <div class="sec-hero" data-hero="sec-menudencias"></div>
+    <div class="chips" id="chipsMenudencias"></div>
+    <div class="grid" id="gridMenudencias" style="margin-top:12px"></div>
+    <div class="tip"><i>!</i><div><b>Menudencias frescas del día.</b> Para anticuchos calcula unos 150 g de corazón por persona; el hígado se cocina rápido para que quede tierno.</div></div>
+  </main>
+
+  <!-- COMPLEMENTOS -->
+  <main class="view" id="v-complementos">
+    <div class="sec-hero red" data-hero="sec-complementos"></div>
+    <div class="chips" id="chipsComplementos"></div>
+    <div class="grid" id="gridComplementos" style="margin-top:12px"></div>
+    <div class="tip"><i>!</i><div><b>Arma tu parrillada completa:</b> agrega pan, sal parrillera, salsas y carbón a tu pedido y te lo entregamos junto con la carne.</div></div>
   </main>
 
   <!-- OFERTAS -->
@@ -687,12 +708,47 @@ const CORTES_BASE = [
    uso:"Para sopas, caldos y carne deshilachada.", descripcion:"Carne con fibra que se deshilacha fácilmente. Para sopas, ropa vieja y saice.", tags:["Deshilachar","Económico"], coc:["Olla"]},
   {id:"cogote", nombre:"Cogote", alias:"Pescuezo", animal:"Res", cat:"platos", precio:44, oferta:null, zona:"cogote", forma:"bone",
    uso:"Económico, ideal para sopas y pucheros.", descripcion:"Corte del cuello con hueso y mucho sabor. Da cuerpo a sopas, pucheros y fricasé.", tags:["Económico","Sopas"], coc:["Olla"]},
-  {id:"lengua", nombre:"Lengua", alias:"Lengua de res", animal:"Res", cat:"platos", precio:56, oferta:null, zona:null, forma:"roast",
+  {id:"lengua", nombre:"Lengua", alias:"Lengua de res", animal:"Res", cat:"menudencias", precio:56, oferta:null, zona:null, forma:"roast",
    uso:"Lengua en salsa o a la vinagreta.", descripcion:"Se cocina hervida, se pela y se sirve en salsa, picante de lengua o a la vinagreta.", tags:["Tradicional"], coc:["Olla"]},
   {id:"chuleta", nombre:"Chuleta de Cerdo", alias:"Chuleta con hueso", animal:"Cerdo", cat:"platos", precio:52, oferta:null, zona:null, forma:"pork",
    uso:"Frita, apanada o a la plancha.", descripcion:"Chuleta de cerdo con hueso, para freír, apanar o a la plancha con papas y ensalada.", tags:["Cerdo","Rápida"], coc:["Sartén","Plancha"]},
   {id:"piernacerdo", nombre:"Pierna de Cerdo", alias:"Para horno", animal:"Cerdo", cat:"platos", precio:50, oferta:45, zona:null, forma:"pork",
    uso:"Lechón al horno, chicharrón y fricasé.", descripcion:"Pierna de cerdo para hornear entera, en trozos para chicharrón o fricasé.", tags:["Cerdo","Para fiestas"], coc:["Horno","Olla"]},
+  // ---------- MENUDENCIAS DE RES ----------
+  {id:"higado", nombre:"Hígado", alias:"Hígado de res", animal:"Res", cat:"menudencias", precio:35, oferta:null, zona:null, forma:"strip",
+   uso:"Encebollado, frito o a la plancha.", descripcion:"Hígado fresco de res, rico en hierro. Cortado en bifes finos para freír, encebollar o hacer a la plancha.", tags:["Fresco del día","Rico en hierro"], coc:["Sartén","Plancha"]},
+  {id:"corazon", nombre:"Corazón", alias:"Corazón de res", animal:"Res", cat:"menudencias", precio:40, oferta:null, zona:null, forma:"roast",
+   uso:"Anticuchos a la parrilla y salteados.", descripcion:"Corazón de res limpio, ideal para anticuchos con papa y maní, o en trozos salteados.", tags:["Anticuchos","Magro"], coc:["Parrilla","Sartén"]},
+  {id:"rinon", nombre:"Riñón", alias:"Riñón de res", animal:"Res", cat:"menudencias", precio:30, oferta:null, zona:null, forma:"roast",
+   uso:"Salteado de riñón y guisos.", descripcion:"Riñón de res fresco. Se deja en agua con limón antes de cocinarlo; ideal salteado con cebolla o en guisos.", tags:["Fresco del día"], coc:["Sartén","Olla"]},
+  {id:"panza", nombre:"Panza / Mondongo", alias:"Callos · Tripa", animal:"Res", cat:"menudencias", precio:32, oferta:null, zona:null, forma:"strip",
+   uso:"Ranga ranga, fricasé y sopa de mondongo.", descripcion:"Panza de res limpia y lista para cocinar. Base del ranga ranga, el mondongo y otros platos tradicionales.", tags:["Tradicional","Limpia"], coc:["Olla"]},
+  {id:"librillo", nombre:"Librillo", alias:"Callo de libro", animal:"Res", cat:"menudencias", precio:34, oferta:null, zona:null, forma:"strip",
+   uso:"Ranga y guisos.", descripcion:"Parte del estómago de la res con forma de hojas. Se usa en ranga, guisos y picantes.", tags:["Tradicional"], coc:["Olla"]},
+  {id:"chinchulin", nombre:"Chinchulín", alias:"Tripa delgada", animal:"Res", cat:"menudencias", precio:38, oferta:null, zona:null, forma:"strip",
+   uso:"A la parrilla bien dorado y crocante.", descripcion:"Intestino delgado limpio. A la parrilla, bien dorado y crocante, con limón. Infaltable en la parrillada completa.", tags:["Parrillada completa","Crocante"], coc:["Parrilla"]},
+  {id:"tripagorda", nombre:"Tripa Gorda", alias:"Tripa de res", animal:"Res", cat:"menudencias", precio:30, oferta:null, zona:null, forma:"strip",
+   uso:"Parrilla y chicharrón de tripa.", descripcion:"Tripa gorda limpia para hacer a la parrilla o como chicharrón crocante.", tags:["Crocante"], coc:["Parrilla","Sartén"]},
+  {id:"rabo", nombre:"Rabo / Cola", alias:"Cola de res", animal:"Res", cat:"menudencias", precio:45, oferta:null, zona:null, forma:"bone",
+   uso:"Estofado de cola y sopas.", descripcion:"Cola de res en rodajas con hueso. Da caldos y estofados muy sabrosos con cocción lenta.", tags:["Con hueso","Cocción lenta"], coc:["Olla"]},
+  {id:"pata", nombre:"Pata de Res", alias:"Kawi · Para caldo", animal:"Res", cat:"menudencias", precio:25, oferta:null, zona:null, forma:"bone",
+   uso:"Caldo de pata y gelatina casera.", descripcion:"Pata de res cortada y limpia. Da un caldo espeso con mucho colágeno; también para gelatina de pata.", tags:["Colágeno","Económico"], coc:["Olla"]},
+  {id:"sesos", nombre:"Sesos", alias:"Seso de res", animal:"Res", cat:"menudencias", precio:30, oferta:null, zona:null, forma:"roast",
+   uso:"Rebozados o en tortilla.", descripcion:"Sesos de res frescos. Se hierven brevemente y luego se rebozan o se preparan en tortilla.", tags:["Tradicional"], coc:["Sartén"]},
+  // ---------- COMPLEMENTOS (se venden por unidad, paquete, bolsa o frasco) ----------
+  {id:"pan", nombre:"Pan para Choripán", alias:"Paquete de 6 panes", animal:"Complemento", cat:"complementos", unidad:"paquete", precio:6, oferta:null, zona:null, forma:"pan",
+   uso:"Para choripán y acompañar la parrillada.", descripcion:"Pan fresco del día, crocante por fuera y suave por dentro. Paquete de 6 unidades.", tags:["Fresco del día"], coc:[]},
+  {id:"salparrillera", nombre:"Sal Parrillera", alias:"Sal gruesa · 1 kg", animal:"Complemento", cat:"complementos", unidad:"bolsa", precio:8, oferta:null, zona:null, forma:"sal",
+   uso:"Sal gruesa para salar la carne en la parrilla.", descripcion:"Sal gruesa especial para parrilla. Se pone recién al poner la carne al fuego. Bolsa de 1 kg.", tags:["Parrilla"], coc:[]},
+  {id:"sazonador", nombre:"Sazonador para Carnes", alias:"Mezcla de especias", animal:"Complemento", cat:"complementos", unidad:"sobre", precio:12, oferta:null, zona:null, forma:"condimento",
+   uso:"Para sazonar carnes antes de cocinarlas.", descripcion:"Mezcla de especias para carnes rojas, cerdo y pollo. Ideal para adobar antes de la parrilla o el horno.", tags:["Especias"], coc:[]},
+  {id:"chimichurri", nombre:"Chimichurri Casero", alias:"Frasco 250 g", animal:"Complemento", cat:"complementos", unidad:"frasco", precio:20, oferta:null, zona:null, forma:"salsa",
+   uso:"Para acompañar choripán y carnes asadas.", descripcion:"Chimichurri preparado en casa con perejil, ajo, orégano, ají y aceite. Frasco de 250 g.", tags:["Casero"], coc:[]},
+  {id:"llajua", nombre:"Llajua", alias:"Frasco 250 g", animal:"Complemento", cat:"complementos", unidad:"frasco", precio:15, oferta:null, zona:null, forma:"salsa",
+   uso:"La salsa picante infaltable en la mesa.", descripcion:"Llajua casera de locoto y tomate con quirquiña. Frasco de 250 g.", tags:["Casera","Picante"], coc:[]},
+  {id:"carbon", nombre:"Carbón Vegetal", alias:"Bolsa de 5 kg", animal:"Complemento", cat:"complementos", unidad:"bolsa", precio:35, oferta:null, zona:null, forma:"carbon",
+   uso:"Para encender tu parrilla.", descripcion:"Carbón vegetal de buena brasa y larga duración. Bolsa de 5 kg, alcanza para una parrillada de 8 a 10 personas.", tags:["Parrilla"], coc:[]},
+
 ];
 
 /* Banners del inicio (el primero es el grande) */
@@ -708,6 +764,8 @@ const PORTADAS_BASE = [
   {id:"portada",      orden:100, pill:"", titulo:"Bienvenida", descripcion:"Cortes selectos, pesados al momento."},
   {id:"sec-parrilla", orden:101, pill:"SECCIÓN", titulo:"Cortes para Parrilla", descripcion:"Jugosos, con buen marmoleado y grasa que se dora al carbón."},
   {id:"sec-platos",   orden:102, pill:"SECCIÓN", titulo:"Cortes para Platos de Casa", descripcion:"Para silpancho, milanesa, guisos, sopas, estofados y al horno."},
+  {id:"sec-menudencias", orden:104, pill:"SECCIÓN", titulo:"Menudencias de Res", descripcion:"Hígado, corazón, panza, chinchulín, rabo y más, frescos del día."},
+  {id:"sec-complementos", orden:105, pill:"COMPLEMENTOS", titulo:"Todo para tu Parrillada", descripcion:"Pan, sal parrillera, sazonadores, salsas y carbón."},
   {id:"sec-ofertas",  orden:103, pill:"SOLO ESTA SEMANA", titulo:"Ofertas de la Semana", descripcion:"Precios especiales mientras dure el stock."},
 ];
 const esPortada = id => id === "portada" || String(id).startsWith("sec-");
@@ -758,9 +816,21 @@ function zonaActual(c){
   if (c.zona && !ZONAS[c.zona]) return ZONA_VIEJA[c.zona] ?? null;
   return c.zona || null;
 }
-const ANIMALES = ["Res", "Cerdo", "Pollo", "Cordero", "Embutido", "Otro"];
-const FORMAS = {steak:"Bife", bone:"Con hueso", rib:"Costillar", ground:"Molida", roast:"Pieza / rollo", strip:"Corte plano", pork:"Cerdo"};
-const COLS_CORTE = ["id","nombre","alias","animal","cat","precio","oferta","oferta_hasta","zona","forma","uso","descripcion","tags","coc","disponible","destacado","orden","foto"];
+const ANIMALES = ["Res", "Cerdo", "Pollo", "Cordero", "Embutido", "Complemento", "Otro"];
+/* Secciones del catálogo */
+const CATS = {parrilla: "Parrilla", platos: "Platos comunes", menudencias: "Menudencias", complementos: "Complementos"};
+const SECCION_UI = {parrilla: "Parrilla", platos: "Platos", menudencias: "Menudencias", complementos: "Complementos"};
+/* Cómo se vende: por kilo o por unidad (para los complementos) */
+const UNIDADES = ["kg", "unidad", "paquete", "bolsa", "frasco", "sobre", "docena"];
+const unidadDe = c => c.unidad || "kg";
+const porKg = c => unidadDe(c) === "kg";
+const plural = (u, n) => n === 1 ? u : (/[aeiou]$/.test(u) ? u + "s" : u + "es");
+const cantTxt = (c, n) => porKg(c) ? `${n.toLocaleString("es-BO")} kg` : `${n.toLocaleString("es-BO")} ${plural(unidadDe(c), n)}`;
+const FORMAS = {steak:"Bife", bone:"Con hueso", rib:"Costillar", ground:"Molida", roast:"Pieza / rollo", strip:"Corte plano", pork:"Cerdo",
+  pan:"Pan", sal:"Sal", condimento:"Sazonador", salsa:"Salsa / frasco", carbon:"Carbón"};
+/* Ícono para complementos sin foto */
+const ICONO_FORMA = {pan:"🥖", sal:"🧂", condimento:"🌿", salsa:"🫙", carbon:"🔥"};
+const COLS_CORTE = ["id","nombre","alias","animal","cat","precio","oferta","oferta_hasta","zona","forma","uso","descripcion","tags","coc","disponible","destacado","orden","foto","unidad"];
 const COLS_BANNER = ["id","orden","pill","titulo","descripcion","precio","antes","unidad","ir","foto"];
 
 /* =====================================================================
@@ -787,7 +857,7 @@ async function ocupado(txt, fn){
 function normCorte(c, i = 0){
   return {
     id: String(c.id), nombre: c.nombre || "", alias: c.alias || "", animal: c.animal || "Res",
-    cat: c.cat === "platos" ? "platos" : "parrilla",
+    cat: CATS[c.cat] ? c.cat : "parrilla", unidad: UNIDADES.includes(c.unidad) ? c.unidad : "kg",
     precio: +c.precio || 0, oferta: c.oferta != null && c.oferta !== "" && +c.oferta > 0 ? +c.oferta : null,
     oferta_hasta: c.oferta_hasta || null, zona: zonaActual(c), forma: c.forma || "steak",
     uso: c.uso || "", descripcion: c.descripcion ?? c.desc ?? "",
@@ -959,14 +1029,21 @@ const repoLocal = {
   async log(accion, detalle = ""){ const l = store.get("valeriano.log", []); l.unshift({fecha: new Date().toISOString(), usuario: "este teléfono", accion, detalle}); store.set("valeriano.log", l.slice(0, 200)); },
   async leerLog(){ return store.get("valeriano.log", []); },
 };
+/* ¿La base de Supabase ya tiene Menudencias, Complementos y la columna "unidad"? */
+const baseV2 = () => !CLOUD || nube.v2 !== false;
+function avisoActualizarBase(){
+  toast("Primero hay que actualizar la base en Supabase (archivo supabase/actualizar-v2.sql)", 5000);
+}
 const repoNube = {
   nube: true,
   async cargar(){
-    const [cortes, banners, aj] = await Promise.all([
+    const [cortes, banners, aj, v2] = await Promise.all([
       nube.get("cortes?select=*&order=orden.asc,nombre.asc"),
       nube.get("banners?select=*&order=orden.asc"),
       nube.get("ajustes?select=*&id=eq.1"),
+      nube.get("cortes?select=unidad&limit=1").then(() => true, () => false),
     ]);
+    nube.v2 = v2;
     return {cortes: cortes.map(normCorte), banners: banners.map(normBanner), ajustes: Object.assign(clone(AJUSTES_BASE), (aj && aj[0]) || {})};
   },
   async cambiarFoto(id, blob, anterior){
@@ -974,7 +1051,7 @@ const repoNube = {
     if (anterior && anterior !== url) nube.borrarFoto(anterior);
     return url;
   },
-  async guardarCortes(lista){ const ahora = new Date().toISOString(); await nube.upsert("cortes", lista.map(c => ({...fila(c, COLS_CORTE), updated_at: ahora}))); },
+  async guardarCortes(lista){ const ahora = new Date().toISOString(); await nube.upsert("cortes", lista.map(c => ({...fila(c, baseV2() ? COLS_CORTE : COLS_CORTE.filter(k => k !== "unidad")), updated_at: ahora}))); },
   async borrarCorte(id, foto){ await nube.borrar("cortes", id); if (foto) nube.borrarFoto(foto); },
   async guardarBanners(lista){ const ahora = new Date().toISOString(); await nube.upsert("banners", lista.map(b => ({...fila(b, COLS_BANNER), updated_at: ahora}))); },
   async guardarAjustes(){ await nube.upsert("ajustes", [{id: 1, whatsapp: AJUSTES.whatsapp, direccion: AJUSTES.direccion, horario: AJUSTES.horario, updated_at: new Date().toISOString()}]); },
@@ -1083,7 +1160,8 @@ function meatSVG(forma, seed = forma, cls = ""){
   }
   return `<svg class="${cls}" viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${defs}${body}</svg>`;
 }
-const imgDe = (x, fallback) => x.foto ? `<img src="${esc(x.foto)}" alt="${esc(x.nombre || x.titulo || "")}" loading="lazy">` : meatSVG(x.forma || fallback || "steak", x.id);
+const imgDe = (x, fallback) => x.foto ? `<img src="${esc(x.foto)}" alt="${esc(x.nombre || x.titulo || "")}" loading="lazy">`
+  : ICONO_FORMA[x.forma] ? `<span class="emo" aria-hidden="true">${ICONO_FORMA[x.forma]}</span>` : meatSVG(x.forma || fallback || "steak", x.id);
 
 /* =====================================================================
    Mapa del toro (cebú Nelore, de perfil) con las 21 zonas numeradas
@@ -1168,7 +1246,7 @@ function cowSVG(){
    ===================================================================== */
 let carrito = store.get("valeriano.carrito", []);
 let filtroInicio = "todos", filtroZona = null, busqueda = "";
-const subFiltro = {parrilla: "todos", platos: "todos"};
+const subFiltro = {parrilla: "todos", platos: "todos", menudencias: "todos", complementos: "todos"};
 let esAdmin = false;
 
 const icoEdit = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>`;
@@ -1176,12 +1254,12 @@ function cardHTML(c){
   const of = ofertaVigente(c), off = of ? Math.round((1 - c.oferta / c.precio) * 100) : 0;
   const agot = !c.disponible;
   return `<article class="card ${agot ? "soldout" : ""}" data-id="${esc(c.id)}">
-    <div class="ph">${off > 0 && !agot ? `<span class="off">-${off}%</span>` : ""}<span class="cat">${esc(c.animal)}</span>${imgDe(c)}
+    <div class="ph">${off > 0 && !agot ? `<span class="off">-${off}%</span>` : ""}<span class="cat">${c.cat === "complementos" ? "Extra" : esc(c.animal)}</span>${imgDe(c)}
       ${agot ? `<span class="sold">AGOTADO</span>` : (c.destacado ? `<span class="star">★ Destacado</span>` : "")}</div>
     <h5>${esc(c.nombre)}</h5>
     <p class="use">${esc(c.uso)}</p>
     <div class="foot">
-      <div class="price">${of ? `<s>${bs(c.precio)}</s>` : ""}${bs(precioDe(c))} <small>/kg</small></div>
+      <div class="price">${of ? `<s>${bs(c.precio)}</s>` : ""}${bs(precioDe(c))} <small>/${unidadDe(c)}</small></div>
       ${esAdmin
         ? `<button class="add edit" data-edit="${esc(c.id)}" aria-label="Editar ${esc(c.nombre)}">${icoEdit}</button>`
         : agot ? "" : `<button class="add" data-quick="${esc(c.id)}" aria-label="Agregar ${esc(c.nombre)}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>`}
@@ -1194,25 +1272,27 @@ function chipsHTML(opts, sel){ return opts.map(([v, l]) => `<button class="chip 
 const publicos = () => [...CORTES].sort(ordenPublico);
 
 function renderInicio(){
-  const opts = [["todos","Todos"],["parrilla","Parrilla"],["platos","Platos comunes"],["ofertas","Ofertas"],["Res","Res"],["Cerdo","Cerdo"]];
+  const opts = [["todos","Todos"],["parrilla","Parrilla"],["platos","Platos comunes"],["menudencias","Menudencias"],["complementos","Complementos"],["ofertas","Ofertas"],["Res","Res"],["Cerdo","Cerdo"]];
   $("#filterChips").innerHTML = chipsHTML(opts, filtroInicio);
   let list = publicos().filter(matchBusqueda);
-  if (filtroInicio === "parrilla" || filtroInicio === "platos") list = list.filter(c => c.cat === filtroInicio);
+  if (CATS[filtroInicio]) list = list.filter(c => c.cat === filtroInicio);
   else if (filtroInicio === "ofertas") list = list.filter(ofertaVigente);
   else if (filtroInicio !== "todos") list = list.filter(c => c.animal === filtroInicio);
   if (filtroZona) list = list.filter(c => c.zona === filtroZona);
   $("#countAll").textContent = list.length + " cortes";
   renderGrid($("#gridAll"), list);
 }
+const nombreId = cat => cat[0].toUpperCase() + cat.slice(1);
 function renderSeccion(cat){
-  const opts = [["todos","Todos"],["Res","Res"],["Cerdo","Cerdo"],["oferta","En oferta"]];
+  const opts = cat === "complementos" || cat === "menudencias" ? [["todos","Todos"],["oferta","En oferta"]] : [["todos","Todos"],["Res","Res"],["Cerdo","Cerdo"],["oferta","En oferta"]];
   if (cat === "parrilla") opts.splice(3, 0, ["Embutido","Embutidos"]);
   const sel = subFiltro[cat];
-  $(cat === "parrilla" ? "#chipsParrilla" : "#chipsPlatos").innerHTML = chipsHTML(opts, sel);
+  $("#chips" + nombreId(cat)).innerHTML = chipsHTML(opts, sel);
   let list = publicos().filter(c => c.cat === cat && matchBusqueda(c));
   if (sel === "oferta") list = list.filter(ofertaVigente); else if (sel !== "todos") list = list.filter(c => c.animal === sel);
-  renderGrid($(cat === "parrilla" ? "#gridParrilla" : "#gridPlatos"), list);
+  renderGrid($("#grid" + nombreId(cat)), list);
 }
+const renderSecciones = () => Object.keys(CATS).forEach(renderSeccion);
 function renderOfertas(){ renderGrid($("#gridOfertas"), publicos().filter(c => ofertaVigente(c) && matchBusqueda(c))); }
 
 const destinoBanner = b => ["parrilla","platos","ofertas","calc"].includes(b.ir) ? `data-go="${b.ir}"` : `data-open="${esc(b.ir)}"`;
@@ -1269,7 +1349,7 @@ function renderCowInfo(){
 function elegirZona(z){ filtroZona = filtroZona === z ? null : z; filtroInicio = "todos"; renderCowInfo(); renderInicio(); }
 
 function renderAll(){
-  renderBanners(); renderPortadas(); renderInicio(); renderSeccion("parrilla"); renderSeccion("platos"); renderOfertas(); renderTienda(); renderCowInfo();
+  renderBanners(); renderPortadas(); renderInicio(); renderSecciones(); renderOfertas(); renderTienda(); renderCowInfo();
   guardarCarrito();
   if (esAdmin && vistaActual === "admin") renderAdmin();
 }
@@ -1295,7 +1375,8 @@ let det = null;
 function abrirDetalle(id){ const c = byId(id); if (!c) return; det = {c, peso: 1, cant: 1}; pintarDetalle(); abrir("#detail"); }
 function pintarDetalle(){
   const {c, peso, cant} = det, of = ofertaVigente(c);
-  const total = precioDe(c) * peso * cant;
+  const kilos = porKg(c), u = unidadDe(c);
+  const total = precioDe(c) * (kilos ? peso : 1) * cant;
   const pesos = [[.5,"500 g"],[1,"1 kg"],[2,"2 kg"],[5,"5 kg"]];
   $("#detail").innerHTML = `
     <div class="photo ${c.foto ? "real" : ""}">
@@ -1307,21 +1388,21 @@ function pintarDetalle(){
     <div class="panel">
       <div class="row1">
         <div><h2>${esc(c.nombre)}</h2><div class="alt">${esc(c.alias)}${c.alias ? " · " : ""}${esc(c.animal)}</div></div>
-        <div class="pp">${of ? `<s>${bs(c.precio)}</s>` : ""}<b>${bs(precioDe(c))}</b><small>por kg</small>${of && c.oferta_hasta ? `<div class="until">Oferta hasta el ${fechaCorta(c.oferta_hasta)}</div>` : ""}</div>
+        <div class="pp">${of ? `<s>${bs(c.precio)}</s>` : ""}<b>${bs(precioDe(c))}</b><small>por ${u}</small>${of && c.oferta_hasta ? `<div class="until">Oferta hasta el ${fechaCorta(c.oferta_hasta)}</div>` : ""}</div>
       </div>
       <div class="usefor"><b>¿PARA QUÉ ES?</b>${esc(c.uso)}</div>
       ${c.descripcion ? `<p class="desc">${esc(c.descripcion)}</p>` : ""}
       <div class="tags">${c.tags.map(t => `<span class="r">${esc(t)}</span>`).join("")}${c.coc.map(t => `<span>${esc(t)}</span>`).join("")}</div>
       ${c.disponible ? `
-      <div class="lab">PESO</div>
-      <div class="weights">${pesos.map(([v, l]) => `<button data-peso="${v}" class="${v === peso ? "on" : ""}">${l}</button>`).join("")}</div>
+      ${kilos ? `<div class="lab">PESO</div>
+      <div class="weights">${pesos.map(([v, l]) => `<button data-peso="${v}" class="${v === peso ? "on" : ""}">${l}</button>`).join("")}</div>` : ""}
       <div class="qty-row" style="margin-top:20px">
         <div class="lab" style="margin:0">CANTIDAD</div>
         <div class="qty"><button data-cant="-1">−</button><b>${cant}</b><button data-cant="1">+</button></div>
       </div>
-      <div class="tot"><span>Total estimado<br><small style="color:#8d8d8d">${(peso*cant).toLocaleString("es-BO")} kg × ${bs(precioDe(c))}</small></span><b>${bs(total)}</b></div>
+      <div class="tot"><span>Total estimado<br><small style="color:#8d8d8d">${cantTxt(c, kilos ? peso*cant : cant)} × ${bs(precioDe(c))}</small></span><b>${bs(total)}</b></div>
       <button class="big-btn" data-addcart>Añadir al pedido</button>
-      <div class="disclaimer">El precio final se ajusta al pesar el corte.</div>`
+      ${kilos ? `<div class="disclaimer">El precio final se ajusta al pesar el corte.</div>` : ""}`
       : `<button class="big-btn dark" disabled>Agotado por ahora</button><div class="disclaimer">Consúltanos por WhatsApp cuándo vuelve.</div>`}
     </div>`;
 }
@@ -1334,16 +1415,16 @@ function guardarCarrito(){ store.set("valeriano.carrito", carrito); const n = it
 function agregar(id, kg){
   const ex = carrito.find(x => x.id === id);
   if (ex) ex.kg = Math.round((ex.kg + kg)*100)/100; else carrito.push({id, kg});
-  guardarCarrito(); toast(`✓ ${byId(id).nombre} · ${kg.toLocaleString("es-BO")} kg agregado`);
+  guardarCarrito(); toast(`✓ ${byId(id).nombre} · ${cantTxt(byId(id), kg)} agregado`);
 }
 function pintarCarrito(){
   const items = itemsCarrito();
   const total = items.reduce((s, x) => s + precioDe(byId(x.id)) * x.kg, 0);
   $("#cart").innerHTML = `<div class="handle"></div>
     <h3>Mi pedido</h3>
-    <p class="page-sub" style="margin:0 0 6px">${items.length ? "Revisa tu pedido y envíalo por WhatsApp." : "Todavía no agregaste cortes."}</p>
+    <p class="page-sub" style="margin:0 0 6px">${items.length ? "Revisa tu pedido y envíalo por WhatsApp." : "Todavía no agregaste productos."}</p>
     ${items.map(x => { const c = byId(x.id); return `<div class="ci"><div class="th">${imgDe(c)}</div>
-      <div class="nf"><b>${esc(c.nombre)}</b><small>${x.kg.toLocaleString("es-BO")} kg × ${bs(precioDe(c))}</small></div>
+      <div class="nf"><b>${esc(c.nombre)}</b><small>${cantTxt(c, x.kg)} × ${bs(precioDe(c))}</small></div>
       <div class="pr">${bs(precioDe(c) * x.kg)}<button class="rm" data-rm="${esc(c.id)}">Quitar</button></div></div>`; }).join("")}
     ${items.length ? `<div class="sum"><span>Total estimado</span><span>${bs(total)}</span></div>
       <button class="big-btn" data-wa>Enviar pedido por WhatsApp</button>
@@ -1356,7 +1437,7 @@ const waNum = () => String(AJUSTES.whatsapp).replace(/\D/g, "");
 function enviarWhatsApp(){
   const items = itemsCarrito();
   const total = items.reduce((s, x) => s + precioDe(byId(x.id)) * x.kg, 0);
-  const txt = "Hola Valeriano Carnes, quiero hacer este pedido:\n" + items.map(x => `• ${byId(x.id).nombre}: ${x.kg} kg`).join("\n") + `\nTotal estimado: ${bs(total)}`;
+  const txt = "Hola Valeriano Carnes, quiero hacer este pedido:\n" + items.map(x => `• ${byId(x.id).nombre}: ${cantTxt(byId(x.id), x.kg)}`).join("\n") + `\nTotal estimado: ${bs(total)}`;
   abrirUrl(`https://wa.me/${waNum()}?text=${encodeURIComponent(txt)}`);
 }
 
@@ -1483,8 +1564,10 @@ function tabCortes(){
   const vacia = CLOUD && n === 0, faltan = vacia ? [] : cortesBaseFaltantes();
   $("#admBody").innerHTML = `
     ${vacia ? `<div class="adm-card warn"><h4>La nube está vacía</h4><p>Sube el catálogo inicial (los ${CORTES_BASE.length} cortes, banners y las fotos que tengas guardadas en este teléfono) para empezar.</p><button class="big-btn sm" data-migrar>Subir catálogo inicial</button></div>` : ""}
-    ${faltan.length ? `<div class="adm-card warn"><h4>${faltan.length} corte${faltan.length === 1 ? " nuevo" : "s nuevos"} para el mapa del toro</h4>
-      <p>${faltan.map(c => `<b>${esc(c.nombre)}</b> (${ZONAS[c.zona] ? ZONAS[c.zona].num : "–"})`).join(", ")}. Puedes cambiar sus precios después.</p>
+    ${faltan.length ? `<div class="adm-card warn"><h4>${faltan.length} producto${faltan.length === 1 ? " nuevo" : "s nuevos"} para el catálogo</h4>
+      <p>${Object.keys(CATS).filter(k => faltan.some(c => c.cat === k)).map(k => `<b>${CATS[k]}:</b> ${faltan.filter(c => c.cat === k).map(c => esc(c.nombre)).join(", ")}`).join("<br>")}<br>Puedes cambiar sus precios después.</p>
+      ${!baseV2() && faltan.some(c => !porKg(c) || c.cat === "menudencias" || c.cat === "complementos")
+        ? `<p style="margin-top:-4px"><b>Antes de agregar Menudencias y Complementos</b> hay que actualizar la base: en Supabase → SQL Editor ejecuta el archivo <b>supabase/actualizar-v2.sql</b> (una sola vez) y vuelve a abrir la app.</p>` : ""}
       <div style="display:flex;gap:8px"><button class="big-btn line sm" data-ocultarbase style="flex:1">Ocultar</button><button class="big-btn sm" data-agregarbase style="flex:2">Agregar al catálogo</button></div></div>` : ""}
     <div class="adm-stats" style="margin-top:12px">
       <div data-af="todos"><b>${n}</b><small>cortes</small></div>
@@ -1494,7 +1577,7 @@ function tabCortes(){
     </div>
     <button class="big-btn" data-newcut>＋ Agregar corte nuevo</button>
     <div class="adm-search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="admBusca" placeholder="Buscar corte…" value="${esc(admBusca)}"></div>
-    <div class="chips" id="admChips" style="margin-top:10px">${chipsHTML([["todos","Todos"],["parrilla","Parrilla"],["platos","Platos"],["ofertas","Ofertas"],["agotados","Agotados"],["sinfoto","Sin foto"],["destacados","Destacados"]], admFiltro)}</div>
+    <div class="chips" id="admChips" style="margin-top:10px">${chipsHTML([["todos","Todos"],["parrilla","Parrilla"],["platos","Platos"],["menudencias","Menudencias"],["complementos","Complementos"],["ofertas","Ofertas"],["agotados","Agotados"],["sinfoto","Sin foto"],["destacados","Destacados"]], admFiltro)}</div>
     <div class="adm-box" id="admList"></div>
     <p class="note">Usa ▲▼ para cambiar el orden en que aparecen. Los destacados se muestran primero a los clientes.</p>`;
   pintarListaAdmin();
@@ -1505,16 +1588,19 @@ function cortesBaseFaltantes(){
   return CORTES_BASE.filter(b => !byId(b.id) && !ocultos.includes(b.id)).map(b => normCorte(clone(b)));
 }
 async function agregarCortesBase(){
-  const faltan = cortesBaseFaltantes();
+  // Sin la base actualizada solo se pueden subir cortes por kilo de Parrilla o Platos
+  const todos = cortesBaseFaltantes();
+  const faltan = baseV2() ? todos : todos.filter(c => porKg(c) && (c.cat === "parrilla" || c.cat === "platos"));
+  if (!faltan.length) return avisoActualizarBase();
   let orden = CORTES.reduce((m, c) => Math.max(m, c.orden), -1);
   faltan.forEach(c => c.orden = ++orden);
-  try { await ocupado("Agregando cortes…", () => repo.guardarCortes(faltan)); }
+  try { await ocupado("Agregando productos…", () => repo.guardarCortes(faltan)); }
   catch (e) { return toast("⚠ No se agregaron: " + e.message, 4000); }
   CORTES.push(...faltan);
   if (!repo.nube) repo.persistir();
-  repo.log("Agregó cortes de fábrica", faltan.map(c => c.nombre).join(", "));
+  repo.log("Agregó productos de fábrica", faltan.map(c => c.nombre).join(", "));
   logCache = null; renderAll(); calcular();
-  toast(`✓ ${faltan.length} cortes agregados`);
+  toast(`✓ ${faltan.length} productos agregados` + (faltan.length < todos.length ? " · falta actualizar la base para el resto" : ""), 4000);
 }
 function ocultarCortesBase(){
   store.set("valeriano.baseOculta", [...store.get("valeriano.baseOculta", []), ...cortesBaseFaltantes().map(c => c.id)]);
@@ -1522,7 +1608,7 @@ function ocultarCortesBase(){
 }
 function listaAdminFiltrada(){
   let list = [...CORTES].sort(ordenAdmin);
-  if (admFiltro === "parrilla" || admFiltro === "platos") list = list.filter(c => c.cat === admFiltro);
+  if (CATS[admFiltro]) list = list.filter(c => c.cat === admFiltro);
   else if (admFiltro === "ofertas") list = list.filter(ofertaVigente);
   else if (admFiltro === "agotados") list = list.filter(c => !c.disponible);
   else if (admFiltro === "sinfoto") list = list.filter(c => !c.foto);
@@ -1534,7 +1620,7 @@ function pintarListaAdmin(){
   const list = listaAdminFiltrada();
   $("#admList").innerHTML = list.map((c, i) => `<div class="adm-row" data-edit="${esc(c.id)}">
       <div class="th">${imgDe(c)}${c.foto ? "" : `<span class="nophoto" title="Sin foto">!</span>`}</div>
-      <div class="nf"><b>${esc(c.nombre)}</b><small>${c.cat === "parrilla" ? "Parrilla" : "Platos"} · ${esc(c.animal)}${!c.disponible ? `<span class="tg sold">AGOTADO</span>` : ""}${c.destacado ? `<span class="tg star">★</span>` : ""}${ofertaVigente(c) ? `<span class="tg off">OFERTA</span>` : ""}</small></div>
+      <div class="nf"><b>${esc(c.nombre)}</b><small>${SECCION_UI[c.cat]} · ${esc(c.animal)}${!c.disponible ? `<span class="tg sold">AGOTADO</span>` : ""}${c.destacado ? `<span class="tg star">★</span>` : ""}${ofertaVigente(c) ? `<span class="tg off">OFERTA</span>` : ""}</small></div>
       <div class="pr">${ofertaVigente(c) ? `<s>${bs(c.precio)}</s>` : ""}${bs(precioDe(c))}</div>
       <div class="ord"><button data-mover="${esc(c.id)}" data-dir="-1" ${i === 0 ? "disabled" : ""} aria-label="Subir">▲</button><button data-mover="${esc(c.id)}" data-dir="1" ${i === list.length - 1 ? "disabled" : ""} aria-label="Bajar">▼</button></div>
     </div>`).join("") || `<div class="empty">Nada por aquí.</div>`;
@@ -1545,7 +1631,7 @@ async function mover(id, dir){
   // Normaliza el orden y luego intercambia los dos cortes
   [...CORTES].sort(ordenAdmin).forEach((c, k) => c.orden = k);
   const a = list[i], b = list[j]; [a.orden, b.orden] = [b.orden, a.orden];
-  pintarListaAdmin(); renderInicio(); renderSeccion("parrilla"); renderSeccion("platos"); renderOfertas();
+  pintarListaAdmin(); renderInicio(); renderSecciones(); renderOfertas();
   try { await repo.guardarCortes(CORTES); } catch (e) { toast("⚠ " + e.message); recargar(); }
 }
 
@@ -1553,7 +1639,7 @@ async function mover(id, dir){
 let edit = null;
 function nuevoCorte(){
   const maxOrden = CORTES.reduce((m, c) => Math.max(m, c.orden), -1);
-  return normCorte({id: "c" + Date.now().toString(36), nombre: "", animal: "Res", cat: admFiltro === "platos" ? "platos" : "parrilla", precio: 0, forma: "steak", orden: maxOrden + 1});
+  return normCorte({id: "c" + Date.now().toString(36), nombre: "", animal: "Res", cat: CATS[admFiltro] ? admFiltro : "parrilla", animal: admFiltro === "complementos" ? "Complemento" : "Res", unidad: admFiltro === "complementos" ? "unidad" : "kg", precio: 0, forma: admFiltro === "complementos" ? "condimento" : "steak", orden: maxOrden + 1});
 }
 function abrirEditor(id, base){
   const c = base || (id ? byId(id) : nuevoCorte());
@@ -1582,13 +1668,14 @@ function pintarEditor(){
     <div class="fg"><label>¿Para qué es? *</label><input id="f_uso" value="${esc(c.uso)}" placeholder="Ej.: Para silpancho, milanesa y apanado"></div>
     <div class="fg"><label>Descripción</label><textarea id="f_desc" placeholder="Detalles del corte, cómo cocinarlo…">${esc(c.descripcion)}</textarea></div>
     <div class="fg2">
-      <div class="fg"><label>Precio Bs/kg *</label><input id="f_precio" type="number" inputmode="decimal" min="0" step="0.5" value="${c.precio || ""}"></div>
+      <div class="fg"><label>Precio Bs *</label><input id="f_precio" type="number" inputmode="decimal" min="0" step="0.5" value="${c.precio || ""}"></div>
       <div class="fg"><label>Precio oferta</label><input id="f_oferta" type="number" inputmode="decimal" min="0" step="0.5" value="${c.oferta ?? ""}" placeholder="Sin oferta"></div>
     </div>
     <div class="fg"><label>Oferta válida hasta</label><input id="f_hasta" type="date" value="${esc(c.oferta_hasta || "")}"><div class="hint">Opcional. Pasada la fecha, vuelve solo al precio normal.</div></div>
     <div class="fg"><label>Sección</label>
-      <div class="seg light" id="f_cat"><button data-fcat="parrilla" class="${c.cat === "parrilla" ? "on" : ""}">Parrilla</button><button data-fcat="platos" class="${c.cat === "platos" ? "on" : ""}">Platos comunes</button></div>
+      <div class="seg light" id="f_cat">${Object.entries(CATS).map(([k, v]) => `<button data-fcat="${k}" class="${c.cat === k ? "on" : ""}">${v}</button>`).join("")}</div>
     </div>
+    <div class="fg"><label>Se vende por</label><select id="f_unidad">${opt(UNIDADES.map(u => [u, u === "kg" ? "Kilo (kg)" : u[0].toUpperCase() + u.slice(1)]), c.unidad)}</select><div class="hint">La carne va por kilo; pan, sal, salsas o carbón por unidad, paquete, bolsa o frasco.</div></div>
     <div class="fg2">
       <div class="fg"><label>Animal</label><select id="f_animal">${opt(ANIMALES.map(a => [a, a]), c.animal)}</select></div>
       <div class="fg"><label>Zona en la vaca</label><select id="f_zona"><option value="">Ninguna</option>${opt(Object.entries(ZONAS).map(([k, v]) => [k, `${v.num}. ${v.n}`]), c.zona)}</select></div>
@@ -1607,19 +1694,20 @@ function leerFormCorte(){
   c.precio = parseFloat(v("f_precio")) || 0;
   const of = parseFloat(v("f_oferta")); c.oferta = isFinite(of) && of > 0 ? of : null;
   c.oferta_hasta = c.oferta ? (v("f_hasta") || null) : null;
-  c.animal = v("f_animal"); c.zona = v("f_zona") || null; c.forma = v("f_forma") || c.forma;
+  c.animal = v("f_animal"); c.zona = v("f_zona") || null; c.forma = v("f_forma") || c.forma; c.unidad = v("f_unidad") || "kg";
   c.tags = lista(v("f_tags")); c.coc = lista(v("f_coc"));
   c.disponible = $("#f_disp").checked; c.destacado = $("#f_dest").checked;
 }
 function describirCambios(a, b){
-  if (!a) return `Precio ${bs(b.precio)}/kg`;
+  if (!a) return `Precio ${bs(b.precio)}/${unidadDe(b)}`;
   const out = [];
   if (a.nombre !== b.nombre) out.push(`nombre “${a.nombre}” → “${b.nombre}”`);
   if (a.precio !== b.precio) out.push(`precio ${bs(a.precio)} → ${bs(b.precio)}`);
   if (a.oferta !== b.oferta) out.push(b.oferta ? `oferta ${bs(b.oferta)}${b.oferta_hasta ? " hasta " + b.oferta_hasta : ""}` : "quitó la oferta");
   if (a.disponible !== b.disponible) out.push(b.disponible ? "disponible" : "agotado");
   if (a.destacado !== b.destacado) out.push(b.destacado ? "destacado" : "ya no destacado");
-  if (a.cat !== b.cat) out.push(`sección ${b.cat}`);
+  if (a.cat !== b.cat) out.push(`sección ${CATS[b.cat]}`);
+  if (unidadDe(a) !== unidadDe(b)) out.push(`se vende por ${unidadDe(b)}`);
   if (a.foto !== b.foto) out.push(b.foto ? "foto nueva" : "quitó la foto");
   if (["alias","uso","descripcion","animal","zona","forma"].some(k => a[k] !== b[k]) || a.tags.join() !== b.tags.join() || a.coc.join() !== b.coc.join()) out.push("datos del corte");
   return out.join(", ") || "sin cambios";
@@ -1629,7 +1717,8 @@ async function guardarCorte(){
   const c = edit.data;
   if (!c.nombre) return toast("Escribe el nombre del corte");
   if (!c.uso) return toast("Escribe para qué es el corte");
-  if (!(c.precio > 0)) return toast("Escribe el precio por kg");
+  if (!(c.precio > 0)) return toast("Escribe el precio");
+  if (!baseV2() && (c.cat === "menudencias" || c.cat === "complementos" || c.unidad !== "kg")) return avisoActualizarBase();
   if (c.oferta && c.oferta >= c.precio) return toast("La oferta debe ser menor que el precio");
   if (c.oferta_hasta && c.oferta_hasta < hoy()) return toast("La fecha de la oferta ya pasó");
   if (CORTES.some(x => x.id !== c.id && norm(x.nombre) === norm(c.nombre)) && !confirm(`Ya existe un corte llamado "${c.nombre}". ¿Guardar igual?`)) return;
@@ -1689,7 +1778,7 @@ function pintarPrecios(){
   const list = [...CORTES].sort((a, b) => a.cat.localeCompare(b.cat) || ordenAdmin(a, b));
   $("#peList").innerHTML = `<div class="pe-row head"><span>CORTE</span><span style="text-align:right">PRECIO</span><span style="text-align:right">OFERTA</span></div>` +
     list.map(c => { const d = borrador[c.id] || {}; const p = d.precio ?? c.precio, o = "oferta" in d ? d.oferta : c.oferta;
-      return `<div class="pe-row"><span class="nm">${esc(c.nombre)}<small>${c.cat === "parrilla" ? "Parrilla" : "Platos"}${!c.disponible ? " · agotado" : ""}</small></span>
+      return `<div class="pe-row"><span class="nm">${esc(c.nombre)}<small>${SECCION_UI[c.cat]} · ${porKg(c) ? "kg" : unidadDe(c)}${!c.disponible ? " · agotado" : ""}</small></span>
         <input data-pe="${esc(c.id)}" data-k="precio" type="number" inputmode="decimal" step="0.5" value="${p}" class="${d.precio !== undefined && d.precio !== c.precio ? "chg" : ""}">
         <input data-pe="${esc(c.id)}" data-k="oferta" type="number" inputmode="decimal" step="0.5" value="${o ?? ""}" placeholder="—" class="${"oferta" in d && d.oferta !== c.oferta ? "chg" : ""}"></div>`; }).join("");
   actualizarBarraPrecios();
@@ -1737,8 +1826,9 @@ async function guardarPrecios(){
 }
 function textoListaPrecios(){
   const sec = cat => [...CORTES].filter(c => c.cat === cat && c.disponible).sort(ordenPublico)
-    .map(c => `• ${c.nombre}: ${bs(precioDe(c))}/kg${ofertaVigente(c) ? ` (antes ${bs(c.precio)})` : ""}`).join("\n");
-  return `*VALERIANO CARNES PREMIUM*\nLista de precios ${new Date().toLocaleDateString("es-BO")}\n\n*PARRILLA*\n${sec("parrilla")}\n\n*PLATOS COMUNES*\n${sec("platos")}\n\nPedidos: wa.me/${waNum()}`;
+    .map(c => `• ${c.nombre}: ${bs(precioDe(c))}/${unidadDe(c)}${ofertaVigente(c) ? ` (antes ${bs(c.precio)})` : ""}`).join("\n");
+  const bloques = Object.entries(CATS).map(([k, v]) => [v.toUpperCase(), sec(k)]).filter(([, t]) => t).map(([v, t]) => `*${v}*\n${t}`).join("\n\n");
+  return `*VALERIANO CARNES PREMIUM*\nLista de precios ${new Date().toLocaleDateString("es-BO")}\n\n${bloques}\n\nPedidos: wa.me/${waNum()}`;
 }
 async function compartirLista(){
   const txt = textoListaPrecios();
@@ -1749,7 +1839,7 @@ async function compartirLista(){
 
 /* ---- Pestaña: Banners ---- */
 const thFoto = x => fotoDe(x) ? `<img src="${esc(fotoDe(x))}" alt="">` : meatSVG("steak", x.id);
-const NOMBRE_PORTADA = {portada: "Pantalla de bienvenida", "sec-parrilla": "Sección Parrilla", "sec-platos": "Sección Platos", "sec-ofertas": "Sección Ofertas"};
+const NOMBRE_PORTADA = {portada: "Pantalla de bienvenida", "sec-parrilla": "Sección Parrilla", "sec-platos": "Sección Platos", "sec-menudencias": "Sección Menudencias", "sec-complementos": "Sección Complementos", "sec-ofertas": "Sección Ofertas"};
 function tabBanners(){
   $("#admBody").innerHTML = `
     <div class="sec-h" style="margin-top:16px"><h2>Ofertas del inicio</h2></div>
@@ -1995,7 +2085,7 @@ document.addEventListener("click", e => {
   if (has("data-cart") || t.id === "cartBtn"){ pintarCarrito(); return abrir("#cart"); }
   if (d.peso){ det.peso = +d.peso; return pintarDetalle(); }
   if (d.cant){ det.cant = Math.max(1, det.cant + +d.cant); return pintarDetalle(); }
-  if (has("data-addcart")){ agregar(det.c.id, det.peso * det.cant); return cerrar(); }
+  if (has("data-addcart")){ agregar(det.c.id, porKg(det.c) ? det.peso * det.cant : det.cant); return cerrar(); }
   if (d.rm){ carrito = carrito.filter(x => x.id !== d.rm); guardarCarrito(); return pintarCarrito(); }
   if (has("data-wa")) return enviarWhatsApp();
   if (has("data-wachat")) return abrirUrl(`https://wa.me/${waNum()}`);
@@ -2043,8 +2133,8 @@ document.addEventListener("click", e => {
   if (t.classList.contains("chip")){
     const box = t.parentElement.id;
     if (box === "filterChips"){ filtroInicio = d.v; filtroZona = null; renderCowInfo(); return renderInicio(); }
-    if (box === "chipsParrilla"){ subFiltro.parrilla = d.v; return renderSeccion("parrilla"); }
-    if (box === "chipsPlatos"){ subFiltro.platos = d.v; return renderSeccion("platos"); }
+    const seccion = Object.keys(CATS).find(k => box === "chips" + nombreId(k));
+    if (seccion){ subFiltro[seccion] = d.v; return renderSeccion(seccion); }
     if (box === "admChips"){ admFiltro = d.v; return tabCortes(); }
   }
 
@@ -2096,7 +2186,7 @@ $("#logoTap").addEventListener("click", () => {
 $("#search").addEventListener("input", e => {
   busqueda = norm(e.target.value.trim());
   if (busqueda && (vistaActual === "calc" || vistaActual === "admin")) go("inicio");
-  renderInicio(); renderSeccion("parrilla"); renderSeccion("platos"); renderOfertas();
+  renderInicio(); renderSecciones(); renderOfertas();
 });
 
 /* Al volver a la app, trae precios nuevos de la nube (si no hay nada sin guardar) */
